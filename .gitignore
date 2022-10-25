@@ -69,3 +69,5 @@ __recovery/
 modules/
 MNK.bpf
 mnk.vcproj.Larkin.user
+del.bat
+one.txt
