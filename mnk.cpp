@@ -1,167 +1,71 @@
 //---------------------------------------------------------------------------
 
+#include <vcl.h>
 #pragma hdrstop
 
+#include "mnk.h"
+#include "math.h"
+//---------------------------------------------------------------------------
+#pragma package(smart_init)
+#pragma resource "*.dfm"
+TForm1 *Form1;
+//---------------------------------------------------------------------------
+__fastcall TForm1::TForm1(TComponent* Owner)
+   : TForm(Owner)
+{
+}
 //---------------------------------------------------------------------------
 
-#pragma argsused
-#include <iostream>
-#include <string.h>
-#include <stdio.h>
-#include <math.h>
-#include <conio.h>
-
-using namespace std;
-void sort (float  **a, int n,int l)
+void __fastcall TForm1::BitBtn1Click(TObject *Sender)
 {
-	float max=0,d;
-	int maxi=0,i;
+   int i=0,j=0, k=0;
+   int N, K;
+   double *x, *y, **sums;
+   StringGrid1->Cells[1][1]=3;
+   StringGrid1->Cells[2][1]=4;
+   StringGrid1->Cells[1][2]=4;
+   StringGrid1->Cells[2][2]=6;
+   StringGrid1->Cells[1][3]=6;
+   StringGrid1->Cells[2][3]=7;
+   K=2;
+   N=1;
 
-	for(i=l;i<n;i++)
-	{
-		if(fabs(a[i][l])>max)
-		{
+   x = new double[N];
+   y = new double[N];
+   sums = new double *[K+1];
+   for(i=0; i<K+1; i++)
+      sums[i] = new double[K+1];
 
-			max=fabs(a[i][l]);
-			maxi=i;
-		}
-	}
+   for(i=0; i<K+1; i++)
+      for(j=0; j<K+1; j++)
+         sums[i][j] = 0;
 
-	for(i=0;i<n+1;i++)
-	{
-		d=a[l][i];
-		a[l][i]=a[maxi][i];
-		a[maxi][i]=d;
-	}
-		
+   i=0,j=0, k=0;
+   for(k=0; k<N; k++)
+   {
+      x[k] = StrToFloatDef(StringGrid1->Cells[1][k+1],0);
+      y[k] = StrToFloatDef(StringGrid1->Cells[2][k+1],0);  //*/
+   }
+   for(i=0; i<K+1; i++)
+   {
+      for(j=0; j<K+1; j++)
+      {
+         double ij = i+j;
+	      sums[i][j] = 0;   //Вылет
+	      for(k=0; k<N; k++)
+	         sums[i][j] += pow(x[k], ij);
+      }
+   }
 }
-void Gaysa (float **M,int n)
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::BitBtn2Click(TObject *Sender)
 {
-	int i,j,l;
-	float *x,d;
-	x=new  float[n];	
-	for(l=0;l<n;l++)
-	{
-		sort(M,n,l);
-		for(i=l;i<n-1;i++)
-		{
-			d=M[i+1][l]/M[l][l];
-			for(j=l;j<n+1;j++)
-				M[i+1][j]=M[i+1][j]-d*M[l][j];
-		}
-	}
-
-	x[n-1]=M[n-1][n]/M[n-1][n-1];
-
-	for(i=n-1-1,l=1;i>=0;i--,l++)
-	{
-		d=0;
-		for(j=n-l;j<n;j++)
-		{
-			d=d+x[j]*M[i][j];
-		}
-		x[i]=(M[i][n]-d)/M[i][i];
-	}
-
-	cout<<"\nIckomye X\n";
-	for(i=n-1;i>=0;i--)
-	{
-		cout<<"x"<<i+1<<"="<<x[i];
-		cout<<"\n";
-	}
-
-	
-	system("pause");
-	
-
-
-
+   StringGrid1->Cells[1][1]=3;
+   StringGrid1->Cells[2][1]=4;
+   StringGrid1->Cells[1][2]=4;
+   StringGrid1->Cells[2][2]=6;
+   StringGrid1->Cells[1][3]=6;
+   StringGrid1->Cells[2][3]=7;
 }
-float step (float a, int n)
-{
-	float b=1;
-	if(n!=0)
-	{
-		
-		for (int i=1;i<=n;i++)
-		{
-			b=b*a;
-		}
-	}
-	else 
-		return 1;
-	return b;
-}
-float symma (float *T, int i, int j,int m)
-{
-	float s=0;
-	int i1;
-	for(i1=0;i1<m;i1++)
-		s=s+step(T[i1],i+j);
-	return s;
-		
-}
-void main()
-{
-	setlocale(LC_CTYPE,"Russian");
-	//FILE *in;
-	int i,j,n,m;
-	float *X,*Y,**M, Sy=0;
-	//in=fopen("red.txt","r");
-	cout<<"Stepen' funkcii: ";
-	cin>>n;
-	n=n+1;
-	cout<<"Kol-vo tochek: ";
-	cin>>m;
-	X=new float [m];
-	Y=new float [m];
-
-	M=new float *[n];
-	for(i=0;i<n;i++)
-		M[i]=new float [n+1];
-	cout<<endl;
-	cout<<"vvedite X Y \n"; 
-	for(i=0;i<m;i++)
-	{
-      cout<<"X["<<i<<"] Y["<<i<<"]: ";
-		cin>>X[i];
-		cin>>Y[i];
-		//scanf("%f",&X[i]);
-		//scanf("%f",&Y[i]);
-	}
-     //cout<<"en\n ";
-
-	for(i=0;i<m;i++)
-	{
-		Sy=Sy+Y[i];
-	}
-	cout<<endl;
-
-	for(i=0;i<n;i++)
-	{
-		for(j=0;j<n;j++)
-		{
-			M[i][j]=symma(X,i,j,m);
-		}         
-	}
-	
-	M[0][n]=Sy;
-	for(i=1;i<n;i++)
-	{
-		M[i][n]=0;
-		for(j=0;j<m;j++)
-			M[i][n]=M[i][n]+Y[j]*step(X[j],i);
-	}
-
-   cout<<"\n";
-   cout<<"systema iz koefficientov\n";
-	for(i=0;i<n;i++)
-	{
-		for(j=0;j<n+1;j++)
-			cout<<M[i][j]<<" ";
-		cout<<endl;
-	}               
-
-   Gaysa(M,n);
-	system("pause");
-}
+//---------------------------------------------------------------------------
