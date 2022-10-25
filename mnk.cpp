@@ -1,16 +1,7 @@
-//---------------------------------------------------------------------------
-
-#pragma hdrstop
-
-//---------------------------------------------------------------------------
-
-#pragma argsused
 #include <iostream>
 #include <string.h>
 #include <stdio.h>
 #include <math.h>
-#include <conio.h>
-
 using namespace std;
 void sort (float  **a, int n,int l)
 {
@@ -63,7 +54,7 @@ void Gaysa (float **M,int n)
 		x[i]=(M[i][n]-d)/M[i][i];
 	}
 
-	cout<<"\nIckomye X\n";
+	cout<<"\nИскомые Х\n";
 	for(i=n-1;i>=0;i--)
 	{
 		cout<<"x"<<i+1<<"="<<x[i];
@@ -104,46 +95,50 @@ float symma (float *T, int i, int j,int m)
 void main()
 {
 	setlocale(LC_CTYPE,"Russian");
-	//FILE *in;
+	FILE *in;
 	int i,j,n,m;
 	float *X,*Y,**M, Sy=0;
-	//in=fopen("red.txt","r");
-	cout<<"Stepen' funkcii: ";
+	in=fopen("input.txt","r");
+	cout<<"Степень функции\n";
 	cin>>n;
 	n=n+1;
-	cout<<"Kol-vo tochek: ";
+	cout<<"Количество точек\n ";
 	cin>>m;
 	X=new float [m];
 	Y=new float [m];
-
 	M=new float *[n];
 	for(i=0;i<n;i++)
 		M[i]=new float [n+1];
 	cout<<endl;
-	cout<<"vvedite X Y \n"; 
+	//cout<<"vvedite X Y \n";
 	for(i=0;i<m;i++)
 	{
-      cout<<"X["<<i<<"] Y["<<i<<"]: ";
-		cin>>X[i];
-		cin>>Y[i];
-		//scanf("%f",&X[i]);
-		//scanf("%f",&Y[i]);
+		//cin>>X[i];
+		//cin>>Y[i];
+		fscanf(in,"%f ",&X[i]);
+		fscanf(in,"%f ",&Y[i]);
+		cout<<X[i]<<"  "<<Y[i]<<endl;
 	}
-     //cout<<"en\n ";
+
 
 	for(i=0;i<m;i++)
 	{
 		Sy=Sy+Y[i];
 	}
+
+
 	cout<<endl;
+	
 
 	for(i=0;i<n;i++)
 	{
 		for(j=0;j<n;j++)
 		{
 			M[i][j]=symma(X,i,j,m);
-		}         
+		}
+
 	}
+
 	
 	M[0][n]=Sy;
 	for(i=1;i<n;i++)
@@ -153,15 +148,22 @@ void main()
 			M[i][n]=M[i][n]+Y[j]*step(X[j],i);
 	}
 
-   cout<<"\n";
-   cout<<"systema iz koefficientov\n";
+cout<<"\n";
+cout<<"Система из коэффициентов\n";
 	for(i=0;i<n;i++)
 	{
 		for(j=0;j<n+1;j++)
 			cout<<M[i][j]<<" ";
 		cout<<endl;
-	}               
+	}
 
-   Gaysa(M,n);
+
+Gaysa(M,n);
 	system("pause");
+
+
+
+
+
+
 }
