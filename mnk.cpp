@@ -1,10 +1,15 @@
-// mnk.cpp: определяет точку входа для консольного приложения.
-//
-
-#include "stdafx.h"
+//---------------------------------------------------------------------------
 #include <stdio.h>
 #include <process.h>
 #include <math.h>
+#pragma hdrstop
+
+//---------------------------------------------------------------------------
+
+#pragma argsused
+
+//---------------------------------------------------------------------------
+
 float *a, *b, *x, *y, **sums;
 int N, K;
 //N - number of data points
@@ -158,9 +163,12 @@ void diagonal(){
 void cls(){
    for(int i=0; i<25; i++) printf("\n");
 }
-void main(){
+int main(int argc, char* argv[])
+{
+
+//void main(){
    int i=0,j=0, k=0;
-   cls();
+   //cls();
    do{
        printf("\nInput filename: ");
        scanf("%s", filename);
@@ -172,12 +180,80 @@ void main(){
        printf("\nInput power of approximation polinom K<N: ");
        scanf("%d", &K);
    }while(K>=N);
-   allocmatrix();
+   //allocmatrix();
+   //allocate memory for matrixes
+   //int i,j,k;
+   a = new float[K+1];
+   b = new float[K+1];
+   x = new float[N];
+   y = new float[N];
+   sums = new float*[K+1];
+   if(x==NULL || y==NULL || a==NULL || sums==NULL){
+       printf("\nNot enough memory to allocate. N=%d, K=%d\n", N, K);
+       exit(-1);
+   }
+   for(i=0; i<K+1; i++){
+       sums[i] = new float[K+1];
+       if(sums[i]==NULL){
+	   printf("\nNot enough memory to allocate for %d equations.\n", K+1);
+       }
+   }
+   for(i=0; i<K+1; i++){
+       a[i]=0;
+       b[i]=0;
+       for(j=0; j<K+1; j++){
+	   sums[i][j] = 0;
+       }
+   }
+   for(k=0; k<N; k++){
+       x[k]=0;
+       y[k]=0;
+   }
    rewind(InFile);
    //read data from file
-   readmatrix();
+   i=0,j=0, k=0;
+   //read x, y matrixes from input file
+   for(k=0; k<N; k++){
+       fscanf(InFile, "%f", &x[k]);
+       fscanf(InFile, "%f", &y[k]);
+   }
+   //init square sums matrix
+   for(i=0; i<K+1; i++){
+       for(j=0; j<K+1; j++){
+	   sums[i][j] = 0;
+	   for(k=0; k<N; k++){
+	       sums[i][j] += pow(x[k], i+j);
+	   }
+       }
+   }
+   //init free coefficients column
+   for(i=0; i<K+1; i++){
+       for(k=0; k<N; k++){
+	   b[i] += pow(x[k], i) * y[k];
+       }
+   }
+   //readmatrix();
    //check if there are 0 on main diagonal and exchange rows in that case
-   diagonal();
+   //diagonal();
+   float temp=0;
+   for(i=0; i<K+1; i++){
+       if(sums[i][i]==0){
+	   for(j=0; j<K+1; j++){
+	       if(j==i) continue;
+	       if(sums[j][i] !=0 && sums[i][j]!=0){
+		   for(k=0; k<K+1; k++){
+		       temp = sums[j][k];
+		       sums[j][k] = sums[i][k];
+		       sums[i][k] = temp;
+		   }
+		   temp = b[j];
+		   b[j] = b[i];
+		   b[i] = temp;
+		   break;
+	       }
+	   }
+       }
+   }
    fclose(InFile);
    //printmatrix();
    //process rows
@@ -185,7 +261,7 @@ void main(){
        for(i=k+1; i<K+1; i++){
 	   if(sums[k][k]==0){
 	       printf("\nSolution is not exist.\n");
-	       return;
+	       return 0;
 	   }
 	   float M = sums[i][k] / sums[k][k];
 	   for(j=k; j<K+1; j++){
@@ -208,8 +284,23 @@ void main(){
    //fclose(InFile);
    //printmatrix();
    //testsolve();
-   printresult();
-   freematrix();
+   //printresult();
+   //print polynom parameters
+   printf("\n");
+   for(i=0; i<K+1; i++){
+       printf("a[%d] = %f\n", i, a[i]);
+   }
+   //freematrix();
+   //free memory for matrixes
+   for(i=0; i<K+1; i++){
+       delete [] sums[i];
+   }
+   delete [] a;
+   delete [] b;
+   delete [] x;
+   delete [] y;
+   delete [] sums;
    getchar();
-   getchar();
+   return 0;
+
 }
