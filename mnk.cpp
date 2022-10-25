@@ -1,167 +1,215 @@
-//---------------------------------------------------------------------------
+// mnk.cpp: определяет точку входа для консольного приложения.
+//
 
-#pragma hdrstop
-
-//---------------------------------------------------------------------------
-
-#pragma argsused
-#include <iostream>
-#include <string.h>
+#include "stdafx.h"
 #include <stdio.h>
+#include <process.h>
 #include <math.h>
-#include <conio.h>
-
-using namespace std;
-void sort (float  **a, int n,int l)
-{
-	float max=0,d;
-	int maxi=0,i;
-
-	for(i=l;i<n;i++)
-	{
-		if(fabs(a[i][l])>max)
-		{
-
-			max=fabs(a[i][l]);
-			maxi=i;
-		}
-	}
-
-	for(i=0;i<n+1;i++)
-	{
-		d=a[l][i];
-		a[l][i]=a[maxi][i];
-		a[maxi][i]=d;
-	}
-		
+float *a, *b, *x, *y, **sums;
+int N, K;
+//N - number of data points
+//K - polinom power
+//K<=N
+char filename[256];
+FILE* InFile=NULL;
+void count_num_lines(){
+   //count number of lines in input file - number of equations
+   int nelf=0;       //non empty line flag
+   do{
+       nelf = 0;
+       while(fgetc(InFile)!='\n' && !feof(InFile)) nelf=1;
+       if(nelf) N++;
+   }while(!feof(InFile));
 }
-void Gaysa (float **M,int n)
-{
-	int i,j,l;
-	float *x,d;
-	x=new  float[n];	
-	for(l=0;l<n;l++)
-	{
-		sort(M,n,l);
-		for(i=l;i<n-1;i++)
-		{
-			d=M[i+1][l]/M[l][l];
-			for(j=l;j<n+1;j++)
-				M[i+1][j]=M[i+1][j]-d*M[l][j];
-		}
-	}
 
-	x[n-1]=M[n-1][n]/M[n-1][n-1];
-
-	for(i=n-1-1,l=1;i>=0;i--,l++)
-	{
-		d=0;
-		for(j=n-l;j<n;j++)
-		{
-			d=d+x[j]*M[i][j];
-		}
-		x[i]=(M[i][n]-d)/M[i][i];
-	}
-
-	cout<<"\nIckomye X\n";
-	for(i=n-1;i>=0;i--)
-	{
-		cout<<"x"<<i+1<<"="<<x[i];
-		cout<<"\n";
-	}
-
-	
-	system("pause");
-	
-
-
-
+void freematrix(){
+   //free memory for matrixes
+   int i;
+   for(i=0; i<K+1; i++){
+       delete [] sums[i];
+   }
+   delete [] a;
+   delete [] b;
+   delete [] x;
+   delete [] y;
+   delete [] sums;
 }
-float step (float a, int n)
-{
-	float b=1;
-	if(n!=0)
-	{
-		
-		for (int i=1;i<=n;i++)
-		{
-			b=b*a;
-		}
-	}
-	else 
-		return 1;
-	return b;
+
+void allocmatrix(){
+   //allocate memory for matrixes
+   int i,j,k;
+   a = new float[K+1];
+   b = new float[K+1];
+   x = new float[N];
+   y = new float[N];
+   sums = new float*[K+1];
+   if(x==NULL || y==NULL || a==NULL || sums==NULL){
+       printf("\nNot enough memory to allocate. N=%d, K=%d\n", N, K);
+       exit(-1);
+   }
+   for(i=0; i<K+1; i++){
+       sums[i] = new float[K+1];
+       if(sums[i]==NULL){
+	   printf("\nNot enough memory to allocate for %d equations.\n", K+1);
+       }
+   }
+   for(i=0; i<K+1; i++){
+       a[i]=0;
+       b[i]=0;
+       for(j=0; j<K+1; j++){
+	   sums[i][j] = 0;
+       }
+   }
+   for(k=0; k<N; k++){
+       x[k]=0;
+       y[k]=0;
+   }
 }
-float symma (float *T, int i, int j,int m)
-{
-	float s=0;
-	int i1;
-	for(i1=0;i1<m;i1++)
-		s=s+step(T[i1],i+j);
-	return s;
-		
+
+void readmatrix(){
+   int i=0,j=0, k=0;
+   //read x, y matrixes from input file
+   for(k=0; k<N; k++){
+       fscanf(InFile, "%f", &x[k]);
+       fscanf(InFile, "%f", &y[k]);
+   }
+   //init square sums matrix
+   for(i=0; i<K+1; i++){
+       for(j=0; j<K+1; j++){
+	   sums[i][j] = 0;
+	   for(k=0; k<N; k++){
+	       sums[i][j] += pow(x[k], i+j);
+	   }
+       }
+   }
+   //init free coefficients column
+   for(i=0; i<K+1; i++){
+       for(k=0; k<N; k++){
+	   b[i] += pow(x[k], i) * y[k];
+       }
+   }
 }
-void main()
-{
-	setlocale(LC_CTYPE,"Russian");
-	//FILE *in;
-	int i,j,n,m;
-	float *X,*Y,**M, Sy=0;
-	//in=fopen("red.txt","r");
-	cout<<"Stepen' funkcii: ";
-	cin>>n;
-	n=n+1;
-	cout<<"Kol-vo tochek: ";
-	cin>>m;
-	X=new float [m];
-	Y=new float [m];
 
-	M=new float *[n];
-	for(i=0;i<n;i++)
-		M[i]=new float [n+1];
-	cout<<endl;
-	cout<<"vvedite X Y \n"; 
-	for(i=0;i<m;i++)
-	{
-      cout<<"X["<<i<<"] Y["<<i<<"]: ";
-		cin>>X[i];
-		cin>>Y[i];
-		//scanf("%f",&X[i]);
-		//scanf("%f",&Y[i]);
-	}
-     //cout<<"en\n ";
+void printresult(){
+   //print polynom parameters
+   int i=0;
+   printf("\n");
+   for(i=0; i<K+1; i++){
+       printf("a[%d] = %f\n", i, a[i]);
+   }
+}
 
-	for(i=0;i<m;i++)
-	{
-		Sy=Sy+Y[i];
-	}
-	cout<<endl;
+/*void testsolve(){
+   //test that ax=y
+   FILE* OutFile;
+   int i=0, j=0;
+   float sum, s, begin, end, step;
+   begin = x[0][1];
+   end = x[N-1][1];
+   step = (end-begin)/20;
+   printf("\n");
+   for(i=0; i<N; i++){
+       sum = 0;
+       for(j=0; j<N; j++){
+	   sum += x[i][j]*a[j];
+       }
+       printf("%f\t%f\n", s, y[i]);
+   }
+   OutFile = fopen("test.txt", "wt");
+   for(s = begin; s<=end; s+=step){
+       sum = 0;
+       for(j=0; j<N; j++){
+	   sum += pow(s, j)*a[j];
+       }
+       fprintf(OutFile, "%f\t%f\n", s, sum);
+   }
+   fclose(OutFile);
+}*/
+/*void printresult(){
+   int i=0;
+   printf("\n");
+   printf("Result\n");
+   for(i=0; i<N; i++){
+       printf("A%d = %f\n", i, a[i]);
+   }
+}*/
+void diagonal(){
+   int i, j, k;
+   float temp=0;
+   for(i=0; i<K+1; i++){
+       if(sums[i][i]==0){
+	   for(j=0; j<K+1; j++){
+	       if(j==i) continue;
+	       if(sums[j][i] !=0 && sums[i][j]!=0){
+		   for(k=0; k<K+1; k++){
+		       temp = sums[j][k];
+		       sums[j][k] = sums[i][k];
+		       sums[i][k] = temp;
+		   }
+		   temp = b[j];
+		   b[j] = b[i];
+		   b[i] = temp;
+		   break;
+	       }
+	   }
+       }
+   }
+}
+void cls(){
+   for(int i=0; i<25; i++) printf("\n");
+}
+void main(){
+   int i=0,j=0, k=0;
+   cls();
+   do{
+       printf("\nInput filename: ");
+       scanf("%s", filename);
+       InFile = fopen(filename, "rt");
+   }while(InFile==NULL);
+   count_num_lines();
+   printf("\nNumber of points: N=%d", N);
+   do{
+       printf("\nInput power of approximation polinom K<N: ");
+       scanf("%d", &K);
+   }while(K>=N);
+   allocmatrix();
+   rewind(InFile);
+   //read data from file
+   readmatrix();
+   //check if there are 0 on main diagonal and exchange rows in that case
+   diagonal();
+   fclose(InFile);
+   //printmatrix();
+   //process rows
+   for(k=0; k<K+1; k++){
+       for(i=k+1; i<K+1; i++){
+	   if(sums[k][k]==0){
+	       printf("\nSolution is not exist.\n");
+	       return;
+	   }
+	   float M = sums[i][k] / sums[k][k];
+	   for(j=k; j<K+1; j++){
+	       sums[i][j] -= M * sums[k][j];
+	   }
+	   b[i] -= M*b[k];
+       }
+   }
+   //printmatrix();
+   for(i=(K+1)-1; i>=0; i--){
+       float s = 0;
+       for(j = i; j<K+1; j++){
+	   s = s + sums[i][j]*a[j];
+       }
+       a[i] = (b[i] - s) / sums[i][i];
+   }
 
-	for(i=0;i<n;i++)
-	{
-		for(j=0;j<n;j++)
-		{
-			M[i][j]=symma(X,i,j,m);
-		}         
-	}
-	
-	M[0][n]=Sy;
-	for(i=1;i<n;i++)
-	{
-		M[i][n]=0;
-		for(j=0;j<m;j++)
-			M[i][n]=M[i][n]+Y[j]*step(X[j],i);
-	}
-
-   cout<<"\n";
-   cout<<"systema iz koefficientov\n";
-	for(i=0;i<n;i++)
-	{
-		for(j=0;j<n+1;j++)
-			cout<<M[i][j]<<" ";
-		cout<<endl;
-	}               
-
-   Gaysa(M,n);
-	system("pause");
+   //InFile = fopen(filename, "rt");
+   //readmatrix();
+   //fclose(InFile);
+   //printmatrix();
+   //testsolve();
+   printresult();
+   freematrix();
+   getchar();
+   getchar();
 }
