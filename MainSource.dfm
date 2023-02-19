@@ -1,10 +1,10 @@
 object Form1: TForm1
   Left = 176
   Top = 27
-  Width = 737
-  Height = 498
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = #1052#1077#1090#1086#1076' '#1085#1072#1080#1084#1077#1085#1100#1096#1080#1093' '#1082#1074#1072#1076#1088#1072#1090#1086#1074
+  ClientHeight = 439
+  ClientWidth = 721
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,8 +14,8 @@ object Form1: TForm1
   Menu = MainMenu1
   OldCreateOrder = False
   DesignSize = (
-    729
-    444)
+    721
+    439)
   PixelsPerInch = 96
   TextHeight = 20
   object Label1: TLabel
@@ -74,9 +74,6 @@ object Form1: TForm1
       Height = 33
       Caption = '&'#1044#1086#1073#1072#1074#1080#1090#1100
       Default = True
-      ModalResult = 6
-      TabOrder = 0
-      OnClick = AddClick
       Glyph.Data = {
         96090000424D9609000000000000360000002800000028000000140000000100
         18000000000060090000120B0000120B0000000000000000000000FF0000FF00
@@ -155,65 +152,30 @@ object Form1: TForm1
         00FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF
         0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000
         FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF00}
+      ModalResult = 6
       NumGlyphs = 2
+      TabOrder = 0
+      OnClick = AddClick
     end
-    object NewX: TAdvSpinEdit
+    object AppXnE: TLabeledEdit
       Left = 24
-      Top = 40
-      Width = 97
-      Height = 30
-      AllowNullValue = False
-      SpinType = sptFloat
-      Value = 0
-      DateValue = 41882.8314753241
-      HexValue = 0
-      Enabled = True
-      IncrementFloat = 0.1
-      IncrementFloatPage = 1
-      LabelCaption = 'X:'
-      LabelPosition = lpLeftCenter
-      LabelMargin = 5
-      LabelFont.Charset = DEFAULT_CHARSET
-      LabelFont.Color = clWindowText
-      LabelFont.Height = -18
-      LabelFont.Name = 'Calibri'
-      LabelFont.Style = []
-      MaxValue = 32000
-      MinFloatValue = -32000
-      MaxFloatValue = 32000
-      Signed = True
+      Top = 34
+      Width = 81
+      Height = 28
+      EditLabel.Width = 15
+      EditLabel.Height = 20
+      EditLabel.Caption = 'X:'
+      LabelPosition = lpLeft
       TabOrder = 1
-      Visible = True
-      Version = '1.4.4.4'
+      Text = '0'
     end
-    object NewY: TAdvSpinEdit
-      Left = 24
-      Top = 72
-      Width = 97
-      Height = 30
-      AllowNullValue = False
-      SpinType = sptFloat
-      Value = 0
-      DateValue = 41882.8314753241
-      HexValue = 0
-      Enabled = True
-      IncrementFloat = 0.1
-      IncrementFloatPage = 1
-      LabelCaption = 'Y:'
-      LabelPosition = lpLeftCenter
-      LabelMargin = 5
-      LabelFont.Charset = DEFAULT_CHARSET
-      LabelFont.Color = clWindowText
-      LabelFont.Height = -18
-      LabelFont.Name = 'Calibri'
-      LabelFont.Style = []
-      MaxValue = 32000
-      MinFloatValue = -32000
-      MaxFloatValue = 32000
-      Signed = True
+    object AppXn: TUpDown
+      Left = 105
+      Top = 34
+      Width = 16
+      Height = 28
+      Associate = AppXnE
       TabOrder = 2
-      Visible = True
-      Version = '1.4.4.4'
     end
   end
   object Out: TListBox
@@ -232,38 +194,12 @@ object Form1: TForm1
     PopupMenu = PopupMenu1
     TabOrder = 1
   end
-  object Degree: TAdvSpinEdit
-    Left = 80
-    Top = 8
-    Width = 57
-    Height = 30
-    AllowNullValue = False
-    Value = 0
-    DateValue = 41882.8314753241
-    HexValue = 0
-    Enabled = True
-    IncrementFloat = 0.1
-    IncrementFloatPage = 1
-    LabelPosition = lpLeftCenter
-    LabelFont.Charset = DEFAULT_CHARSET
-    LabelFont.Color = clWindowText
-    LabelFont.Height = -16
-    LabelFont.Name = 'MS Sans Serif'
-    LabelFont.Style = []
-    MaxValue = 10
-    TabOrder = 2
-    Visible = True
-    Version = '1.4.4.4'
-  end
   object RunBtn: TBitBtn
     Left = 16
     Top = 208
     Width = 113
     Height = 33
     Caption = '&'#1042#1099#1095#1080#1089#1083#1080#1090#1100
-    ModalResult = 5
-    TabOrder = 3
-    OnClick = RunClick
     Glyph.Data = {
       96090000424D9609000000000000360000002800000028000000140000000100
       18000000000060090000120B0000120B0000000000000000000000FF0000FF00
@@ -342,7 +278,10 @@ object Form1: TForm1
       E79D5DE69C5AE69957E59654E49450E38F4CE28C49EBAA7900FF0000FF0000FF
       0000FF0000FF00C9C9C9A6A6A6A6A6A6A5A5A5A5A5A5A5A5A5A3A3A3A2A2A2A0
       A0A09E9E9E9C9C9C9A9A9A979797959595B2B2B200FF0000FF00}
+    ModalResult = 5
     NumGlyphs = 2
+    TabOrder = 2
+    OnClick = RunClick
   end
   object Grid: TStringGrid
     Left = 144
@@ -354,7 +293,7 @@ object Form1: TForm1
     Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goEditing]
     PopupMenu = PopupMenu2
     ScrollBars = ssVertical
-    TabOrder = 4
+    TabOrder = 3
   end
   object PanelGraph: TPanel
     Left = 320
@@ -370,62 +309,56 @@ object Form1: TForm1
       Top = 1
       Width = 399
       Height = 427
-      BackWall.Brush.Color = clWhite
       BackWall.Color = clWhite
       BottomWall.Color = 13041663
       Gradient.Direction = gdLeftRight
       Gradient.EndColor = 7050388
       LeftWall.Color = 6009343
-      MarginTop = 1
-      PrintProportional = False
-      Title.Brush.Color = clWhite
-      Title.Brush.Style = bsClear
-      Title.Color = clWhite
-      Title.Font.Charset = DEFAULT_CHARSET
-      Title.Font.Color = clRed
-      Title.Font.Height = -15
-      Title.Font.Name = 'Arial'
-      Title.Font.Style = []
-      Title.Text.Strings = (
-        #1040#1087#1087#1088#1086#1082#1089#1080#1084#1072#1094#1080#1103)
-      BackColor = clWhite
       Legend.Alignment = laBottom
       Legend.LegendStyle = lsSeries
       Legend.TextStyle = ltsPlain
       Legend.Visible = False
+      MarginTop = 1
+      PrintProportional = False
+      Title.Brush.Style = bsClear
+      Title.Font.Color = clRed
+      Title.Font.Height = -15
+      Title.Text.Strings = (
+        #1040#1087#1087#1088#1086#1082#1089#1080#1084#1072#1094#1080#1103)
+      BottomAxis.LabelsFormat.TextAlignment = taCenter
+      DepthAxis.LabelsFormat.TextAlignment = taCenter
+      DepthTopAxis.LabelsFormat.TextAlignment = taCenter
+      LeftAxis.LabelsFormat.TextAlignment = taCenter
+      RightAxis.LabelsFormat.TextAlignment = taCenter
+      TopAxis.LabelsFormat.TextAlignment = taCenter
+      Zoom.Pen.Mode = pmNotXor
       Align = alClient
       TabOrder = 0
+      DefaultCanvas = 'TGDIPlusCanvas'
+      ColorPaletteIndex = 13
       object Series1: TLineSeries
-        Marks.ArrowLength = 8
         Marks.Visible = False
         SeriesColor = 8388672
         Title = 'Series12'
+        Brush.BackColor = clDefault
         Pointer.InflateMargins = True
         Pointer.Style = psRectangle
         Pointer.Visible = False
-        XValues.DateTime = False
         XValues.Name = 'X'
-        XValues.Multiplier = 1
         XValues.Order = loAscending
-        YValues.DateTime = False
         YValues.Name = 'Y'
-        YValues.Multiplier = 1
         YValues.Order = loNone
       end
       object Series2: TLineSeries
-        Marks.ArrowLength = 8
         Marks.Visible = False
         SeriesColor = clRed
+        Brush.BackColor = clDefault
         Pointer.InflateMargins = True
         Pointer.Style = psRectangle
         Pointer.Visible = False
-        XValues.DateTime = False
         XValues.Name = 'X'
-        XValues.Multiplier = 1
         XValues.Order = loAscending
-        YValues.DateTime = False
         YValues.Name = 'Y'
-        YValues.Multiplier = 1
         YValues.Order = loNone
       end
     end
@@ -438,94 +371,7 @@ object Form1: TForm1
     Anchors = [akLeft, akBottom]
     Caption = #1040#1087#1087#1088#1086#1082#1089#1080#1084#1072#1094#1080#1103
     PopupMenu = PopupMenu2
-    TabOrder = 6
-    object AppXn: TAdvSpinEdit
-      Left = 64
-      Top = 24
-      Width = 97
-      Height = 30
-      AllowNullValue = False
-      SpinType = sptFloat
-      Value = 0
-      DateValue = 41882.8314753241
-      HexValue = 0
-      Enabled = True
-      IncrementFloat = 0.1
-      IncrementFloatPage = 1
-      LabelCaption = 'X('#1085#1072#1095'):'
-      LabelPosition = lpLeftCenter
-      LabelMargin = 5
-      LabelFont.Charset = DEFAULT_CHARSET
-      LabelFont.Color = clWindowText
-      LabelFont.Height = -18
-      LabelFont.Name = 'Calibri'
-      LabelFont.Style = []
-      MaxValue = 32000
-      MinFloatValue = -32000
-      MaxFloatValue = 32000
-      Signed = True
-      TabOrder = 0
-      Visible = True
-      Version = '1.4.4.4'
-    end
-    object AppXk: TAdvSpinEdit
-      Left = 64
-      Top = 56
-      Width = 97
-      Height = 30
-      AllowNullValue = False
-      SpinType = sptFloat
-      Value = 0
-      DateValue = 41882.8314753241
-      HexValue = 0
-      Enabled = True
-      IncrementFloat = 0.1
-      IncrementFloatPage = 1
-      LabelCaption = 'X('#1082#1086#1085'):'
-      LabelPosition = lpLeftCenter
-      LabelMargin = 5
-      LabelFont.Charset = DEFAULT_CHARSET
-      LabelFont.Color = clWindowText
-      LabelFont.Height = -18
-      LabelFont.Name = 'Calibri'
-      LabelFont.Style = []
-      MaxValue = 32000
-      MinFloatValue = -32000
-      MaxFloatValue = 32000
-      Signed = True
-      TabOrder = 1
-      Visible = True
-      Version = '1.4.4.4'
-    end
-    object AppStep: TAdvSpinEdit
-      Left = 64
-      Top = 88
-      Width = 97
-      Height = 30
-      AllowNullValue = False
-      SpinType = sptFloat
-      Value = 1
-      FloatValue = 1
-      HexValue = 0
-      Enabled = True
-      IncrementFloat = 0.1
-      IncrementFloatPage = 1
-      LabelCaption = #1064#1072#1075':'
-      LabelPosition = lpLeftCenter
-      LabelMargin = 5
-      LabelFont.Charset = DEFAULT_CHARSET
-      LabelFont.Color = clWindowText
-      LabelFont.Height = -18
-      LabelFont.Name = 'Calibri'
-      LabelFont.Style = []
-      MaxValue = 32000
-      MinFloatValue = -32000
-      MaxFloatValue = 32000
-      Signed = True
-      TabOrder = 2
-      Visible = True
-      Version = '1.4.4.4'
-    end
+    TabOrder = 4
     object BuiltBtn: TBitBtn
       Left = 24
       Top = 128
@@ -538,10 +384,6 @@ object Form1: TForm1
       Font.Height = -16
       Font.Name = 'MS Sans Serif'
       Font.Style = []
-      ModalResult = 6
-      ParentFont = False
-      TabOrder = 3
-      OnClick = BuiltBtnClick
       Glyph.Data = {
         96090000424D9609000000000000360000002800000028000000140000000100
         18000000000060090000120B0000120B00000000000000000000FFFFFFFFFFFF
@@ -620,8 +462,32 @@ object Form1: TForm1
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
+      ModalResult = 6
       NumGlyphs = 2
+      ParentFont = False
+      TabOrder = 0
+      OnClick = BuiltBtnClick
     end
+  end
+  object AppYnE: TLabeledEdit
+    Left = 32
+    Top = 116
+    Width = 81
+    Height = 28
+    EditLabel.Width = 15
+    EditLabel.Height = 20
+    EditLabel.Caption = 'Y:'
+    LabelPosition = lpLeft
+    TabOrder = 6
+    Text = '0'
+  end
+  object AppYn: TUpDown
+    Left = 113
+    Top = 116
+    Width = 16
+    Height = 28
+    Associate = AppYnE
+    TabOrder = 7
   end
   object MainMenu1: TMainMenu
     Left = 152
@@ -722,8 +588,6 @@ object Form1: TForm1
     Font.Height = -11
     Font.Name = 'MS Sans Serif'
     Font.Style = []
-    MinFontSize = 0
-    MaxFontSize = 0
     Left = 264
     Top = 160
   end
@@ -744,7 +608,6 @@ object Form1: TForm1
     end
   end
   object ColorDialog1: TColorDialog
-    Ctl3D = True
     Left = 232
     Top = 160
   end

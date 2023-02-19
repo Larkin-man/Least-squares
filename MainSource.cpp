@@ -5,8 +5,6 @@
 #include "MainSource.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
-#pragma link "AdvSpin"
-#pragma link "WinXP"
 #pragma resource "*.dfm"
 
 TForm1 *Form1;

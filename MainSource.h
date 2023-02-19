@@ -16,8 +16,6 @@
 #include "About.h"
 #include "Table.h"
 #include <math.h>
-#include "AdvSpin.hpp"
-#include "WinXP.hpp"
 #include <Mask.hpp>
 #include <Grids.hpp>
 #include "Graphic.h"
@@ -25,6 +23,7 @@
 #include <Series.hpp>
 #include <TeEngine.hpp>
 #include <TeeProcs.hpp>
+#include <VclTee.TeeGDIPlus.hpp>
 //---------------------------------------------------------------------------
 class TForm1 : public TForm
 {
@@ -58,12 +57,9 @@ __published:	// IDE-managed Components
    TMenuItem *NFont2;
    TMenuItem *Nformat;
    TMenuItem *NGridClear;
-   TAdvSpinEdit *Degree;
    TColorDialog *ColorDialog1;
    TBitBtn *Add;
    TBitBtn *RunBtn;
-   TAdvSpinEdit *NewX;
-   TAdvSpinEdit *NewY;
    TStringGrid *Grid;
    TLabel *Label1;
    TPanel *PanelGraph;
@@ -71,11 +67,12 @@ __published:	// IDE-managed Components
    TLineSeries *Series1;
    TMenuItem *NGColor;
    TGroupBox *GroupBox1;
-   TAdvSpinEdit *AppXn;
-   TAdvSpinEdit *AppXk;
    TLineSeries *Series2;
-   TAdvSpinEdit *AppStep;
    TBitBtn *BuiltBtn;
+	TLabeledEdit *AppXnE;
+	TUpDown *AppXn;
+	TLabeledEdit *AppYnE;
+	TUpDown *AppYn;
      void __fastcall NExitClick(TObject *Sender);
      void __fastcall RunClick(TObject *Sender);
      void __fastcall NNewClick(TObject *Sender);
