@@ -1,6 +1,10 @@
 //------------файл реализации---------------------------------------------------------------
 
 #include <vcl.h>
+#include "About.h"
+#include "Table.h"
+#include <math.h>
+#include "Graphic.h"
 #pragma hdrstop
 #include "MainSource.h"
 //---------------------------------------------------------------------------
@@ -55,12 +59,12 @@ void __fastcall TForm1::NExitClick(TObject *Sender)
 //Вычислить
 void __fastcall TForm1::RunClick(TObject *Sender)
 {
-   AppXn->FloatValue = minX-1;
-   AppXk->FloatValue = maxX+1;
+   AppXn->Position = minX-1; //TODO: Тут везде был float
+   AppXk->Position = maxX+1;
    //Сам расчет
    int i=0,j=0, k=0;
    N = point-1;
-   K = Degree->Value;
+   K = Degree->Position;
    if (N < K)
    {
       Out->Items->Add("Недостаточно входных данных для расчета");
@@ -206,7 +210,7 @@ void __fastcall TForm1::NOpenClick(TObject *Sender)
       int n;
       int fx,fy;
 	   fscanf(file, "%d", &n);
-      Degree->Value = n;
+      Degree->Position = n;
       fscanf(file, "%d", &point);
       point++;
       Label7->Caption = point;
@@ -243,7 +247,7 @@ void __fastcall TForm1::NSaveClick(TObject *Sender)
 	      ShowMessage ( "Cannot create text file");
 		   return;
 	   }
-	   fprintf(file, "%d ", Degree->Value);
+	   fprintf(file, "%d ", Degree->Position);
       fprintf(file, "%d ", point-1);
 	   for (unsigned int i = 1; i < point; i++)
 	   {
@@ -359,8 +363,8 @@ void __fastcall TForm1::NPointClearClick(TObject *Sender)
 //ДОБАВИТЬ
 void __fastcall TForm1::AddClick(TObject *Sender)
 {
-      double X = NewX->FloatValue;
-      double Y = NewY->FloatValue;
+      double X = NewX->Position;
+      double Y = NewY->Position;
      Grid->Cells[0][point]=point;
      Grid->Cells[1][point]=X;
      Grid->Cells[2][point]=Y;
@@ -401,10 +405,10 @@ void __fastcall TForm1::BuiltBtnClick(TObject *Sender)
    if (!a)
       return;
    double y;
-   for (double x=AppXn->FloatValue; x<AppXk->FloatValue+AppStep->FloatValue; x+=AppStep->FloatValue)
+   for (double x=AppXn->Position; x<AppXk->Position+AppStep->Position; x+=AppStep->Position)
    {
       y = 0;
-      for (int j=0; j<Degree->Value+1; j++)
+      for (int j=0; j<Degree->Position+1; j++)
          if ((x == 0) && (j == 0))
              y += a[j];
          else

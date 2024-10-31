@@ -13,17 +13,13 @@
 #include <Dialogs.hpp>
 #include <ComCtrls.hpp>
 #include <Buttons.hpp>
-#include "About.h"
-#include "Table.h"
-#include <math.h>
 #include <Mask.hpp>
 #include <Grids.hpp>
-#include "Graphic.h"
 #include <Chart.hpp>
 #include <Series.hpp>
 #include <TeEngine.hpp>
 #include <TeeProcs.hpp>
-#include <VclTee.TeeGDIPlus.hpp>
+//#include <VclTee.TeeGDIPlus.hpp>
 //---------------------------------------------------------------------------
 class TForm1 : public TForm
 {
@@ -61,7 +57,6 @@ __published:	// IDE-managed Components
    TBitBtn *Add;
    TBitBtn *RunBtn;
    TStringGrid *Grid;
-   TLabel *Label1;
    TPanel *PanelGraph;
    TChart *Chart1;
    TLineSeries *Series1;
@@ -69,10 +64,18 @@ __published:	// IDE-managed Components
    TGroupBox *GroupBox1;
    TLineSeries *Series2;
    TBitBtn *BuiltBtn;
+	TLabeledEdit *NewXE;
+	TUpDown *NewX;
+	TLabeledEdit *NewYE;
+	TUpDown *NewY;
+	TUpDown *AppXk;
 	TLabeledEdit *AppXnE;
 	TUpDown *AppXn;
-	TLabeledEdit *AppYnE;
-	TUpDown *AppYn;
+	TUpDown *AppStep;
+	TUpDown *Degree;
+	TLabeledEdit *DegreeE;
+	TLabeledEdit *AppXkE;
+	TLabeledEdit *AppStepE;
      void __fastcall NExitClick(TObject *Sender);
      void __fastcall RunClick(TObject *Sender);
      void __fastcall NNewClick(TObject *Sender);

@@ -3,77 +3,79 @@ object Form1: TForm1
   Top = 27
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = #1052#1077#1090#1086#1076' '#1085#1072#1080#1084#1077#1085#1100#1096#1080#1093' '#1082#1074#1072#1076#1088#1072#1090#1086#1074
-  ClientHeight = 439
-  ClientWidth = 721
+  ClientHeight = 565
+  ClientWidth = 968
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -16
+  Font.Height = -20
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   Menu = MainMenu1
   OldCreateOrder = False
   DesignSize = (
-    721
-    439)
-  PixelsPerInch = 96
-  TextHeight = 20
-  object Label1: TLabel
-    Left = 9
-    Top = 11
-    Width = 69
-    Height = 20
-    Caption = #1057#1090#1077#1087#1077#1085#1100':'
-    Color = clBtnFace
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -16
-    Font.Name = 'MS Sans Serif'
-    Font.Style = []
-    ParentColor = False
-    ParentFont = False
-  end
+    968
+    565)
+  PixelsPerInch = 120
+  TextHeight = 24
   object Panel1: TPanel
-    Left = 8
-    Top = 48
-    Width = 129
-    Height = 153
+    Left = 10
+    Top = 58
+    Width = 154
+    Height = 183
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     PopupMenu = PopupMenu2
     TabOrder = 0
     object Label4: TLabel
-      Left = 8
-      Top = 8
-      Width = 63
-      Height = 20
+      Left = 10
+      Top = 10
+      Width = 77
+      Height = 24
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Alignment = taCenter
       Caption = #1058#1086#1095#1082#1072' '#8470
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
-      Font.Height = -16
+      Font.Height = -20
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
     end
     object Label7: TLabel
-      Left = 80
-      Top = 8
-      Width = 9
-      Height = 20
+      Left = 96
+      Top = 10
+      Width = 10
+      Height = 24
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = '_'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
-      Font.Height = -16
+      Font.Height = -20
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
     end
     object Add: TBitBtn
-      Left = 8
-      Top = 112
-      Width = 113
-      Height = 33
+      Left = 10
+      Top = 134
+      Width = 135
+      Height = 40
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = '&'#1044#1086#1073#1072#1074#1080#1090#1100
       Default = True
+      DoubleBuffered = True
       Glyph.Data = {
         96090000424D9609000000000000360000002800000028000000140000000100
         18000000000060090000120B0000120B0000000000000000000000FF0000FF00
@@ -154,52 +156,74 @@ object Form1: TForm1
         FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF00}
       ModalResult = 6
       NumGlyphs = 2
+      ParentDoubleBuffered = False
       TabOrder = 0
       OnClick = AddClick
     end
-    object AppXnE: TLabeledEdit
-      Left = 24
-      Top = 34
-      Width = 81
-      Height = 28
-      EditLabel.Width = 15
-      EditLabel.Height = 20
+    object NewXE: TLabeledEdit
+      Left = 29
+      Top = 41
+      Width = 97
+      Height = 32
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
+      EditLabel.Width = 19
+      EditLabel.Height = 24
+      EditLabel.Margins.Left = 4
+      EditLabel.Margins.Top = 4
+      EditLabel.Margins.Right = 4
+      EditLabel.Margins.Bottom = 4
       EditLabel.Caption = 'X:'
       LabelPosition = lpLeft
       TabOrder = 1
       Text = '0'
     end
-    object AppXn: TUpDown
-      Left = 105
-      Top = 34
-      Width = 16
-      Height = 28
-      Associate = AppXnE
+    object NewX: TUpDown
+      Left = 126
+      Top = 41
+      Width = 20
+      Height = 32
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
+      Associate = NewXE
       TabOrder = 2
     end
   end
   object Out: TListBox
-    Left = 8
-    Top = 248
-    Width = 129
-    Height = 188
+    Left = 10
+    Top = 298
+    Width = 154
+    Height = 263
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Anchors = [akLeft, akTop, akBottom]
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -16
+    Font.Height = -20
     Font.Name = 'MS Sans Serif'
     Font.Style = []
-    ItemHeight = 20
+    ItemHeight = 24
     ParentFont = False
     PopupMenu = PopupMenu1
     TabOrder = 1
   end
   object RunBtn: TBitBtn
-    Left = 16
-    Top = 208
-    Width = 113
-    Height = 33
+    Left = 19
+    Top = 250
+    Width = 136
+    Height = 39
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Caption = '&'#1042#1099#1095#1080#1089#1083#1080#1090#1100
+    DoubleBuffered = True
     Glyph.Data = {
       96090000424D9609000000000000360000002800000028000000140000000100
       18000000000060090000120B0000120B0000000000000000000000FF0000FF00
@@ -280,35 +304,51 @@ object Form1: TForm1
       A0A09E9E9E9C9C9C9A9A9A979797959595B2B2B200FF0000FF00}
     ModalResult = 5
     NumGlyphs = 2
+    ParentDoubleBuffered = False
     TabOrder = 2
     OnClick = RunClick
   end
   object Grid: TStringGrid
-    Left = 144
-    Top = 8
-    Width = 169
-    Height = 257
+    Left = 173
+    Top = 10
+    Width = 203
+    Height = 346
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Anchors = [akLeft, akTop, akBottom]
     ColCount = 3
     Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goEditing]
     PopupMenu = PopupMenu2
     ScrollBars = ssVertical
     TabOrder = 3
+    ExplicitHeight = 308
   end
   object PanelGraph: TPanel
-    Left = 320
-    Top = 8
-    Width = 401
-    Height = 429
+    Left = 384
+    Top = 10
+    Width = 584
+    Height = 552
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Anchors = [akLeft, akTop, akRight, akBottom]
     BevelInner = bvLowered
     BevelOuter = bvNone
     TabOrder = 5
+    ExplicitWidth = 481
+    ExplicitHeight = 514
     object Chart1: TChart
       Left = 1
       Top = 1
-      Width = 399
-      Height = 427
+      Width = 582
+      Height = 550
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       BackWall.Color = clWhite
       BottomWall.Color = 13041663
       Gradient.Direction = gdLeftRight
@@ -320,23 +360,22 @@ object Form1: TForm1
       Legend.Visible = False
       MarginTop = 1
       PrintProportional = False
+      Title.Brush.Color = clWhite
       Title.Brush.Style = bsClear
       Title.Font.Color = clRed
       Title.Font.Height = -15
       Title.Text.Strings = (
         #1040#1087#1087#1088#1086#1082#1089#1080#1084#1072#1094#1080#1103)
-      BottomAxis.LabelsFormat.TextAlignment = taCenter
-      DepthAxis.LabelsFormat.TextAlignment = taCenter
-      DepthTopAxis.LabelsFormat.TextAlignment = taCenter
-      LeftAxis.LabelsFormat.TextAlignment = taCenter
-      RightAxis.LabelsFormat.TextAlignment = taCenter
-      TopAxis.LabelsFormat.TextAlignment = taCenter
       Zoom.Pen.Mode = pmNotXor
       Align = alClient
       TabOrder = 0
-      DefaultCanvas = 'TGDIPlusCanvas'
+      ExplicitWidth = 479
+      ExplicitHeight = 512
       ColorPaletteIndex = 13
       object Series1: TLineSeries
+        Marks.Arrow.Visible = True
+        Marks.Callout.Brush.Color = clBlack
+        Marks.Callout.Arrow.Visible = True
         Marks.Visible = False
         SeriesColor = 8388672
         Title = 'Series12'
@@ -350,6 +389,9 @@ object Form1: TForm1
         YValues.Order = loNone
       end
       object Series2: TLineSeries
+        Marks.Arrow.Visible = True
+        Marks.Callout.Brush.Color = clBlack
+        Marks.Callout.Arrow.Visible = True
         Marks.Visible = False
         SeriesColor = clRed
         Brush.BackColor = clDefault
@@ -364,24 +406,34 @@ object Form1: TForm1
     end
   end
   object GroupBox1: TGroupBox
-    Left = 144
-    Top = 266
-    Width = 169
-    Height = 171
+    Left = 173
+    Top = 357
+    Width = 203
+    Height = 205
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Anchors = [akLeft, akBottom]
     Caption = #1040#1087#1087#1088#1086#1082#1089#1080#1084#1072#1094#1080#1103
     PopupMenu = PopupMenu2
     TabOrder = 4
+    ExplicitTop = 319
     object BuiltBtn: TBitBtn
-      Left = 24
-      Top = 128
-      Width = 113
-      Height = 33
+      Left = 29
+      Top = 154
+      Width = 135
+      Height = 39
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = '&'#1057#1090#1088#1086#1080#1090#1100
       Default = True
+      DoubleBuffered = True
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
-      Font.Height = -16
+      Font.Height = -20
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       Glyph.Data = {
@@ -464,30 +516,157 @@ object Form1: TForm1
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
       ModalResult = 6
       NumGlyphs = 2
+      ParentDoubleBuffered = False
       ParentFont = False
       TabOrder = 0
       OnClick = BuiltBtnClick
     end
+    object AppXk: TUpDown
+      Left = 153
+      Top = 76
+      Width = 20
+      Height = 32
+      Associate = AppXkE
+      TabOrder = 1
+    end
+    object AppXnE: TLabeledEdit
+      Left = 77
+      Top = 33
+      Width = 76
+      Height = 32
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
+      EditLabel.Width = 60
+      EditLabel.Height = 24
+      EditLabel.Margins.Left = 4
+      EditLabel.Margins.Top = 4
+      EditLabel.Margins.Right = 4
+      EditLabel.Margins.Bottom = 4
+      EditLabel.Caption = #1061'('#1085#1072#1095'):'
+      LabelPosition = lpLeft
+      TabOrder = 2
+      Text = '0'
+    end
+    object AppXn: TUpDown
+      Left = 153
+      Top = 33
+      Width = 20
+      Height = 32
+      Associate = AppXnE
+      TabOrder = 3
+    end
+    object AppStep: TUpDown
+      Left = 153
+      Top = 116
+      Width = 20
+      Height = 32
+      Associate = AppStepE
+      TabOrder = 4
+    end
+    object AppXkE: TLabeledEdit
+      Left = 77
+      Top = 76
+      Width = 76
+      Height = 32
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
+      EditLabel.Width = 60
+      EditLabel.Height = 24
+      EditLabel.Margins.Left = 4
+      EditLabel.Margins.Top = 4
+      EditLabel.Margins.Right = 4
+      EditLabel.Margins.Bottom = 4
+      EditLabel.Caption = #1061'('#1082#1086#1085'):'
+      LabelPosition = lpLeft
+      TabOrder = 5
+      Text = '0'
+    end
+    object AppStepE: TLabeledEdit
+      Left = 77
+      Top = 116
+      Width = 76
+      Height = 32
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
+      EditLabel.Width = 38
+      EditLabel.Height = 24
+      EditLabel.Margins.Left = 4
+      EditLabel.Margins.Top = 4
+      EditLabel.Margins.Right = 4
+      EditLabel.Margins.Bottom = 4
+      EditLabel.Caption = #1064#1072#1075':'
+      LabelPosition = lpLeft
+      TabOrder = 6
+      Text = '0'
+    end
   end
-  object AppYnE: TLabeledEdit
-    Left = 32
-    Top = 116
-    Width = 81
-    Height = 28
-    EditLabel.Width = 15
-    EditLabel.Height = 20
+  object NewYE: TLabeledEdit
+    Left = 38
+    Top = 139
+    Width = 98
+    Height = 32
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
+    EditLabel.Width = 17
+    EditLabel.Height = 24
+    EditLabel.Margins.Left = 4
+    EditLabel.Margins.Top = 4
+    EditLabel.Margins.Right = 4
+    EditLabel.Margins.Bottom = 4
     EditLabel.Caption = 'Y:'
     LabelPosition = lpLeft
     TabOrder = 6
     Text = '0'
   end
-  object AppYn: TUpDown
-    Left = 113
-    Top = 116
-    Width = 16
-    Height = 28
-    Associate = AppYnE
+  object NewY: TUpDown
+    Left = 136
+    Top = 139
+    Width = 20
+    Height = 32
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
+    Associate = NewYE
     TabOrder = 7
+  end
+  object Degree: TUpDown
+    Left = 146
+    Top = 10
+    Width = 20
+    Height = 32
+    Associate = DegreeE
+    Max = 9999
+    TabOrder = 8
+  end
+  object DegreeE: TLabeledEdit
+    Left = 97
+    Top = 10
+    Width = 49
+    Height = 32
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
+    EditLabel.Width = 83
+    EditLabel.Height = 24
+    EditLabel.Margins.Left = 4
+    EditLabel.Margins.Top = 4
+    EditLabel.Margins.Right = 4
+    EditLabel.Margins.Bottom = 4
+    EditLabel.Caption = #1057#1090#1077#1087#1077#1085#1100':'
+    LabelPosition = lpLeft
+    NumbersOnly = True
+    TabOrder = 9
+    Text = '0'
   end
   object MainMenu1: TMainMenu
     Left = 152
