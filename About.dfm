@@ -3,23 +3,27 @@ object AboutBox1: TAboutBox1
   Top = 143
   BorderStyle = bsDialog
   Caption = 'About'
-  ClientHeight = 213
-  ClientWidth = 298
+  ClientHeight = 266
+  ClientWidth = 373
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -13
+  Font.Height = -16
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = True
   Position = poScreenCenter
-  PixelsPerInch = 96
-  TextHeight = 16
+  PixelsPerInch = 120
+  TextHeight = 20
   object Panel1: TPanel
-    Left = 8
-    Top = 8
-    Width = 281
-    Height = 161
+    Left = 10
+    Top = 10
+    Width = 351
+    Height = 201
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     BevelInner = bvRaised
     BevelOuter = bvLowered
     ParentColor = True
@@ -27,8 +31,12 @@ object AboutBox1: TAboutBox1
     object ProgramIcon: TImage
       Left = 0
       Top = 0
-      Width = 281
-      Height = 161
+      Width = 351
+      Height = 201
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Picture.Data = {
         0A544A504547496D6167654D130000FFD8FFE000104A46494600010101012C01
         2C0000FFDB00430006040506050406060506070706080A100A0A09090A140E0F
@@ -189,38 +197,54 @@ object AboutBox1: TAboutBox1
       IsControl = True
     end
     object ProductName: TLabel
-      Left = 16
-      Top = 8
-      Width = 200
-      Height = 16
+      Left = 20
+      Top = 10
+      Width = 240
+      Height = 20
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = #1052#1077#1090#1086#1076' '#1053#1072#1080#1084#1077#1085#1100#1096#1080#1093' '#1050#1074#1072#1076#1088#1072#1090#1086#1074
       Transparent = True
       IsControl = True
     end
     object Version: TLabel
-      Left = 16
-      Top = 32
-      Width = 66
-      Height = 16
-      Caption = 'Version 1.2'
+      Left = 20
+      Top = 40
+      Width = 80
+      Height = 20
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
+      Caption = 'Version 1.3'
       Transparent = True
       IsControl = True
     end
     object Copyright: TLabel
-      Left = 16
-      Top = 56
-      Width = 159
-      Height = 32
+      Left = 20
+      Top = 70
+      Width = 183
+      Height = 40
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = #1040#1074#1090#1086#1088': '#1040#1087#1086#1085#1072#1089#1077#1085#1082#1086' '#1040#1083#1077#1082#1089#1077#1081' '#1042#1083#1072#1076#1080#1084#1080#1088#1086#1074#1080#1095' '
       Transparent = True
       WordWrap = True
       IsControl = True
     end
     object Comments: TLabel
-      Left = 16
-      Top = 96
-      Width = 50
-      Height = 32
+      Left = 20
+      Top = 120
+      Width = 62
+      Height = 40
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = #1043#1088#1091#1087#1087#1072' '#1050#1048'08-04'
       Transparent = True
       Visible = False
@@ -229,10 +253,14 @@ object AboutBox1: TAboutBox1
     end
   end
   object OKButton: TButton
-    Left = 111
-    Top = 180
-    Width = 75
-    Height = 25
+    Left = 139
+    Top = 225
+    Width = 94
+    Height = 31
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Caption = 'OK'
     Default = True
     ModalResult = 1
