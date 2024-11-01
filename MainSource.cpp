@@ -5,6 +5,7 @@
 #include "Table.h"
 #include <math.h>
 #include <stdio.h>
+#include <vector>
 #pragma hdrstop
 #include "MainSource.h"
 //---------------------------------------------------------------------------
@@ -21,17 +22,8 @@ __fastcall TForm1::TForm1(TComponent* Owner): TForm(Owner)
 	Grid->ColWidths[0] = 24;
 	point = 1;
 	NNewClick(NULL);
-	minX = 32000;
-	maxX = -32000;
 	OpenDialog1->InitialDir = GetCurrentDir();
 	SaveDialog1->InitialDir = GetCurrentDir();
-   CapacityK = 0;
-   CapacityN = 0;
-	a = NULL;
-   b = NULL;
-   x = NULL;
-   y = NULL;
-   sums = NULL;
 }
 //---------------------------------------------------------------------------
 //Начать заново
@@ -51,18 +43,38 @@ void __fastcall TForm1::NNewClick(TObject *Sender)
 	RunGraph->Enabled = false;
 }
 //---------------------------------------------------------------------------
+void CheckDot(TLabeledEdit* &Sender)
+{
+	int p;
+   if ((p = Sender->Text.Pos('.')) <= 0)
+   	return;
+   String s(Sender->Text);
+   s[p] = ',';
+   Sender->Text = s;
+}
+//---------------------------------------------------------------------------
 //ДОБАВИТЬ
 void __fastcall TForm1::AddClick(TObject *Sender)
 {
+   CheckDot(NewXE);
+   CheckDot(NewYE);
 	double X = NewXE->Text.ToDouble();
 	double Y = NewYE->Text.ToDouble();
 	Grid->Cells[0][point] = point;
 	Grid->Cells[1][point] = X;
 	Grid->Cells[2][point] = Y;
-	if (X < minX)
-		minX = X;
-	if (X > maxX)
-		maxX = X;
+   if (point <= 1)
+   {
+      AppXn->Position = X;
+      AppXk->Position = X;
+   }
+   else
+   {
+      if (X < AppXn->Position)
+         AppXn->Position = X-1;
+      if (X > AppXk->Position)
+         AppXk->Position = X+1;
+   }
 	point++;
 	Label7->Caption = point;
 	if (Grid->RowCount < (int)point)
@@ -80,10 +92,6 @@ void __fastcall TForm1::NExitClick(TObject *Sender)
 //Вычислить
 void __fastcall TForm1::RunClick(TObject *Sender)
 {
-	AppXn->Position = minX - 1; //TODO: Тут везде был float
-	AppXk->Position = maxX + 1;
-	//Сам расчет
-	int i=0, j=0, k=0;
 	N = point - 1;
 	K = Degree->Position;
 	if (N < K)
@@ -93,61 +101,34 @@ void __fastcall TForm1::RunClick(TObject *Sender)
 	}
 	Form2->StringGrid1->ColCount = K+2;
 	Form2->StringGrid1->RowCount = K+1;
-	delete []a;
-   if (CapacityK < K+1)
+
+	a.resize(K+1);
+   b.resize(K+1);
+   x.resize(N);
+   y.resize(N);
+   sums.resize(K+1);
+
+	for(int i=0; i<K+1; i++)
    {
-		a = new double[K+1];
-		b = new double[K+1];
-      sums = new double *[K+1];
-      CapacityK = K+1;
-   }
-   if (CapacityN < N)
-   {
-		x = new double[N];
-		y = new double[N];
-      CapacityN = N;
-   }
-	if(x==NULL || y==NULL || a==NULL || sums==NULL)
-	{
-		Out->Lines->Add("Not enough memory to allocate.");
-		return;
-	}
-	for(i=0; i<K+1; i++)
-	{
-		sums[i] = new double[K+1];
-		if(sums[i]==NULL)
-		{
-			Out->Lines->Add("Not enough memory to allocate equations");
-			return;
-		}
-	}
-	for(i=0; i<K+1; i++)
-	{
+      sums[i].resize(K+1);
 		a[i]=0;
 		b[i]=0;
-		for(j=0; j<K+1; j++)
+		for(int j=0; j<K+1; j++)
 			sums[i][j] = 0;
 	}
-	for(k=0; k<N; k++)
+	for(int j=0; j<N; j++)
 	{
-		x[k]=0;
-		y[k]=0;
+		x[j] = StrToFloat(Grid->Cells[1][j+1]);
+		y[j] = StrToFloat(Grid->Cells[2][j+1]);
 	}
-	i=0,j=0, k=0;
-	for(k=0; k<N; k++)
+
+	for(int i=0; i<K+1; i++)
 	{
-		x[k] = StrToFloat(Grid->Cells[1][k+1]);
-		y[k] = StrToFloat(Grid->Cells[2][k+1]);
-		//x[i]=atof(ListBox1->Items->Strings[i].c_str());
-		//y[i]=atof(ListBox2->Items->Strings[i].c_str());
-	}
-	for(i=0; i<K+1; i++)
-	{
-		for(j=0; j<K+1; j++)
+		for(int j=0; j<K+1; j++)
 		{
 			int ij = i+j;
 			sums[i][j] = 0;
-			for(k=0; k<N; k++)
+			for(int k=0; k<N; k++)
 			{
          	if (ij != 0)
 					sums[i][j] += pow(x[k], ij);
@@ -157,8 +138,8 @@ void __fastcall TForm1::RunClick(TObject *Sender)
 			}
 		}
 	}
-	for(i=0; i<K+1; i++)
-		for(k=0; k<N; k++)
+	for(int i=0; i<K+1; i++)
+		for(int k=0; k<N; k++)
 		{
       	if (i != 0)
 				b[i] += pow(x[k], i) * y[k];
@@ -168,17 +149,17 @@ void __fastcall TForm1::RunClick(TObject *Sender)
 		}
 	//check if there are 0 on main diagonal and exchange rows in that case
 	double temp = 0;
-	for(i=0; i<K+1; i++)
+	for(int i=0; i<K+1; i++)
 	{
 		if(sums[i][i]==0)
 		{
-			for(j=0; j<K+1; j++)
+			for(int j=0; j<K+1; j++)
 			{
 				if(j==i)
 					continue;
 				if((sums[j][i] !=0) && (sums[i][j]!=0))
 				{
-					for(k=0; k<K+1; k++)
+					for(int k=0; k<K+1; k++)
 					{
 						temp = sums[j][k];
 						sums[j][k] = sums[i][k];
@@ -192,33 +173,32 @@ void __fastcall TForm1::RunClick(TObject *Sender)
 			}
 		}
 	}
-	for(k=0; k<K+1; k++)
+	for(int k=0; k<K+1; k++)
 	{
-		for(i=k+1; i<K+1; i++)
+		for(int i=k+1; i<K+1; i++)
 		{
 			if(sums[k][k]==0)
 			{
 				Out->Lines->Add("Solution is not exist.");
-				//printf("\nSolution is not exist.\n");
 				return;
 			}
 			double M = sums[i][k] / sums[k][k];
-			for(j=k; j<K+1; j++)
+			for(int j=k; j<K+1; j++)
 				sums[i][j] -= M * sums[k][j];
 			b[i] -= M*b[k];
 		}
 	}
    if (Out->Lines->Count > 0)
       Out->Lines->Append("===== "+IntToStr(K)+ " =====");
-	for(i=(K+1)-1; i>=0; i--)
+	for(int i=(K+1)-1; i>=0; i--)
 	{
 		double s = 0;
-		for(j = i; j<K+1; j++)
+		for(int j = i; j<K+1; j++)
 			s = s + sums[i][j]*a[j];
-		a[i] = (b[i] - s) / sums[i][i];   ////////////////
+		a[i] = (b[i] - s) / sums[i][i];
 	}
 
-	for(i=0; i<K+1; i++)
+	for(int i=0; i<K+1; i++)
 		Out->Lines->Add("C["+IntToStr(i)+"] = "+FloatToStr(a[i]));
 	RunGraph->Enabled = true;
 }
@@ -250,10 +230,6 @@ void __fastcall TForm1::NOpenClick(TObject *Sender)
 			Grid->Cells[0][i] = i;
 			Grid->Cells[1][i] = fx;
 			Grid->Cells[2][i] = fy;
-			if (fx < minX)
-				minX = fx;
-			if (fx > maxX)
-				maxX = fx;
 			Series1->AddXY(fx, fy,"",clBlue);
 		}
 		fclose(file);
@@ -373,7 +349,6 @@ void __fastcall TForm1::NPointClearClick(TObject *Sender)
 {
 	Out->Clear();
 }
-
 //---------------------------------------------------------------------------
 //График - 3D
 void __fastcall TForm1::N3DClick(TObject *Sender)
@@ -396,8 +371,6 @@ void __fastcall TForm1::NGColorClick(TObject *Sender)
 void __fastcall TForm1::RunGraphClick(TObject *Sender)
 {
 	Series2->Clear();
-	if (!a)
-		return;
 	double y;
 	for (double x=AppXn->Position; x<AppXk->Position+AppStep->Position; x+=AppStep->Position)
 	{
@@ -411,14 +384,9 @@ void __fastcall TForm1::RunGraphClick(TObject *Sender)
 	}
 }
 //---------------------------------------------------------------------------
-void __fastcall TForm1::FormClose(TObject *Sender, TCloseAction &Action)
+void __fastcall TForm1::DegreeChanging(TObject *Sender, bool &AllowChange)
 {
-	delete []a;
-   for(int i=0; i<CapacityK; i++)
-		delete [] sums[i];
-	delete [] b;
-	delete [] x;
-	delete [] y;
-	delete [] sums;
+	RunGraph->Enabled = false;
 }
 //---------------------------------------------------------------------------
+

@@ -94,18 +94,13 @@ __published:	// IDE-managed Components
 	void __fastcall N3DClick(TObject *Sender);
 	void __fastcall NGColorClick(TObject *Sender);
 	void __fastcall RunGraphClick(TObject *Sender);
-	void __fastcall FormClose(TObject *Sender, TCloseAction &Action);
+	void __fastcall DegreeChanging(TObject *Sender, bool &AllowChange);
 private:	// User declarations
 //Только в пределах данного модуля
-	//void __fastcall F1(char c);
-	//int ij;
-
-public:		// User declarations
-	int minX, maxX;
-	double *a, *b, *x, *y, **sums;
+public:	// User declarations
+   std::vector<double> a, b, x, y;
+   std::vector<std::vector<double> > sums;
 	int N, K;
-   int CapacityK;
-   int CapacityN;
 	unsigned int point;
 	__fastcall TForm1(TComponent* Owner); //Объявление конструктора
 //   double pow(double a, double b)

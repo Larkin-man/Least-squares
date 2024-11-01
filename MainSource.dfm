@@ -13,7 +13,6 @@ object Form1: TForm1
   Font.Style = []
   Menu = MainMenu1
   OldCreateOrder = False
-  OnClose = FormClose
   PixelsPerInch = 120
   TextHeight = 24
   object PanelLeft: TPanel
@@ -31,7 +30,7 @@ object Form1: TForm1
       590)
     object PanelNewPoint: TPanel
       Left = 10
-      Top = 58
+      Top = 10
       Width = 154
       Height = 183
       Margins.Left = 4
@@ -39,7 +38,7 @@ object Form1: TForm1
       Margins.Right = 4
       Margins.Bottom = 4
       PopupMenu = PopupMenu2
-      TabOrder = 2
+      TabOrder = 0
       object Label4: TLabel
         Left = 10
         Top = 10
@@ -174,7 +173,7 @@ object Form1: TForm1
       object NewXE: TLabeledEdit
         Left = 29
         Top = 41
-        Width = 97
+        Width = 98
         Height = 32
         Margins.Left = 4
         Margins.Top = 4
@@ -192,7 +191,7 @@ object Form1: TForm1
         Text = '0'
       end
       object NewX: TUpDown
-        Left = 126
+        Left = 127
         Top = 41
         Width = 20
         Height = 32
@@ -201,6 +200,8 @@ object Form1: TForm1
         Margins.Right = 4
         Margins.Bottom = 4
         Associate = NewXE
+        Min = -32000
+        Max = 32000
         TabOrder = 1
       end
       object NewY: TUpDown
@@ -213,6 +214,8 @@ object Form1: TForm1
         Margins.Right = 4
         Margins.Bottom = 4
         Associate = NewYE
+        Min = -32000
+        Max = 32000
         TabOrder = 3
       end
       object NewYE: TLabeledEdit
@@ -237,23 +240,26 @@ object Form1: TForm1
       end
     end
     object Degree: TUpDown
-      Left = 146
-      Top = 10
+      Left = 145
+      Top = 496
       Width = 20
       Height = 32
+      Anchors = [akLeft, akBottom]
       Associate = DegreeE
-      Max = 9999
-      TabOrder = 1
+      Max = 32000
+      TabOrder = 3
+      OnChanging = DegreeChanging
     end
     object DegreeE: TLabeledEdit
-      Left = 97
-      Top = 10
+      Left = 96
+      Top = 496
       Width = 49
       Height = 32
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
+      Anchors = [akLeft, akBottom]
       EditLabel.Width = 83
       EditLabel.Height = 24
       EditLabel.Margins.Left = 4
@@ -263,14 +269,14 @@ object Form1: TForm1
       EditLabel.Caption = #1057#1090#1077#1087#1077#1085#1100':'
       LabelPosition = lpLeft
       NumbersOnly = True
-      TabOrder = 0
+      TabOrder = 2
       Text = '0'
     end
     object Grid: TStringGrid
-      Left = 173
-      Top = 10
-      Width = 203
-      Height = 371
+      Left = 7
+      Top = 201
+      Width = 158
+      Height = 290
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
@@ -280,7 +286,13 @@ object Form1: TForm1
       Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goEditing]
       PopupMenu = PopupMenu2
       ScrollBars = ssVertical
-      TabOrder = 4
+      TabOrder = 1
+      RowHeights = (
+        24
+        24
+        24
+        24
+        24)
     end
     object PanelApprox: TGroupBox
       Left = 173
@@ -294,7 +306,7 @@ object Form1: TForm1
       Anchors = [akLeft, akBottom]
       Caption = #1040#1087#1087#1088#1086#1082#1089#1080#1084#1072#1094#1080#1103
       PopupMenu = PopupMenu2
-      TabOrder = 5
+      TabOrder = 6
       object RunGraph: TBitBtn
         Left = 29
         Top = 154
@@ -403,6 +415,8 @@ object Form1: TForm1
         Width = 20
         Height = 32
         Associate = AppXkE
+        Min = -32000
+        Max = 32000
         TabOrder = 3
       end
       object AppXnE: TLabeledEdit
@@ -431,6 +445,8 @@ object Form1: TForm1
         Width = 20
         Height = 32
         Associate = AppXnE
+        Min = -32000
+        Max = 32000
         TabOrder = 1
       end
       object AppStep: TUpDown
@@ -439,6 +455,8 @@ object Form1: TForm1
         Width = 20
         Height = 32
         Associate = AppStepE
+        Min = 1
+        Max = 32000
         Position = 1
         TabOrder = 5
       end
@@ -485,13 +503,14 @@ object Form1: TForm1
     end
     object RunBtn: TBitBtn
       Left = 19
-      Top = 250
+      Top = 536
       Width = 136
       Height = 39
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
+      Anchors = [akLeft, akBottom]
       Caption = '&'#1042#1099#1095#1080#1089#1083#1080#1090#1100
       DoubleBuffered = True
       Glyph.Data = {
@@ -575,16 +594,16 @@ object Form1: TForm1
       ModalResult = 5
       NumGlyphs = 2
       ParentDoubleBuffered = False
-      TabOrder = 3
+      TabOrder = 4
       OnClick = RunClick
     end
     object Out: TMemo
-      Left = 10
-      Top = 296
-      Width = 156
-      Height = 291
+      Left = 172
+      Top = 10
+      Width = 204
+      Height = 365
       Anchors = [akLeft, akTop, akBottom]
-      TabOrder = 6
+      TabOrder = 5
       WordWrap = False
     end
   end
@@ -652,8 +671,8 @@ object Form1: TForm1
     end
   end
   object MainMenu1: TMainMenu
-    Left = 152
-    Top = 184
+    Left = 264
+    Top = 256
     object N1: TMenuItem
       Caption = '&'#1060#1072#1081#1083
       object NOpen: TMenuItem
@@ -721,8 +740,8 @@ object Form1: TForm1
     end
   end
   object PopupMenu1: TPopupMenu
-    Left = 184
-    Top = 184
+    Left = 264
+    Top = 208
     object NPointClear: TMenuItem
       Caption = #1054#1095#1080#1089#1090#1080#1090#1100
       OnClick = NPointClearClick
@@ -731,14 +750,14 @@ object Form1: TForm1
   object OpenDialog1: TOpenDialog
     DefaultExt = '.txt'
     Filter = #1058#1077#1082#1089#1090#1086#1074#1099#1077' '#1092#1072#1081#1083#1099'|*.txt|'#1069#1082#1089#1077#1083#1077#1074#1089#1082#1080#1077' '#1092#1072#1081#1083#1099'|*.xls'
-    Left = 232
-    Top = 128
+    Left = 264
+    Top = 16
   end
   object SaveDialog1: TSaveDialog
     DefaultExt = '.txt'
     Filter = #1058#1077#1082#1089#1090#1086#1074#1099#1077' '#1092#1072#1081#1083#1099'|*.txt|'#1069#1082#1089#1077#1083#1077#1074#1089#1082#1080#1077' '#1092#1072#1081#1083#1099'|*.xls'
     Left = 264
-    Top = 128
+    Top = 64
   end
   object FontDialog1: TFontDialog
     Font.Charset = DEFAULT_CHARSET
@@ -747,11 +766,11 @@ object Form1: TForm1
     Font.Name = 'MS Sans Serif'
     Font.Style = []
     Left = 264
-    Top = 160
+    Top = 112
   end
   object PopupMenu2: TPopupMenu
-    Left = 184
-    Top = 152
+    Left = 264
+    Top = 312
     object NFont2: TMenuItem
       Caption = #1064#1088#1080#1092#1090
       OnClick = NFont2Click
@@ -766,7 +785,7 @@ object Form1: TForm1
     end
   end
   object ColorDialog1: TColorDialog
-    Left = 232
+    Left = 264
     Top = 160
   end
 end
