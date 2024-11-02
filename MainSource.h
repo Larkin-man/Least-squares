@@ -42,7 +42,6 @@ __published:	// IDE-managed Components
 	TFontDialog *FontDialog1;
 	TMenuItem *N3D;
 	TMenuItem *NAdd;
-	TMenuItem *NDelete;
 	TMenuItem *N18;
 	TMenuItem *NAbout;
 	TPopupMenu *PopupMenu2;

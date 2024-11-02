@@ -208,7 +208,7 @@ void __fastcall TForm1::NOpenClick(TObject *Sender)
 {
 	if(OpenDialog1->Execute()==IDOK)
 	{
-		FILE *file = fopen (OpenDialog1->FileName.c_str(), "r");
+		FILE *file = _wfopen(OpenDialog1->FileName.w_str(), L"rt");
 		if (!file)
 		{
 			ShowMessage ( "Cannot open text file");
@@ -230,10 +230,13 @@ void __fastcall TForm1::NOpenClick(TObject *Sender)
 			Grid->Cells[0][i] = i;
 			Grid->Cells[1][i] = fx;
 			Grid->Cells[2][i] = fy;
+         if (fx < AppXn->Position)
+         	AppXnE->Text = fx-1;
+         if (fx > AppXk->Position)
+         	AppXkE->Text = fx+1;
 			Series1->AddXY(fx, fy,"",clBlue);
 		}
 		fclose(file);
-		//StatusBar1->Panels->Items[0]->Text=OpenDialog1->FileName;
 	}
 	RunGraph->Enabled = true;
 }
@@ -243,7 +246,7 @@ void __fastcall TForm1::NSaveClick(TObject *Sender)
 {
 	if(SaveDialog1->Execute()==IDOK)
 	{
-		FILE *file = fopen (SaveDialog1->FileName.c_str(), "w");
+		FILE *file = _wfopen (SaveDialog1->FileName.w_str(), L"wt");
 		if (!file)
 		{
 			ShowMessage ( "Cannot create text file");
@@ -259,9 +262,6 @@ void __fastcall TForm1::NSaveClick(TObject *Sender)
 		fclose(file);
 		ShowMessage ( "Данные сохранены!");
 	}
-	//Out->Lines->SaveToFile(SaveDialog1->FileName);
-	//Memo1->Lines->SaveToFile(SaveDialog1->FileName);
-	//StatusBar1->Panels->Items[0]->Text=SaveDialog1->FileName;
 }
 //---------------------------------------------------------------------------
 
@@ -274,15 +274,20 @@ void __fastcall TForm1::NFontClick(TObject *Sender)
 	}
 }
 //---------------------------------------------------------------------------
-//Удалить
+//Удалить точку
 void __fastcall TForm1::NDeleteClick(TObject *Sender)
 {
-	/*if ((ListBox1->ItemIndex == -1)&&(ListBox2->ItemIndex == -1))
-		ShowMessage("Чтобы удалить элементы их сперва надо выделить.");
-	if (!(ListBox1->ItemIndex == -1))
-		ListBox1->Items->Delete(ListBox1->ItemIndex);
-	if (!(ListBox2->ItemIndex == -1))
-		ListBox2->Items->Delete(ListBox2->ItemIndex);		*/
+	if (Grid->Row < 1)
+   	return;
+   point--;
+   for (int i = Grid->Row; i < Grid->RowCount-1; i++)
+   {
+   	Grid->Cells[0][i] = i;
+      Grid->Cells[1][i] = Grid->Cells[1][i+1];
+      Grid->Cells[2][i] = Grid->Cells[2][i+1];
+   }
+   Grid->RowCount--;
+   Label7->Caption = point;
 }
 //---------------------------------------------------------------------------
 //О программе
@@ -389,4 +394,3 @@ void __fastcall TForm1::DegreeChanging(TObject *Sender, bool &AllowChange)
 	RunGraph->Enabled = false;
 }
 //---------------------------------------------------------------------------
-

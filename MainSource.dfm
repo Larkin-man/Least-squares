@@ -3,7 +3,7 @@ object Form1: TForm1
   Top = 27
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = #1052#1077#1090#1086#1076' '#1085#1072#1080#1084#1077#1085#1100#1096#1080#1093' '#1082#1074#1072#1076#1088#1072#1090#1086#1074
-  ClientHeight = 590
+  ClientHeight = 740
   ClientWidth = 968
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -19,15 +19,16 @@ object Form1: TForm1
     Left = 0
     Top = 0
     Width = 385
-    Height = 590
+    Height = 740
     Align = alLeft
     BevelOuter = bvNone
     Caption = 'PanelLeft'
     ShowCaption = False
     TabOrder = 0
+    ExplicitHeight = 590
     DesignSize = (
       385
-      590)
+      740)
     object PanelNewPoint: TPanel
       Left = 10
       Top = 10
@@ -58,7 +59,7 @@ object Form1: TForm1
         ParentFont = False
       end
       object Label7: TLabel
-        Left = 96
+        Left = 92
         Top = 10
         Width = 10
         Height = 24
@@ -241,7 +242,7 @@ object Form1: TForm1
     end
     object Degree: TUpDown
       Left = 145
-      Top = 496
+      Top = 646
       Width = 20
       Height = 32
       Anchors = [akLeft, akBottom]
@@ -249,10 +250,11 @@ object Form1: TForm1
       Max = 32000
       TabOrder = 3
       OnChanging = DegreeChanging
+      ExplicitTop = 496
     end
     object DegreeE: TLabeledEdit
       Left = 96
-      Top = 496
+      Top = 646
       Width = 49
       Height = 32
       Margins.Left = 4
@@ -271,22 +273,24 @@ object Form1: TForm1
       NumbersOnly = True
       TabOrder = 2
       Text = '0'
+      ExplicitTop = 496
     end
     object Grid: TStringGrid
       Left = 7
       Top = 201
       Width = 158
-      Height = 290
+      Height = 440
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
       Anchors = [akLeft, akTop, akBottom]
       ColCount = 3
-      Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goEditing]
+      Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goEditing]
       PopupMenu = PopupMenu2
       ScrollBars = ssVertical
       TabOrder = 1
+      ExplicitHeight = 290
       RowHeights = (
         24
         24
@@ -296,7 +300,7 @@ object Form1: TForm1
     end
     object PanelApprox: TGroupBox
       Left = 173
-      Top = 382
+      Top = 532
       Width = 203
       Height = 205
       Margins.Left = 4
@@ -307,6 +311,7 @@ object Form1: TForm1
       Caption = #1040#1087#1087#1088#1086#1082#1089#1080#1084#1072#1094#1080#1103
       PopupMenu = PopupMenu2
       TabOrder = 6
+      ExplicitTop = 382
       object RunGraph: TBitBtn
         Left = 29
         Top = 154
@@ -503,7 +508,7 @@ object Form1: TForm1
     end
     object RunBtn: TBitBtn
       Left = 19
-      Top = 536
+      Top = 686
       Width = 136
       Height = 39
       Margins.Left = 4
@@ -596,22 +601,24 @@ object Form1: TForm1
       ParentDoubleBuffered = False
       TabOrder = 4
       OnClick = RunClick
+      ExplicitTop = 536
     end
     object Out: TMemo
       Left = 172
       Top = 10
       Width = 204
-      Height = 365
+      Height = 515
       Anchors = [akLeft, akTop, akBottom]
       TabOrder = 5
       WordWrap = False
+      ExplicitHeight = 365
     end
   end
   object Chart1: TChart
     Left = 385
     Top = 0
     Width = 583
-    Height = 590
+    Height = 740
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
@@ -637,6 +644,7 @@ object Form1: TForm1
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 1
+    ExplicitHeight = 590
     ColorPaletteIndex = 13
     object Series1: TLineSeries
       Marks.Arrow.Visible = True
@@ -703,7 +711,7 @@ object Form1: TForm1
         ShortCut = 16452
         OnClick = AddClick
       end
-      object NDelete: TMenuItem
+      object NDeleteM: TMenuItem
         Caption = #1059#1076#1072'&'#1083#1080#1090#1100
         ShortCut = 16474
         OnClick = NDeleteClick
@@ -782,6 +790,10 @@ object Form1: TForm1
     object NGridClear: TMenuItem
       Caption = #1054#1095#1080#1089#1090#1080#1090#1100
       OnClick = NGridClearClick
+    end
+    object NDelete: TMenuItem
+      Caption = #1059#1076#1072#1083#1080#1090#1100' '#1090#1086#1095#1082#1091
+      OnClick = NDeleteClick
     end
   end
   object ColorDialog1: TColorDialog
