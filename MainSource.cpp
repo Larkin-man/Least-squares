@@ -200,42 +200,48 @@ void __fastcall TForm1::RunClick(TObject *Sender)
 
 	for(int i=0; i<K+1; i++)
 		Out->Lines->Add("C["+IntToStr(i)+"] = "+FloatToStr(a[i]));
+	//float otk = 0;
+	//Out->Lines->Add("Среднеквадратоткл ");
 	RunGraph->Enabled = true;
 }
 //---------------------------------------------------------------------------
 //Функция загружает список из текстового файла
 void __fastcall TForm1::NOpenClick(TObject *Sender)
 {
-	if(OpenDialog1->Execute()==IDOK)
+	//if(OpenDialog1->Execute()==IDOK)
 	{
-		FILE *file = _wfopen(OpenDialog1->FileName.w_str(), L"rt");
+		FILE *file = fopen("data.txt", "rt");
 		if (!file)
 		{
 			ShowMessage ( "Cannot open text file");
 			return;
 		}
 		int n;
-		int fx, fy;
-		fscanf(file, "%d", &n);
-		Degree->Position = n;
-		fscanf(file, "%d", &point);
-		point++;
-		Label7->Caption = point;
-		if (Grid->RowCount < (int)point)
+		float fx, fy;
+		int EoF;
+		fseek(file, 0, SEEK_END);
+		EoF = ftell(file);
+		fseek(file, 0, SEEK_SET);
+		if ((unsigned int)Grid->RowCount < point)
 			Grid->RowCount = point+1;
-		for (unsigned int i = 1; i < point; i++)
+		point = 1;
+		while (ftell(file) < EoF)
 		{
-			fscanf(file, "%d", &fx);
-			fscanf(file, "%d", &fy);
-			Grid->Cells[0][i] = i;
-			Grid->Cells[1][i] = fx;
-			Grid->Cells[2][i] = fy;
-         if (fx < AppXn->Position)
-         	AppXnE->Text = fx-1;
-         if (fx > AppXk->Position)
-         	AppXkE->Text = fx+1;
+			fscanf(file, "%g ", &fx);
+			fscanf(file, "%g\n", &fy);
+			if ((unsigned int)Grid->RowCount <= point)
+				Grid->RowCount++;
+			Grid->Cells[0][point] = point;
+			Grid->Cells[1][point] = fx;
+			Grid->Cells[2][point] = fy;
+			if (fx < AppXn->Position)
+				AppXnE->Text = fx-1;
+			if (fx > AppXk->Position)
+				AppXkE->Text = fx+1;
 			Series1->AddXY(fx, fy,"",clBlue);
+			point++;
 		}
+	   Label7->Caption = point;
 		fclose(file);
 	}
 	RunGraph->Enabled = true;
@@ -244,20 +250,21 @@ void __fastcall TForm1::NOpenClick(TObject *Sender)
 //Функция сохраняет список в текстовый файл
 void __fastcall TForm1::NSaveClick(TObject *Sender)
 {
-	if(SaveDialog1->Execute()==IDOK)
+	//if(SaveDialog1->Execute()==IDOK)
 	{
-		FILE *file = _wfopen (SaveDialog1->FileName.w_str(), L"wt");
+		//FILE *file = _wfopen (SaveDialog1->FileName.w_str(), L"wt");
+		FILE *file = fopen("data.txt", "wt");
 		if (!file)
 		{
 			ShowMessage ( "Cannot create text file");
 			return;
 		}
-		fprintf(file, "%d ", Degree->Position);
-		fprintf(file, "%d ", point-1);
 		for (unsigned int i = 1; i < point; i++)
 		{
-			fprintf(file, "%d ", StrToInt(Grid->Cells[1][i]));
-			fprintf(file, "%d ", StrToInt(Grid->Cells[2][i]));
+			float f1 = StrToFloat(Grid->Cells[1][i]);
+			float f2 = StrToFloat(Grid->Cells[2][i]);
+			fprintf(file, "%g ", f1);
+			fprintf(file, "%g\n", f2);
 		}
 		fclose(file);
 		ShowMessage ( "Данные сохранены!");
@@ -278,10 +285,10 @@ void __fastcall TForm1::NFontClick(TObject *Sender)
 void __fastcall TForm1::NDeleteClick(TObject *Sender)
 {
 	if (Grid->Row < 1)
-   	return;
+		return;
    point--;
    for (int i = Grid->Row; i < Grid->RowCount-1; i++)
-   {
+	{
    	Grid->Cells[0][i] = i;
       Grid->Cells[1][i] = Grid->Cells[1][i+1];
       Grid->Cells[2][i] = Grid->Cells[2][i+1];

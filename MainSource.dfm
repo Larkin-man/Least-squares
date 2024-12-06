@@ -25,7 +25,6 @@ object Form1: TForm1
     Caption = 'PanelLeft'
     ShowCaption = False
     TabOrder = 0
-    ExplicitHeight = 590
     DesignSize = (
       385
       740)
@@ -250,7 +249,6 @@ object Form1: TForm1
       Max = 32000
       TabOrder = 3
       OnChanging = DegreeChanging
-      ExplicitTop = 496
     end
     object DegreeE: TLabeledEdit
       Left = 96
@@ -273,7 +271,6 @@ object Form1: TForm1
       NumbersOnly = True
       TabOrder = 2
       Text = '0'
-      ExplicitTop = 496
     end
     object Grid: TStringGrid
       Left = 7
@@ -290,7 +287,6 @@ object Form1: TForm1
       PopupMenu = PopupMenu2
       ScrollBars = ssVertical
       TabOrder = 1
-      ExplicitHeight = 290
       RowHeights = (
         24
         24
@@ -311,7 +307,6 @@ object Form1: TForm1
       Caption = #1040#1087#1087#1088#1086#1082#1089#1080#1084#1072#1094#1080#1103
       PopupMenu = PopupMenu2
       TabOrder = 6
-      ExplicitTop = 382
       object RunGraph: TBitBtn
         Left = 29
         Top = 154
@@ -601,7 +596,6 @@ object Form1: TForm1
       ParentDoubleBuffered = False
       TabOrder = 4
       OnClick = RunClick
-      ExplicitTop = 536
     end
     object Out: TMemo
       Left = 172
@@ -611,7 +605,6 @@ object Form1: TForm1
       Anchors = [akLeft, akTop, akBottom]
       TabOrder = 5
       WordWrap = False
-      ExplicitHeight = 365
     end
   end
   object Chart1: TChart
@@ -644,7 +637,6 @@ object Form1: TForm1
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 1
-    ExplicitHeight = 590
     ColorPaletteIndex = 13
     object Series1: TLineSeries
       Marks.Arrow.Visible = True
