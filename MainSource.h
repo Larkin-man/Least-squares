@@ -72,6 +72,7 @@ __published:	// IDE-managed Components
 	TLabeledEdit *AppStepE;
 	TPanel *PanelLeft;
 	TMemo *Out;
+	TMenuItem *NPrints2;
 	void __fastcall NExitClick(TObject *Sender);
 	void __fastcall RunClick(TObject *Sender);
 	void __fastcall NNewClick(TObject *Sender);
@@ -94,6 +95,8 @@ __published:	// IDE-managed Components
 	void __fastcall NGColorClick(TObject *Sender);
 	void __fastcall RunGraphClick(TObject *Sender);
 	void __fastcall DegreeChanging(TObject *Sender, bool &AllowChange);
+	void __fastcall DegreeChangingEx(TObject *Sender, bool &AllowChange, short NewValue,
+          TUpDownDirection Direction);
 private:	// User declarations
 //Только в пределах данного модуля
 public:	// User declarations
@@ -102,13 +105,13 @@ public:	// User declarations
 	int N, K;
 	unsigned int point;
 	__fastcall TForm1(TComponent* Owner); //Объявление конструктора
-//   double pow(double a, double b)
-//   {
-//   	int res = 1;
-//   	for (int i = 0; i < b; i++)
-//      	res *= a;
-//      return res;
-//   }
+	double pow(double a, int s)
+	{
+		double res = 1;
+		for (int i = 0; i < s; i++)
+			res *= a;
+		return res;
+	}
 };
 //---------------------------------------------------------------------------
 extern PACKAGE TForm1 *Form1;

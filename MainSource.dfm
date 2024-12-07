@@ -1,9 +1,8 @@
 object Form1: TForm1
   Left = 176
   Top = 27
-  BorderIcons = [biSystemMenu, biMinimize]
   Caption = #1052#1077#1090#1086#1076' '#1085#1072#1080#1084#1077#1085#1100#1096#1080#1093' '#1082#1074#1072#1076#1088#1072#1090#1086#1074
-  ClientHeight = 740
+  ClientHeight = 815
   ClientWidth = 968
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -19,15 +18,16 @@ object Form1: TForm1
     Left = 0
     Top = 0
     Width = 385
-    Height = 740
+    Height = 815
     Align = alLeft
     BevelOuter = bvNone
     Caption = 'PanelLeft'
     ShowCaption = False
     TabOrder = 0
+    ExplicitHeight = 740
     DesignSize = (
       385
-      740)
+      815)
     object PanelNewPoint: TPanel
       Left = 10
       Top = 10
@@ -241,7 +241,7 @@ object Form1: TForm1
     end
     object Degree: TUpDown
       Left = 145
-      Top = 646
+      Top = 721
       Width = 20
       Height = 32
       Anchors = [akLeft, akBottom]
@@ -249,10 +249,12 @@ object Form1: TForm1
       Max = 32000
       TabOrder = 3
       OnChanging = DegreeChanging
+      OnChangingEx = DegreeChangingEx
+      ExplicitTop = 646
     end
     object DegreeE: TLabeledEdit
       Left = 96
-      Top = 646
+      Top = 721
       Width = 49
       Height = 32
       Margins.Left = 4
@@ -267,26 +269,34 @@ object Form1: TForm1
       EditLabel.Margins.Right = 4
       EditLabel.Margins.Bottom = 4
       EditLabel.Caption = #1057#1090#1077#1087#1077#1085#1100':'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -20
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
       LabelPosition = lpLeft
       NumbersOnly = True
+      ParentFont = False
       TabOrder = 2
       Text = '0'
+      ExplicitTop = 646
     end
     object Grid: TStringGrid
       Left = 7
       Top = 201
       Width = 158
-      Height = 440
+      Height = 515
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
       Anchors = [akLeft, akTop, akBottom]
       ColCount = 3
-      Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goEditing]
+      Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRowMoving, goColMoving, goEditing, goAlwaysShowEditor]
       PopupMenu = PopupMenu2
       ScrollBars = ssVertical
       TabOrder = 1
+      ExplicitHeight = 440
       RowHeights = (
         24
         24
@@ -296,7 +306,7 @@ object Form1: TForm1
     end
     object PanelApprox: TGroupBox
       Left = 173
-      Top = 532
+      Top = 607
       Width = 203
       Height = 205
       Margins.Left = 4
@@ -307,6 +317,7 @@ object Form1: TForm1
       Caption = #1040#1087#1087#1088#1086#1082#1089#1080#1084#1072#1094#1080#1103
       PopupMenu = PopupMenu2
       TabOrder = 6
+      ExplicitTop = 532
       object RunGraph: TBitBtn
         Left = 29
         Top = 154
@@ -503,7 +514,7 @@ object Form1: TForm1
     end
     object RunBtn: TBitBtn
       Left = 19
-      Top = 686
+      Top = 761
       Width = 136
       Height = 39
       Margins.Left = 4
@@ -596,22 +607,24 @@ object Form1: TForm1
       ParentDoubleBuffered = False
       TabOrder = 4
       OnClick = RunClick
+      ExplicitTop = 686
     end
     object Out: TMemo
       Left = 172
       Top = 10
       Width = 204
-      Height = 515
+      Height = 590
       Anchors = [akLeft, akTop, akBottom]
       TabOrder = 5
       WordWrap = False
+      ExplicitHeight = 515
     end
   end
   object Chart1: TChart
     Left = 385
     Top = 0
     Width = 583
-    Height = 740
+    Height = 815
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
@@ -637,6 +650,7 @@ object Form1: TForm1
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 1
+    ExplicitHeight = 740
     ColorPaletteIndex = 13
     object Series1: TLineSeries
       Marks.Arrow.Visible = True
@@ -672,7 +686,7 @@ object Form1: TForm1
   end
   object MainMenu1: TMainMenu
     Left = 264
-    Top = 256
+    Top = 216
     object N1: TMenuItem
       Caption = '&'#1060#1072#1081#1083
       object NOpen: TMenuItem
@@ -741,7 +755,7 @@ object Form1: TForm1
   end
   object PopupMenu1: TPopupMenu
     Left = 264
-    Top = 208
+    Top = 264
     object NPointClear: TMenuItem
       Caption = #1054#1095#1080#1089#1090#1080#1090#1100
       OnClick = NPointClearClick
@@ -786,6 +800,10 @@ object Form1: TForm1
     object NDelete: TMenuItem
       Caption = #1059#1076#1072#1083#1080#1090#1100' '#1090#1086#1095#1082#1091
       OnClick = NDeleteClick
+    end
+    object NPrints2: TMenuItem
+      AutoCheck = True
+      Caption = #1042#1099#1074#1086#1076#1080#1090#1100' '#1086#1090#1082#1083#1086#1085#1077#1085#1080#1077' '
     end
   end
   object ColorDialog1: TColorDialog

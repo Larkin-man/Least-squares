@@ -33,7 +33,7 @@ void __fastcall TForm1::NNewClick(TObject *Sender)
 	for (unsigned int i=1; i<point+1; i++)
 	{
 		Grid->Cells[0][i]="";
-      Grid->Cells[1][i]="";
+	   Grid->Cells[1][i]="";
       Grid->Cells[2][i]="";
 	}
 	point = 1;
@@ -130,10 +130,7 @@ void __fastcall TForm1::RunClick(TObject *Sender)
 			sums[i][j] = 0;
 			for(int k=0; k<N; k++)
 			{
-         	if (ij != 0)
-					sums[i][j] += pow(x[k], ij);
-            else
-             	sums[i][j] += 1; //TODO: просто pow
+				sums[i][j] += pow(x[k], ij);
 				Form2->StringGrid1->Cells[i][j]=FloatToStr(sums[i][j]);
 			}
 		}
@@ -141,10 +138,7 @@ void __fastcall TForm1::RunClick(TObject *Sender)
 	for(int i=0; i<K+1; i++)
 		for(int k=0; k<N; k++)
 		{
-      	if (i != 0)
-				b[i] += pow(x[k], i) * y[k];
-         else
-          	b[i] += 1 * y[k];
+			b[i] += pow(x[k], i) * y[k];
 			Form2->StringGrid1->Cells[K+1][i]=FloatToStr(b[i]);
 		}
 	//check if there are 0 on main diagonal and exchange rows in that case
@@ -200,8 +194,18 @@ void __fastcall TForm1::RunClick(TObject *Sender)
 
 	for(int i=0; i<K+1; i++)
 		Out->Lines->Add("C["+IntToStr(i)+"] = "+FloatToStr(a[i]));
-	//float otk = 0;
-	//Out->Lines->Add("Среднеквадратоткл ");
+	double s2 = 0;
+	for(int j=0; j<N; j++)
+	{
+		double cu = 0;
+		for(int i=0; i<K+1; i++)
+			cu += a[i] * pow(x[j], i);
+		s2 += (y[j] - cu) * (y[j] - cu);
+		if (NPrints2->Checked)
+			Out->Lines->Append(FloatToStr(fabs(s2-cu)));
+	}
+	Out->Lines->Add("Сумма квадратов отклонений");
+	Out->Lines->Add(FloatToStr(s2));
 	RunGraph->Enabled = true;
 }
 //---------------------------------------------------------------------------
@@ -227,7 +231,7 @@ void __fastcall TForm1::NOpenClick(TObject *Sender)
 		point = 1;
 		while (ftell(file) < EoF)
 		{
-			fscanf(file, "%g ", &fx);
+			fscanf(file, "%g\t", &fx);
 			fscanf(file, "%g\n", &fy);
 			if ((unsigned int)Grid->RowCount <= point)
 				Grid->RowCount++;
@@ -263,7 +267,7 @@ void __fastcall TForm1::NSaveClick(TObject *Sender)
 		{
 			float f1 = StrToFloat(Grid->Cells[1][i]);
 			float f2 = StrToFloat(Grid->Cells[2][i]);
-			fprintf(file, "%g ", f1);
+			fprintf(file, "%g\t", f1);
 			fprintf(file, "%g\n", f2);
 		}
 		fclose(file);
@@ -286,15 +290,16 @@ void __fastcall TForm1::NDeleteClick(TObject *Sender)
 {
 	if (Grid->Row < 1)
 		return;
-   point--;
-   for (int i = Grid->Row; i < Grid->RowCount-1; i++)
+	point--;
+	for (int i = Grid->Row; i < Grid->RowCount-1; i++)
 	{
-   	Grid->Cells[0][i] = i;
-      Grid->Cells[1][i] = Grid->Cells[1][i+1];
-      Grid->Cells[2][i] = Grid->Cells[2][i+1];
-   }
-   Grid->RowCount--;
-   Label7->Caption = point;
+		Grid->Cells[0][i] = i;
+		Grid->Cells[1][i] = Grid->Cells[1][i+1];
+		Grid->Cells[2][i] = Grid->Cells[2][i+1];
+	}
+	Grid->RowCount--;
+	Label7->Caption = point;
+	Series1->Delete(Grid->Row-1);
 }
 //---------------------------------------------------------------------------
 //О программе
@@ -384,15 +389,22 @@ void __fastcall TForm1::RunGraphClick(TObject *Sender)
 {
 	Series2->Clear();
 	double y;
-	for (double x=AppXn->Position; x<AppXk->Position+AppStep->Position; x+=AppStep->Position)
+	for (double xc=AppXn->Position; xc<=AppXk->Position; xc+=AppStep->Position)
 	{
 		y = 0;
 		for (int j=0; j<Degree->Position+1; j++)
-			if ((x == 0) && (j == 0))
-				y += a[j];
-			else
-				y += a[j]*pow(x,j);
-		Series2->AddXY(x, y,"",clRed);
+			y += a[j] * pow(xc, j);
+		Series2->AddXY(xc, y,"",clRed);
+	}
+	for (unsigned int i = 0; i < x.size(); i++)
+	{
+		if (x[i] >= AppXn->Position && x[i] <= AppXk->Position)
+		{
+			y = 0;
+			for (int j=0; j<Degree->Position+1; j++)
+				y += a[j] * pow(x[i], j);
+			Series2->AddXY(x[i], y,"",clRed);
+		}
 	}
 }
 //---------------------------------------------------------------------------
@@ -401,3 +413,13 @@ void __fastcall TForm1::DegreeChanging(TObject *Sender, bool &AllowChange)
 	RunGraph->Enabled = false;
 }
 //---------------------------------------------------------------------------
+void __fastcall TForm1::DegreeChangingEx(TObject *Sender, bool &AllowChange, short NewValue,
+          TUpDownDirection Direction)
+{
+	if ((unsigned)NewValue >= point)
+		DegreeE->Font->Color = clMaroon;
+	else
+		DegreeE->Font->Color = clWindowText;
+}
+//---------------------------------------------------------------------------
+
