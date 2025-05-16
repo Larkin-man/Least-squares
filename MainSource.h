@@ -37,13 +37,9 @@ __published:	// IDE-managed Components
 	TLabel *Label4;
 	TMenuItem *NNew;
 	TLabel *Label7;
-	TOpenDialog *OpenDialog1;
-	TSaveDialog *SaveDialog1;
 	TFontDialog *FontDialog1;
 	TMenuItem *N3D;
 	TMenuItem *NAdd;
-	TMenuItem *N18;
-	TMenuItem *NAbout;
 	TPopupMenu *PopupMenu2;
 	TMenuItem *NFont2;
 	TMenuItem *Nformat;
@@ -73,6 +69,7 @@ __published:	// IDE-managed Components
 	TPanel *PanelLeft;
 	TMemo *Out;
 	TMenuItem *NPrints2;
+	TCheckBox *OnlyX;
 	void __fastcall NExitClick(TObject *Sender);
 	void __fastcall RunClick(TObject *Sender);
 	void __fastcall NNewClick(TObject *Sender);
@@ -80,7 +77,6 @@ __published:	// IDE-managed Components
 	void __fastcall NSaveClick(TObject *Sender);
 	void __fastcall NFontClick(TObject *Sender);
 	void __fastcall NDeleteClick(TObject *Sender);
-	void __fastcall NAboutClick(TObject *Sender);
 	void __fastcall Edit3KeyDown(TObject *Sender, WORD &Key,
 		TShiftState Shift);
 	void __fastcall Edit4KeyDown(TObject *Sender, WORD &Key,
@@ -97,12 +93,14 @@ __published:	// IDE-managed Components
 	void __fastcall DegreeChanging(TObject *Sender, bool &AllowChange);
 	void __fastcall DegreeChangingEx(TObject *Sender, bool &AllowChange, short NewValue,
           TUpDownDirection Direction);
+	void __fastcall OnlyXClick(TObject *Sender);
+	void __fastcall GridRowMoved(TObject *Sender, int FromIndex, int ToIndex);
 private:	// User declarations
 //Только в пределах данного модуля
 public:	// User declarations
    std::vector<double> a, b, x, y;
    std::vector<std::vector<double> > sums;
-	int N, K;
+	int N, S;
 	unsigned int point;
 	__fastcall TForm1(TComponent* Owner); //Объявление конструктора
 	double pow(double a, int s)
@@ -112,6 +110,7 @@ public:	// User declarations
 			res *= a;
 		return res;
 	}
+   void AddRedDot(double x);
 };
 //---------------------------------------------------------------------------
 extern PACKAGE TForm1 *Form1;

@@ -3,7 +3,6 @@
 #include <vcl.h>
 #pragma hdrstop
 //---------------------------------------------------------------------------
-USEFORM("About.cpp", AboutBox1);
 USEFORM("Table.cpp", Form2);
 USEFORM("MainSource.cpp", Form1);
 //---------------------------------------------------------------------------
