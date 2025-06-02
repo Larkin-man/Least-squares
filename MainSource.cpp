@@ -1,13 +1,12 @@
 //------------файл реализации---------------------------------------------------------------
 
 #include <vcl.h>
-#include "About.h"
-#include "Table.h"
 #include <math.h>
 #include <stdio.h>
 #include <vector>
 #include <float.h>
 #pragma hdrstop
+#include "Table.h"
 #include "MainSource.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
@@ -116,6 +115,15 @@ void __fastcall TForm1::RunClick(TObject *Sender)
 		y[p] = StrToFloat(Grid->Cells[2][p+1]);
 	}
 
+	int powcount = S+S+1;
+	pows.resize(powcount);
+	for (int i = 0; i < powcount; i++)
+	{
+		pows[i].resize(N);
+		for(int p=0; p<N; p++)
+			pows[i][p] = pow(x[p], i);
+	}
+
 	for(int i=0; i<S+1; i++)
 	{
 		sums[i].resize(S+1);
@@ -126,27 +134,20 @@ void __fastcall TForm1::RunClick(TObject *Sender)
 			int ij = i+j;
 			sums[i][j] = 0;
 			for(int p=0; p<N; p++)
-				sums[i][j] += pow(x[p], ij);
+				sums[i][j] += pows[ij][p];//pow(x[p], ij);
 		}
 		for(int p=0; p<N; p++)
-			b[i] += pow(x[p], i) * y[p];
+			b[i] += y[p] * pows[i][p];//pow(x[p], i);
 	}
 	//check if there are 0 on main diagonal and exchange rows in that case
-	double temp = 0;
 	for(int i=0; i<S+1; i++)
 		if(sums[i][i] == 0)
 			for(int j=0; j<S+1; j++)
 				if((j != i) && (sums[j][i] != 0) && (sums[i][j] != 0))
 				{
 					for(int k=0; k<S+1; k++)
-					{
-						temp = sums[j][k];
-						sums[j][k] = sums[i][k];
-						sums[i][k] = temp;
-					}
-					temp = b[j];
-					b[j] = b[i];
-					b[i] = temp;
+						Exchange(sums[j][k], sums[j][k]);
+					Exchange(b[j], b[i]);
 					break;
 				}
 	for(int k=0; k<S+1; k++)
@@ -161,18 +162,17 @@ void __fastcall TForm1::RunClick(TObject *Sender)
 			//Out->Lines->Append(IntToStr((int)sums[i][k])+"\t"+IntToStr((int)sums[k][k]));
 			for(int j=k; j<S+1; j++)
 				sums[i][j] -= M * sums[k][j];
-			b[i] -= M*b[k];
+			b[i] -= M * b[k];
 		}
-	if (Out->Lines->Count > 0)
-		Out->Lines->Append("===== "+IntToStr(S)+ " =====");
 	for(int i=(S+1)-1; i>=0; i--)
 	{
 		double s = 0;
 		for(int j = i; j<S+1; j++)
-			s = s + sums[i][j]*a[j];
+			s = s + sums[i][j] * a[j];
 		a[i] = (b[i] - s) / sums[i][i];
 	}
-
+	if (Out->Lines->Count > 0)
+		Out->Lines->Append("===== "+IntToStr(S)+ " =====");
 	for(int i=0; i<S+1; i++)
 		Out->Lines->Add("C["+IntToStr(i)+"] = "+FloatToStr(a[i]));
 	double s2 = 0;
@@ -182,7 +182,7 @@ void __fastcall TForm1::RunClick(TObject *Sender)
 	{
 		double cu = 0;
 		for(int i=0; i<S+1; i++)
-			cu += a[i] * pow(x[j], i);
+			cu += a[i] * pows[i][j];//pow(x[j], i);
 		s2 += (y[j] - cu) * (y[j] - cu);
 		if (NPrints2->Checked)
 		{
@@ -416,11 +416,18 @@ void __fastcall TForm1::OnlyXClick(TObject *Sender)
 
 void __fastcall TForm1::GridRowMoved(TObject *Sender, int FromIndex, int ToIndex)
 {
-	String t(Grid->Cells[1][FromIndex]);
-	Grid->Cells[1][FromIndex] = Grid->Cells[1][ToIndex];
-	Grid->Cells[1][ToIndex] = t;
+	//String t(Grid->Cells[1][FromIndex]);
+	//Grid->Cells[1][FromIndex] = Grid->Cells[1][ToIndex];
+	//Grid->Cells[1][ToIndex] = t;
 	for (int i = 1; i < Grid->RowCount; i++)
 		Grid->Cells[0][i] = i;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::N2Click(TObject *Sender)
+{
+	//
+
 }
 //---------------------------------------------------------------------------
 

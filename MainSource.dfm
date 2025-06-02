@@ -613,6 +613,7 @@ object Form1: TForm1
       Width = 204
       Height = 559
       Anchors = [akLeft, akTop, akBottom]
+      ScrollBars = ssVertical
       TabOrder = 5
       WordWrap = False
     end
@@ -727,6 +728,10 @@ object Form1: TForm1
         Caption = '&'#1055#1086#1082#1072#1079#1072#1090#1100' '#1089#1080#1089#1090#1077#1084#1091' '#1091#1088#1072#1074#1085#1077#1085#1080#1081
         ShortCut = 16469
         OnClick = NKoeffClick
+      end
+      object N2: TMenuItem
+        Caption = #1057#1086#1088#1090#1080#1088#1086#1074#1082#1072
+        OnClick = N2Click
       end
     end
     object N9: TMenuItem

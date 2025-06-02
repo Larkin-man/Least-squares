@@ -70,6 +70,7 @@ __published:	// IDE-managed Components
 	TMemo *Out;
 	TMenuItem *NPrints2;
 	TCheckBox *OnlyX;
+	TMenuItem *N2;
 	void __fastcall NExitClick(TObject *Sender);
 	void __fastcall RunClick(TObject *Sender);
 	void __fastcall NNewClick(TObject *Sender);
@@ -95,12 +96,14 @@ __published:	// IDE-managed Components
           TUpDownDirection Direction);
 	void __fastcall OnlyXClick(TObject *Sender);
 	void __fastcall GridRowMoved(TObject *Sender, int FromIndex, int ToIndex);
+	void __fastcall N2Click(TObject *Sender);
 private:	// User declarations
 //Только в пределах данного модуля
 public:	// User declarations
-   std::vector<double> a, b, x, y;
-   std::vector<std::vector<double> > sums;
 	int N, S;
+	std::vector<double> a, b, x, y;
+	std::vector<std::vector<double> > sums;
+	std::vector<std::vector<double> > pows;
 	unsigned int point;
 	__fastcall TForm1(TComponent* Owner); //Объявление конструктора
 	double pow(double a, int s)
@@ -110,7 +113,13 @@ public:	// User declarations
 			res *= a;
 		return res;
 	}
-   void AddRedDot(double x);
+	void AddRedDot(double x);
+	inline void Exchange(double &a, double &b)
+	{
+		double temp = a;
+		a = b;
+		b = temp;
+	}
 };
 //---------------------------------------------------------------------------
 extern PACKAGE TForm1 *Form1;
