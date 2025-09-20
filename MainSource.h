@@ -101,8 +101,10 @@ private:	// User declarations
 //Только в пределах данного модуля
 public:	// User declarations
 	int N, S;
-	std::vector<double> a, b, x, y;
-	std::vector<std::vector<double> > sums;
+	typedef Rational T;
+	std::vector<double> x, y;
+	std::vector<T> a, b;
+	std::vector<std::vector<T> > sums;
 	std::vector<std::vector<double> > pows;
 	unsigned int point;
 	__fastcall TForm1(TComponent* Owner); //Объявление конструктора
@@ -114,9 +116,9 @@ public:	// User declarations
 		return res;
 	}
 	void AddRedDot(double x);
-	inline void Exchange(double &a, double &b)
+	inline void Exchange(T &a, T &b)
 	{
-		double temp = a;
+		T temp = a;
 		a = b;
 		b = temp;
 	}

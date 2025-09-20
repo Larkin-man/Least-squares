@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <vector>
 #include <float.h>
+#include <Rational.cpp>
 #pragma hdrstop
 #include "Table.h"
 #include "MainSource.h"
@@ -173,8 +174,9 @@ void __fastcall TForm1::RunClick(TObject *Sender)
 	}
 	if (Out->Lines->Count > 0)
 		Out->Lines->Append("===== "+IntToStr(S)+ " =====");
+	a[i].
 	for(int i=0; i<S+1; i++)
-		Out->Lines->Add("C["+IntToStr(i)+"] = "+FloatToStr(a[i]));
+		Out->Lines->Add("C["+IntToStr(i)+"]="+FloatToStr(a[i])+"\t"+a[i]);
 	double s2 = 0;
 	double mino = DBL_MAX;
 	double maxo = DBL_MIN;

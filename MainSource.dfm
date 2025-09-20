@@ -3,7 +3,7 @@ object Form1: TForm1
   Top = 27
   Caption = #1052#1077#1090#1086#1076' '#1085#1072#1080#1084#1077#1085#1100#1096#1080#1093' '#1082#1074#1072#1076#1088#1072#1090#1086#1074
   ClientHeight = 815
-  ClientWidth = 968
+  ClientWidth = 1026
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,7 +17,7 @@ object Form1: TForm1
   object PanelLeft: TPanel
     Left = 0
     Top = 0
-    Width = 385
+    Width = 401
     Height = 815
     Align = alLeft
     BevelOuter = bvNone
@@ -25,7 +25,7 @@ object Form1: TForm1
     ShowCaption = False
     TabOrder = 0
     DesignSize = (
-      385
+      401
       815)
     object PanelNewPoint: TPanel
       Left = 10
@@ -304,7 +304,7 @@ object Form1: TForm1
     object PanelApprox: TGroupBox
       Left = 173
       Top = 576
-      Width = 203
+      Width = 220
       Height = 236
       Margins.Left = 4
       Margins.Top = 4
@@ -608,20 +608,26 @@ object Form1: TForm1
       OnClick = RunClick
     end
     object Out: TMemo
-      Left = 172
+      Left = 169
       Top = 10
-      Width = 204
+      Width = 232
       Height = 559
       Anchors = [akLeft, akTop, akBottom]
-      ScrollBars = ssVertical
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -18
+      Font.Name = 'Arial'
+      Font.Style = []
+      ParentFont = False
+      ScrollBars = ssBoth
       TabOrder = 5
       WordWrap = False
     end
   end
   object Chart1: TChart
-    Left = 385
+    Left = 401
     Top = 0
-    Width = 583
+    Width = 625
     Height = 815
     Margins.Left = 4
     Margins.Top = 4
@@ -648,6 +654,8 @@ object Form1: TForm1
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 1
+    ExplicitLeft = 416
+    ExplicitWidth = 610
     ColorPaletteIndex = 13
     object Series1: TLineSeries
       Marks.Arrow.Visible = True
