@@ -109,20 +109,12 @@ public:	// User declarations
 	std::vector<std::vector<double> > pows;
 	unsigned int point;
 	__fastcall TForm1(TComponent* Owner); //Объявление конструктора
-	double pow(double a, int s)
-	{
-		double res = 1;
-		for (int i = 0; i < s; i++)
-			res *= a;
-		return res;
-	}
+	double pow(double a, int s);
 	void AddRedDot(double x);
-	inline void Exchange(T &a, T &b)
-	{
-		T temp = a;
-		a = b;
-		b = temp;
-	}
+	inline void Exchange(T &a, T &b);
+	bool SolveGauss(std::vector< std::vector<double> >& matrix, std::vector<double>& result);
+	std::vector<double> PolyFit(const std::vector<double>& x, const std::vector<double>& y, int degree);
+	std::vector<double> PolyFitOptimized(const std::vector<double>& x, const std::vector<double>& y, int degree);
 };
 //---------------------------------------------------------------------------
 extern PACKAGE TForm1 *Form1;
