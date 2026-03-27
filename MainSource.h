@@ -14,10 +14,11 @@
 #include <Buttons.hpp>
 #include <Mask.hpp>
 #include <Grids.hpp>
-#include <Chart.hpp>
-#include <Series.hpp>
-#include <TeEngine.hpp>
-#include <TeeProcs.hpp>
+#include <VclTee.TeeGDIPlus.hpp>
+#include <VCLTee.Chart.hpp>
+#include <VCLTee.Series.hpp>
+#include <VCLTee.TeEngine.hpp>
+#include <VCLTee.TeeProcs.hpp>
 //---------------------------------------------------------------------------
 class TForm1 : public TForm
 {
@@ -101,7 +102,7 @@ private:	// User declarations
 //Только в пределах данного модуля
 public:	// User declarations
 	int N, S;
-	typedef Rational T;
+	typedef double T;
 	std::vector<double> x, y;
 	std::vector<T> a, b;
 	std::vector<std::vector<T> > sums;

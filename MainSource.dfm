@@ -2,7 +2,7 @@ object Form1: TForm1
   Left = 176
   Top = 27
   Caption = #1052#1077#1090#1086#1076' '#1085#1072#1080#1084#1077#1085#1100#1096#1080#1093' '#1082#1074#1072#1076#1088#1072#1090#1086#1074
-  ClientHeight = 815
+  ClientHeight = 795
   ClientWidth = 1026
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -18,7 +18,7 @@ object Form1: TForm1
     Left = 0
     Top = 0
     Width = 401
-    Height = 815
+    Height = 795
     Align = alLeft
     BevelOuter = bvNone
     Caption = 'PanelLeft'
@@ -26,7 +26,7 @@ object Form1: TForm1
     TabOrder = 0
     DesignSize = (
       401
-      815)
+      795)
     object PanelNewPoint: TPanel
       Left = 10
       Top = 10
@@ -41,8 +41,8 @@ object Form1: TForm1
       object Label4: TLabel
         Left = 10
         Top = 10
-        Width = 77
-        Height = 24
+        Width = 76
+        Height = 25
         Margins.Left = 4
         Margins.Top = 4
         Margins.Right = 4
@@ -59,8 +59,8 @@ object Form1: TForm1
       object Label7: TLabel
         Left = 92
         Top = 10
-        Width = 10
-        Height = 24
+        Width = 11
+        Height = 25
         Margins.Left = 4
         Margins.Top = 4
         Margins.Right = 4
@@ -84,7 +84,6 @@ object Form1: TForm1
         Margins.Bottom = 4
         Caption = '&'#1044#1086#1073#1072#1074#1080#1090#1100
         Default = True
-        DoubleBuffered = True
         Glyph.Data = {
           96090000424D9609000000000000360000002800000028000000140000000100
           18000000000060090000120B0000120B0000000000000000000000FF0000FF00
@@ -165,7 +164,6 @@ object Form1: TForm1
           FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF00}
         ModalResult = 6
         NumGlyphs = 2
-        ParentDoubleBuffered = False
         TabOrder = 4
         OnClick = AddClick
       end
@@ -240,7 +238,7 @@ object Form1: TForm1
     end
     object Degree: TUpDown
       Left = 145
-      Top = 721
+      Top = 701
       Width = 20
       Height = 31
       Anchors = [akLeft, akBottom]
@@ -248,11 +246,10 @@ object Form1: TForm1
       Max = 32000
       TabOrder = 3
       OnChanging = DegreeChanging
-      OnChangingEx = DegreeChangingEx
     end
     object DegreeE: TLabeledEdit
       Left = 96
-      Top = 721
+      Top = 701
       Width = 49
       Height = 31
       Margins.Left = 4
@@ -282,7 +279,7 @@ object Form1: TForm1
       Left = 7
       Top = 201
       Width = 158
-      Height = 515
+      Height = 495
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
@@ -294,6 +291,10 @@ object Form1: TForm1
       ScrollBars = ssVertical
       TabOrder = 1
       OnRowMoved = GridRowMoved
+      ColWidths = (
+        64
+        64
+        64)
       RowHeights = (
         24
         24
@@ -303,7 +304,7 @@ object Form1: TForm1
     end
     object PanelApprox: TGroupBox
       Left = 173
-      Top = 576
+      Top = 556
       Width = 220
       Height = 236
       Margins.Left = 4
@@ -325,7 +326,6 @@ object Form1: TForm1
         Margins.Bottom = 4
         Caption = '&'#1057#1090#1088#1086#1080#1090#1100
         Default = True
-        DoubleBuffered = True
         Glyph.Data = {
           96090000424D9609000000000000360000002800000028000000140000000100
           18000000000060090000120B0000120B00000000000000000000FFFFFFFFFFFF
@@ -406,7 +406,6 @@ object Form1: TForm1
           FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
         ModalResult = 6
         NumGlyphs = 2
-        ParentDoubleBuffered = False
         TabOrder = 7
         OnClick = RunGraphClick
       end
@@ -513,7 +512,7 @@ object Form1: TForm1
     end
     object RunBtn: TBitBtn
       Left = 19
-      Top = 761
+      Top = 741
       Width = 136
       Height = 39
       Margins.Left = 4
@@ -522,7 +521,6 @@ object Form1: TForm1
       Margins.Bottom = 4
       Anchors = [akLeft, akBottom]
       Caption = '&'#1042#1099#1095#1080#1089#1083#1080#1090#1100
-      DoubleBuffered = True
       Glyph.Data = {
         96090000424D9609000000000000360000002800000028000000140000000100
         18000000000060090000120B0000120B0000000000000000000000FF0000FF00
@@ -603,7 +601,6 @@ object Form1: TForm1
         A0A09E9E9E9C9C9C9A9A9A979797959595B2B2B200FF0000FF00}
       ModalResult = 5
       NumGlyphs = 2
-      ParentDoubleBuffered = False
       TabOrder = 4
       OnClick = RunClick
     end
@@ -611,7 +608,7 @@ object Form1: TForm1
       Left = 169
       Top = 10
       Width = 232
-      Height = 559
+      Height = 539
       Anchors = [akLeft, akTop, akBottom]
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
@@ -628,7 +625,7 @@ object Form1: TForm1
     Left = 401
     Top = 0
     Width = 625
-    Height = 815
+    Height = 795
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
@@ -644,7 +641,6 @@ object Form1: TForm1
     Legend.Visible = False
     MarginTop = 1
     PrintProportional = False
-    Title.Brush.Color = clWhite
     Title.Brush.Style = bsClear
     Title.Font.Color = clRed
     Title.Font.Height = -15
@@ -654,35 +650,24 @@ object Form1: TForm1
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 1
-    ExplicitLeft = 416
-    ExplicitWidth = 610
+    DefaultCanvas = 'TGDIPlusCanvas'
     ColorPaletteIndex = 13
     object Series1: TLineSeries
-      Marks.Arrow.Visible = True
-      Marks.Callout.Brush.Color = clBlack
-      Marks.Callout.Arrow.Visible = True
-      Marks.Visible = False
       SeriesColor = 8388672
       Title = 'Series12'
       Brush.BackColor = clDefault
       Pointer.InflateMargins = True
       Pointer.Style = psRectangle
-      Pointer.Visible = False
       XValues.Name = 'X'
       XValues.Order = loAscending
       YValues.Name = 'Y'
       YValues.Order = loNone
     end
     object Series2: TLineSeries
-      Marks.Arrow.Visible = True
-      Marks.Callout.Brush.Color = clBlack
-      Marks.Callout.Arrow.Visible = True
-      Marks.Visible = False
       SeriesColor = clRed
       Brush.BackColor = clDefault
       Pointer.InflateMargins = True
       Pointer.Style = psRectangle
-      Pointer.Visible = False
       XValues.Name = 'X'
       XValues.Order = loAscending
       YValues.Name = 'Y'
