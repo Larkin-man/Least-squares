@@ -7,6 +7,7 @@
 #include <float.h>
 #include <vector>
 #include <cmath>
+#include <algorithm>
 #pragma hdrstop
 #include "Table.h"
 #include "MainSource.h"
@@ -106,6 +107,91 @@ inline void TForm1::Exchange(T &a, T &b)
 	T temp = a;
 	a = b;
 	b = temp;
+}
+//---------------------------------------------------------------------------
+// Функция расчета значения Y для произвольного X
+// res - структура с коэффициентами и сдвигом после CalculateLMS
+double TForm1::GetPredict(const LSResult& res, double x)
+{
+	if (!res.success || res.coeffs.empty()) return 0.0;
+
+	double y = 0.0;
+	double x_shifted = x - res.shiftX; // Применяем тот же сдвиг, что и при расчете
+	double x_pow = 1.0;                // x_shifted в степени 0
+
+	// Вычисляем полином: y = a0 + a1*(x') + a2*(x')^2 + ...
+	for (size_t i = 0; i < res.coeffs.size(); i++) {
+		y += res.coeffs[i] * x_pow;
+		x_pow *= x_shifted;
+	}
+
+	return y;
+}
+//---------------------------------------------------------------------------
+// Метод Гаусса (стандартная реализация для m x n)
+bool TForm1::SolveGauss2(std::vector< std::vector<double> >& matrix, std::vector<double>& result)
+{
+	int n = (int)result.size();
+	for (int i = 0; i < n; i++) {
+		int maxRow = i;
+		for (int k = i + 1; k < n; k++)
+			if (std::abs(matrix[k][i]) > std::abs(matrix[maxRow][i])) maxRow = k;
+		std::swap(matrix[maxRow], matrix[i]);
+		if (std::abs(matrix[i][i]) < 1e-18) return false;
+		for (int k = i + 1; k < n; k++) {
+			double c = -matrix[k][i] / matrix[i][i];
+			for (int j = i; j <= n; j++) matrix[k][j] += (i == j) ? 0 : c * matrix[i][j];
+			matrix[k][i] = 0;
+		}
+	}
+	for (int i = n - 1; i >= 0; i--) {
+		result[i] = matrix[i][n] / matrix[i][i];
+		for (int k = i - 1; k >= 0; k--) matrix[k][n] -= matrix[k][i] * result[i];
+	}
+	return true;
+}
+//---------------------------------------------------------------------------
+TForm1::LSResult TForm1::CalculateLMS(const std::vector<double>& x, const std::vector<double>& y, int degree)
+{
+	LSResult res;
+	res.success = false;
+	int n = (int)x.size();
+	if (n == 0 || n != (int)y.size() || degree < 0 || degree >= n) return res;
+
+	// 1. Умный сдвиг: берем ЦЕЛОЕ число в середине диапазона
+	double minX = x[0], maxX = x[0];
+	for (int i = 1; i < n; i++) {
+		if (x[i] < minX) minX = x[i];
+		if (x[i] > maxX) maxX = x[i];
+	}
+	res.shiftX = std::floor((minX + maxX) / 2.0); // Гарантированно целое, если x были целыми
+
+	int m = degree + 1;
+	int num_sums = 2 * degree + 1;
+	std::vector<double> sum_x(num_sums, 0.0);
+	std::vector<double> sum_xy(m, 0.0);
+	sum_x[0] = (double)n;
+
+	// 2. Расчет матриц (оптимизированный)
+	for (int i = 0; i < n; i++) {
+		double x_shifted = x[i] - res.shiftX; // Остается целым без погрешностей!
+		double x_pow = 1.0;
+		for (int k = 0; k < num_sums; k++) {
+			if (k > 0) sum_x[k] += x_pow;
+			if (k < m) sum_xy[k] += y[i] * x_pow;
+			x_pow *= x_shifted;
+		}
+	}
+
+	std::vector< std::vector<double> > matrix(m, std::vector<double>(m + 1, 0.0));
+	for (int i = 0; i < m; i++) {
+		for (int j = 0; j < m; j++) matrix[i][j] = sum_x[i + j];
+		matrix[i][m] = sum_xy[i];
+	}
+
+	res.coeffs.resize(m);
+	if (SolveGauss(matrix, res.coeffs)) res.success = true;
+	return res;
 }
 //---------------------------------------------------------------------------
 // Метод для решения СЛАУ (метод Гаусса)
@@ -243,7 +329,36 @@ std::vector<double> TForm1::PolyFit(const std::vector<double>& x, const std::vec
 	}
 	return std::vector<double>();
 }
+//---------------------------------------------------------------------------
+// Функция для расчета ошибки после нахождения коэффициентов
+void TForm1::CalculateError(const std::vector<double>& x, const std::vector<double>& y, LSResult& res)
+{
+	if (!res.success) {
+		res.rmse = -1.0;
+		return;
+	}
 
+	double sse = 0.0; // Сумма квадратов отклонений
+	int n = (int)x.size();
+
+	for (int i = 0; i < n; i++) {
+		// Считаем значение полинома в данной точке
+		double y_pred = 0.0;
+		double x_shifted = x[i] - res.shiftX;
+		double x_pow = 1.0;
+		for (size_t j = 0; j < res.coeffs.size(); j++) {
+			y_pred += res.coeffs[j] * x_pow;
+			x_pow *= x_shifted;
+		}
+
+		// Квадрат разности между реальным y и предсказанным
+		double diff = y[i] - y_pred;
+		sse += diff * diff;
+	}
+
+	// RMSE = корень из среднего квадрата ошибки
+	res.rmse = std::sqrt(sse / n);
+}
 //---------------------------------------------------------------------------
 //Вычислить
 void __fastcall TForm1::RunClick(TObject *Sender)

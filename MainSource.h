@@ -113,8 +113,19 @@ public:	// User declarations
 	void AddRedDot(double x);
 	inline void Exchange(T &a, T &b);
 	bool SolveGauss(std::vector< std::vector<double> >& matrix, std::vector<double>& result);
+	bool SolveGauss2(std::vector< std::vector<double> >& matrix, std::vector<double>& result);
 	std::vector<double> PolyFit(const std::vector<double>& x, const std::vector<double>& y, int degree);
 	std::vector<double> PolyFitOptimized(const std::vector<double>& x, const std::vector<double>& y, int degree);
+	struct LSResult
+	{
+	std::vector<double> coeffs;
+	double shiftX; // Наш целочисленный сдвиг
+	double rmse; // Среднеквадратичная ошибка
+	bool success;
+};
+LSResult CalculateLMS(const std::vector<double>& x, const std::vector<double>& y, int degree);
+double GetPredict(const LSResult& res, double x);
+void CalculateError(const std::vector<double>& x, const std::vector<double>& y, LSResult& res);
 };
 //---------------------------------------------------------------------------
 extern PACKAGE TForm1 *Form1;
