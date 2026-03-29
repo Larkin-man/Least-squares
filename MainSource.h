@@ -72,6 +72,7 @@ __published:	// IDE-managed Components
 	TMenuItem *NPrints2;
 	TCheckBox *OnlyX;
 	TMenuItem *N2;
+	TSplitter *Splitter1;
 	void __fastcall NExitClick(TObject *Sender);
 	void __fastcall RunClick(TObject *Sender);
 	void __fastcall NNewClick(TObject *Sender);
@@ -104,28 +105,36 @@ public:	// User declarations
 	int N, S;
 	typedef double T;
 	std::vector<double> x, y;
-	std::vector<T> a, b;
-	std::vector<std::vector<T> > sums;
-	std::vector<std::vector<double> > pows;
+	//std::vector<T> a, b;
+	//std::vector<std::vector<T> > sums;
+	//std::vector<std::vector<double> > pows;
 	unsigned int point;
 	__fastcall TForm1(TComponent* Owner); //Объявление конструктора
-	double pow(double a, int s);
 	void AddRedDot(double x);
 	inline void Exchange(T &a, T &b);
 	bool SolveGauss(std::vector< std::vector<double> >& matrix, std::vector<double>& result);
 	bool SolveGauss2(std::vector< std::vector<double> >& matrix, std::vector<double>& result);
 	std::vector<double> PolyFit(const std::vector<double>& x, const std::vector<double>& y, int degree);
-	std::vector<double> PolyFitOptimized(const std::vector<double>& x, const std::vector<double>& y, int degree);
 	struct LSResult
 	{
-	std::vector<double> coeffs;
-	double shiftX; // Наш целочисленный сдвиг
-	double rmse; // Среднеквадратичная ошибка
-	bool success;
-};
-LSResult CalculateLMS(const std::vector<double>& x, const std::vector<double>& y, int degree);
-double GetPredict(const LSResult& res, double x);
-void CalculateError(const std::vector<double>& x, const std::vector<double>& y, LSResult& res);
+		std::vector<double> coeffs;
+		double shiftX; // Наш целочисленный сдвиг
+		double rmse; // Среднеквадратичная ошибка
+		bool success;
+	};
+	LSResult CalculateLMS(const std::vector<double>& x, const std::vector<double>& y, int degree);
+	double GetPredict(const LSResult& res, double x);
+	void CalculateError(const std::vector<double>& x, const std::vector<double>& y, LSResult& res);
+	void logv(const std::vector<T> &c, String nam="")
+	{
+		String str;
+		for (std::vector<T>::const_iterator el = c.begin(); el != c.end(); ++el)
+			str += FloatToStr(*el)+" ";
+		if (nam.IsEmpty())
+			Out->Lines->Append(str);
+		else
+			Out->Lines->Append(nam+" "+str);
+	}
 };
 //---------------------------------------------------------------------------
 extern PACKAGE TForm1 *Form1;

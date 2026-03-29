@@ -94,14 +94,6 @@ void __fastcall TForm1::NExitClick(TObject *Sender)
 	Close();
 }
 //---------------------------------------------------------------------------
-double TForm1::pow(double a, int s)
-{
-	double res = 1;
-	for (int i = 0; i < s; i++)
-		res *= a;
-	return res;
-}
-//---------------------------------------------------------------------------
 inline void TForm1::Exchange(T &a, T &b)
 {
 	T temp = a;
@@ -238,16 +230,17 @@ bool TForm1::SolveGauss(std::vector< std::vector<double> >& matrix, std::vector<
 // Основная функция МНК
 // degree - степень полинома (1 - прямая, 2 - парабола и т.д.)
 //МНК подготавливает систему уравнений (матрицу сумм)
-std::vector<double> TForm1::PolyFitOptimized(const std::vector<double>& x, const std::vector<double>& y, int degree)
+std::vector<double> TForm1::PolyFit(const std::vector<double>& x, const std::vector<double>& y, int degree)
 {
 	int n = (int)x.size();
-	int m = degree + 1;
+	int m = degree + 1; // Размерность матрицы (m x m)
 	int num_sums = 2 * degree + 1; // Столько уникальных сумм x^k нам нужно
 
 	if (degree >= (int)x.size())
 		return std::vector<double>();
-
+	logv(x,"x"); logv(y, "y");
 	// 1. Вычисляем все необходимые суммы степеней x: sum_x[k] = \sum x_i^k
+	// С оптимизацией std::pow(x[k], i + j);
 	std::vector<double> sum_x(num_sums, 0.0);
 	sum_x[0] = (double)n; // x^0 это 1, сумма единиц это n
 
@@ -268,6 +261,7 @@ std::vector<double> TForm1::PolyFitOptimized(const std::vector<double>& x, const
 			sum_x[k] += x_pow;
 		}
 	}
+	logv(sum_x,"sum_x");
 
 	// 2. Вычисляем суммы произведений: sum_xy[k] = \sum (y_i * x_i^k)
 	std::vector<double> sum_xy(m, 0.0);
@@ -278,6 +272,7 @@ std::vector<double> TForm1::PolyFitOptimized(const std::vector<double>& x, const
 			x_pow *= x[i];
 		}
 	}
+	logv(sum_xy,"sum_xy");
 
 	// 3. Заполняем матрицу sum, просто копируя уже вычисленные значения
 	std::vector< std::vector<double> > sum(m, std::vector<double>(m + 1, 0.0));
@@ -291,42 +286,6 @@ std::vector<double> TForm1::PolyFitOptimized(const std::vector<double>& x, const
 	// Далее вызываем SolveGauss(sum, coeffs)...
 	std::vector<double> coeffs(m, 0.0);
 	if (SolveGauss(sum, coeffs)) return coeffs;
-	return std::vector<double>();
-}
-//---------------------------------------------------------------------------
-// Основная функция МНК
-// degree - степень полинома (1 - прямая, 2 - парабола и т.д.)
-//МНК подготавливает систему уравнений (матрицу сумм)
-std::vector<double> TForm1::PolyFit(const std::vector<double>& x, const std::vector<double>& y, int degree)
-{
-	int n = (int)x.size();
-	int m = degree + 1; // Размерность матрицы (m x m)
-
-	// sum - расширенная матрица (m строк на m+1 столбцов)
-	std::vector< std::vector<double> > sum(m, std::vector<double>(m + 1, 0.0));
-	std::vector<double> coeffs(m, 0.0);
-
-	// Наполнение матрицы сумм степеней x
-	for (int i = 0; i < m; i++) {
-		for (int j = 0; j < m; j++) {
-			double sumX = 0;
-			for (int k = 0; k < n; k++) {
-				sumX += std::pow(x[k], i + j);
-			}
-			sum[i][j] = sumX;
-		}
-
-		// Наполнение свободного члена (правая часть)
-		double sumY = 0;
-		for (int k = 0; k < n; k++) {
-			sumY += y[k] * std::pow(x[k], i);
-		}
-		sum[i][m] = sumY;
-	}
-
-	if (SolveGauss(sum, coeffs)) {
-		return coeffs; // Коэффициенты [a0, a1, a2...] для y = a0 + a1*x + a2*x^2...
-	}
 	return std::vector<double>();
 }
 //---------------------------------------------------------------------------
@@ -372,97 +331,47 @@ void __fastcall TForm1::RunClick(TObject *Sender)
 	}
 	Form2->StringGrid1->ColCount = S+2;
 	Form2->StringGrid1->RowCount = S+1;
-
-	a.resize(S+1);
-	b.resize(S+1);
+	//std::vector<double> x, y;
+	//std::vector<T> a, b;
+	//std::vector<std::vector<T> > sums;
+	//std::vector<std::vector<double> > pows;
+	//a.resize(S+1);
+	//b.resize(S+1);
 	x.resize(N);
 	y.resize(N);
-	sums.resize(S+1);
+
 	for(int p=0; p<N; p++)
 	{
 		x[p] = StrToFloat(Grid->Cells[1][p+1]);
 		y[p] = StrToFloat(Grid->Cells[2][p+1]);
 	}
 
-	int powcount = S+S+1;
-	pows.resize(powcount);
-	for (int i = 0; i < powcount; i++)
-	{
-		pows[i].resize(N);
-		for(int p=0; p<N; p++)
-			pows[i][p] = pow(x[p], i);
-	}
+	//int powcount = S+S+1;
+	//pows.resize(powcount);
 
-	for(int i=0; i<S+1; i++)
-	{
-		sums[i].resize(S+1);
-		a[i]=0;
-		b[i]=0;
-		for(int j=0; j<S+1; j++)
-		{
-			int ij = i+j;
-			sums[i][j] = 0;
-			for(int p=0; p<N; p++)
-				sums[i][j] += pows[ij][p];//pow(x[p], ij);
-		}
-		for(int p=0; p<N; p++)
-			b[i] += y[p] * pows[i][p];//pow(x[p], i);
-	}
-	//check if there are 0 on main diagonal and exchange rows in that case
-	for(int i=0; i<S+1; i++)
-		if(sums[i][i] == 0)
-			for(int j=0; j<S+1; j++)
-				if((j != i) && (sums[j][i] != 0) && (sums[i][j] != 0))
-				{
-					for(int k=0; k<S+1; k++)
-						Exchange(sums[j][k], sums[j][k]);
-					Exchange(b[j], b[i]);
-					break;
-				}
 
-	// Прямой ход метода Гаусса
-	for(int k = 0; k <= S; k++) {
-		// ПРОВЕРКА НА НОЛЬ (Pivot check)
-		if (fabs(sums[k][k]) < 1e-10) {
-			Application->MessageBox(L"Ошибка: матрица вырождена (деление на 0)", L"Критическая ошибка", MB_ICONERROR);
-			return;
-		}
+	std::vector<double> result(S, 0.0);
+	result = PolyFit(x, y, S);
 
-		for(int i = k + 1; i <= S; i++) {
-			T M = sums[i][k] / sums[k][k];
-			for(int j = k; j <= S + 1; j++) {
-				sums[i][j] -= M * sums[k][j];
-				b[i] = sums[i][j];
-			}
-		}
-	}
 
-	// Обратный ход (Back Substitution)
-	// Вектор коэффициентов полинома
-	a.clear();
-	a.resize(S + 1, 0);
+	//a.clear();
+	//a.resize(S + 1, 0);
 
-	for(int i = S; i >= 0; i--) {
-		T s = 0;
-		for(int j = i + 1; j <= S; j++) {
-			s += a[j] * sums[i][j];
-		}
-		a[i] = (sums[i][S + 1] - s) / sums[i][i];
-	}
+
 
 	if (Out->Lines->Count > 0)
 		Out->Lines->Append("===== "+IntToStr(S)+ " =====");
 
 	for(int i=0; i<S+1; i++)
-		Out->Lines->Add("C["+IntToStr(i)+"]="+FloatToStr(a[i])+"\t"+a[i]);
+		Out->Lines->Add("C["+IntToStr(i)+"]="+FloatToStr(result[i])+"\t"+result[i]);
 	double s2 = 0;
 	double mino = DBL_MAX;
 	double maxo = DBL_MIN;
 	for(int j=0; j<N; j++)
 	{
 		double cu = 0;
-		for(int i=0; i<S+1; i++)
-			cu += a[i] * pows[i][j];//pow(x[j], i);
+		//for(int i=0; i<S+1; i++)
+		//	cu += result[i] * pows[i][j];//pow(x[j], i);
 		s2 += (y[j] - cu) * (y[j] - cu);
 		if (NPrints2->Checked)
 		{
@@ -654,8 +563,8 @@ void __fastcall TForm1::NGColorClick(TObject *Sender)
 void TForm1::AddRedDot(double X)
 {
 	double y = 0;
-	for (int j=0; j<Degree->Position+1; j++)
-		y += a[j] * pow(X, j);
+//	for (int j=0; j<Degree->Position+1; j++)
+//		y += a[j] * pow(X, j);
 	Series2->AddXY(X, y,"",clRed);
 }
 //---------------------------------------------------------------------------

@@ -2,7 +2,7 @@ object Form1: TForm1
   Left = 176
   Top = 27
   Caption = #1052#1077#1090#1086#1076' '#1085#1072#1080#1084#1077#1085#1100#1096#1080#1093' '#1082#1074#1072#1076#1088#1072#1090#1086#1074
-  ClientHeight = 795
+  ClientHeight = 755
   ClientWidth = 1026
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -18,7 +18,7 @@ object Form1: TForm1
     Left = 0
     Top = 0
     Width = 401
-    Height = 795
+    Height = 755
     Align = alLeft
     BevelOuter = bvNone
     Caption = 'PanelLeft'
@@ -26,7 +26,7 @@ object Form1: TForm1
     TabOrder = 0
     DesignSize = (
       401
-      795)
+      755)
     object PanelNewPoint: TPanel
       Left = 10
       Top = 10
@@ -238,7 +238,7 @@ object Form1: TForm1
     end
     object Degree: TUpDown
       Left = 145
-      Top = 701
+      Top = 661
       Width = 20
       Height = 31
       Anchors = [akLeft, akBottom]
@@ -249,7 +249,7 @@ object Form1: TForm1
     end
     object DegreeE: TLabeledEdit
       Left = 96
-      Top = 701
+      Top = 661
       Width = 49
       Height = 31
       Margins.Left = 4
@@ -279,7 +279,7 @@ object Form1: TForm1
       Left = 7
       Top = 201
       Width = 158
-      Height = 495
+      Height = 455
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
@@ -304,7 +304,7 @@ object Form1: TForm1
     end
     object PanelApprox: TGroupBox
       Left = 173
-      Top = 556
+      Top = 516
       Width = 220
       Height = 236
       Margins.Left = 4
@@ -512,7 +512,7 @@ object Form1: TForm1
     end
     object RunBtn: TBitBtn
       Left = 19
-      Top = 741
+      Top = 701
       Width = 136
       Height = 39
       Margins.Left = 4
@@ -608,7 +608,7 @@ object Form1: TForm1
       Left = 169
       Top = 10
       Width = 232
-      Height = 539
+      Height = 499
       Anchors = [akLeft, akTop, akBottom]
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
@@ -625,7 +625,7 @@ object Form1: TForm1
     Left = 401
     Top = 0
     Width = 625
-    Height = 795
+    Height = 755
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
@@ -652,6 +652,14 @@ object Form1: TForm1
     TabOrder = 1
     DefaultCanvas = 'TGDIPlusCanvas'
     ColorPaletteIndex = 13
+    object Splitter1: TSplitter
+      Left = 0
+      Top = 0
+      Height = 755
+      ExplicitLeft = 88
+      ExplicitTop = 216
+      ExplicitHeight = 100
+    end
     object Series1: TLineSeries
       SeriesColor = 8388672
       Title = 'Series12'
