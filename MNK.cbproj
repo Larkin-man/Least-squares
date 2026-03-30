@@ -131,6 +131,9 @@
         <AppEnableHighDPI>true</AppEnableHighDPI>
     </PropertyGroup>
     <ItemGroup>
+        <None Include="LMSUnit.h">
+            <BuildOrder>4</BuildOrder>
+        </None>
         <CppCompile Include="MainSource.cpp">
             <Form>Form1</Form>
             <FormType>dfm</FormType>
@@ -211,7 +214,7 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName=".\Win32\Debug\MNK.tds" Configuration="Debug" Class="DebugSymbols">
+                <DeployFile LocalName=".\Debug\MNK.tds" Configuration="Debug" Class="DebugSymbols">
                     <Platform Name="Win32">
                         <RemoteName>MNK.tds</RemoteName>
                         <Overwrite>true</Overwrite>
@@ -227,7 +230,7 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName=".\Win32\Debug\MNK.exe" Configuration="Debug" Class="ProjectOutput">
+                <DeployFile LocalName=".\Debug\MNK.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>MNK.exe</RemoteName>
                         <Overwrite>true</Overwrite>

@@ -8,7 +8,9 @@
 #include <vector>
 #include <cmath>
 #include <algorithm>
+#include "LMSUnit.h"
 #pragma hdrstop
+
 #include "Table.h"
 #include "MainSource.h"
 //---------------------------------------------------------------------------
@@ -27,6 +29,7 @@ __fastcall TForm1::TForm1(TComponent* Owner): TForm(Owner)
 	NNewClick(NULL);
 	//OpenDialog1->InitialDir = GetCurrentDir();
 	//SaveDialog1->InitialDir = GetCurrentDir();
+
 }
 //---------------------------------------------------------------------------
 //Начать заново
@@ -121,14 +124,19 @@ double TForm1::GetPredict(const LSResult& res, double x)
 }
 //---------------------------------------------------------------------------
 // Метод Гаусса (стандартная реализация для m x n)
-bool TForm1::SolveGauss2(std::vector< std::vector<double> >& matrix, std::vector<double>& result)
+bool TForm1::SolveGauss(std::vector< std::vector<double> >& matrix, std::vector<double>& result)
 {
 	int n = (int)result.size();
 	for (int i = 0; i < n; i++) {
+		// Поиск максимального элемента в столбце
 		int maxRow = i;
 		for (int k = i + 1; k < n; k++)
 			if (std::abs(matrix[k][i]) > std::abs(matrix[maxRow][i])) maxRow = k;
+
+		// Перестановка строк
 		std::swap(matrix[maxRow], matrix[i]);
+
+		// Обнуление нижних элементов столбца
 		if (std::abs(matrix[i][i]) < 1e-18) return false;
 		for (int k = i + 1; k < n; k++) {
 			double c = -matrix[k][i] / matrix[i][i];
@@ -136,93 +144,11 @@ bool TForm1::SolveGauss2(std::vector< std::vector<double> >& matrix, std::vector
 			matrix[k][i] = 0;
 		}
 	}
-	for (int i = n - 1; i >= 0; i--) {
-		result[i] = matrix[i][n] / matrix[i][i];
-		for (int k = i - 1; k >= 0; k--) matrix[k][n] -= matrix[k][i] * result[i];
-	}
-	return true;
-}
-//---------------------------------------------------------------------------
-TForm1::LSResult TForm1::CalculateLMS(const std::vector<double>& x, const std::vector<double>& y, int degree)
-{
-	LSResult res;
-	res.success = false;
-	int n = (int)x.size();
-	if (n == 0 || n != (int)y.size() || degree < 0 || degree >= n) return res;
-
-	// 1. Умный сдвиг: берем ЦЕЛОЕ число в середине диапазона
-	double minX = x[0], maxX = x[0];
-	for (int i = 1; i < n; i++) {
-		if (x[i] < minX) minX = x[i];
-		if (x[i] > maxX) maxX = x[i];
-	}
-	res.shiftX = std::floor((minX + maxX) / 2.0); // Гарантированно целое, если x были целыми
-
-	int m = degree + 1;
-	int num_sums = 2 * degree + 1;
-	std::vector<double> sum_x(num_sums, 0.0);
-	std::vector<double> sum_xy(m, 0.0);
-	sum_x[0] = (double)n;
-
-	// 2. Расчет матриц (оптимизированный)
-	for (int i = 0; i < n; i++) {
-		double x_shifted = x[i] - res.shiftX; // Остается целым без погрешностей!
-		double x_pow = 1.0;
-		for (int k = 0; k < num_sums; k++) {
-			if (k > 0) sum_x[k] += x_pow;
-			if (k < m) sum_xy[k] += y[i] * x_pow;
-			x_pow *= x_shifted;
-		}
-	}
-
-	std::vector< std::vector<double> > matrix(m, std::vector<double>(m + 1, 0.0));
-	for (int i = 0; i < m; i++) {
-		for (int j = 0; j < m; j++) matrix[i][j] = sum_x[i + j];
-		matrix[i][m] = sum_xy[i];
-	}
-
-	res.coeffs.resize(m);
-	if (SolveGauss(matrix, res.coeffs)) res.success = true;
-	return res;
-}
-//---------------------------------------------------------------------------
-// Метод для решения СЛАУ (метод Гаусса)
-bool TForm1::SolveGauss(std::vector< std::vector<double> >& matrix, std::vector<double>& result)
-{
-	int n = (int)result.size();
-
-	for (int i = 0; i < n; i++) {
-		// Поиск максимального элемента в столбце
-		double maxEl = std::abs(matrix[i][i]);
-		int maxRow = i;
-		for (int k = i + 1; k < n; k++) {
-			if (std::abs(matrix[k][i]) > maxEl) {
-				maxEl = std::abs(matrix[k][i]);
-				maxRow = k;
-			}
-		}
-
-		// Перестановка строк
-		std::swap(matrix[maxRow], matrix[i]);
-
-		// Обнуление нижних элементов столбца
-		if (std::abs(matrix[i][i]) < 1e-12) return false; // Вырожденная матрица
-
-		for (int k = i + 1; k < n; k++) {
-			double c = -matrix[k][i] / matrix[i][i];
-			for (int j = i; j <= n; j++) {
-				if (i == j) matrix[k][j] = 0;
-				else matrix[k][j] += c * matrix[i][j];
-			}
-		}
-	}
 	//После того как прямой ход метода Гаусса превратил левую часть матрицы в «треугольник» (под главной диагональю стоят нули)
 	// Обратный ход
 	for (int i = n - 1; i >= 0; i--) {
 		result[i] = matrix[i][n] / matrix[i][i];
-		for (int k = i - 1; k >= 0; k--) {
-			matrix[k][n] -= matrix[k][i] * result[i];
-		}
+		for (int k = i - 1; k >= 0; k--) matrix[k][n] -= matrix[k][i] * result[i];
 	}
 	return true;
 }
@@ -349,10 +275,12 @@ void __fastcall TForm1::RunClick(TObject *Sender)
 	//int powcount = S+S+1;
 	//pows.resize(powcount);
 
-
+	LSResult lsr;
 	std::vector<double> result(S, 0.0);
-	result = PolyFit(x, y, S);
+	//result = PolyFit(x, y, S);
 
+	//lsr = TLeastSquares::Calculate(x, y, S);
+	lsr = ti.Calculate(x, y, S);
 
 	//a.clear();
 	//a.resize(S + 1, 0);
@@ -363,7 +291,10 @@ void __fastcall TForm1::RunClick(TObject *Sender)
 		Out->Lines->Append("===== "+IntToStr(S)+ " =====");
 
 	for(int i=0; i<S+1; i++)
-		Out->Lines->Add("C["+IntToStr(i)+"]="+FloatToStr(result[i])+"\t"+result[i]);
+		Out->Lines->Add("C["+IntToStr(i)+"]="+FloatToStr(lsr.coeffs[i])+"\t"+lsr.coeffs[i]);
+	tolog("shiftX="+FloatToStr(lsr.shiftX));
+	tolog("rmse="+FloatToStr(lsr.rmse));
+	tolog("r2="+FloatToStr(lsr.r2));
 	double s2 = 0;
 	double mino = DBL_MAX;
 	double maxo = DBL_MIN;
