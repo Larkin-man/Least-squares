@@ -29,7 +29,6 @@ __fastcall TForm1::TForm1(TComponent* Owner): TForm(Owner)
 	NNewClick(NULL);
 	//OpenDialog1->InitialDir = GetCurrentDir();
 	//SaveDialog1->InitialDir = GetCurrentDir();
-
 }
 //---------------------------------------------------------------------------
 //Начать заново
@@ -104,55 +103,6 @@ inline void TForm1::Exchange(T &a, T &b)
 	b = temp;
 }
 //---------------------------------------------------------------------------
-// Функция расчета значения Y для произвольного X
-// res - структура с коэффициентами и сдвигом после CalculateLMS
-double TForm1::GetPredict(const LSResult& res, double x)
-{
-	if (!res.success || res.coeffs.empty()) return 0.0;
-
-	double y = 0.0;
-	double x_shifted = x - res.shiftX; // Применяем тот же сдвиг, что и при расчете
-	double x_pow = 1.0;                // x_shifted в степени 0
-
-	// Вычисляем полином: y = a0 + a1*(x') + a2*(x')^2 + ...
-	for (size_t i = 0; i < res.coeffs.size(); i++) {
-		y += res.coeffs[i] * x_pow;
-		x_pow *= x_shifted;
-	}
-
-	return y;
-}
-//---------------------------------------------------------------------------
-// Метод Гаусса (стандартная реализация для m x n)
-bool TForm1::SolveGauss(std::vector< std::vector<double> >& matrix, std::vector<double>& result)
-{
-	int n = (int)result.size();
-	for (int i = 0; i < n; i++) {
-		// Поиск максимального элемента в столбце
-		int maxRow = i;
-		for (int k = i + 1; k < n; k++)
-			if (std::abs(matrix[k][i]) > std::abs(matrix[maxRow][i])) maxRow = k;
-
-		// Перестановка строк
-		std::swap(matrix[maxRow], matrix[i]);
-
-		// Обнуление нижних элементов столбца
-		if (std::abs(matrix[i][i]) < 1e-18) return false;
-		for (int k = i + 1; k < n; k++) {
-			double c = -matrix[k][i] / matrix[i][i];
-			for (int j = i; j <= n; j++) matrix[k][j] += (i == j) ? 0 : c * matrix[i][j];
-			matrix[k][i] = 0;
-		}
-	}
-	//После того как прямой ход метода Гаусса превратил левую часть матрицы в «треугольник» (под главной диагональю стоят нули)
-	// Обратный ход
-	for (int i = n - 1; i >= 0; i--) {
-		result[i] = matrix[i][n] / matrix[i][i];
-		for (int k = i - 1; k >= 0; k--) matrix[k][n] -= matrix[k][i] * result[i];
-	}
-	return true;
-}
-//---------------------------------------------------------------------------
 // Основная функция МНК
 // degree - степень полинома (1 - прямая, 2 - парабола и т.д.)
 //МНК подготавливает систему уравнений (матрицу сумм)
@@ -211,7 +161,7 @@ std::vector<double> TForm1::PolyFit(const std::vector<double>& x, const std::vec
 
 	// Далее вызываем SolveGauss(sum, coeffs)...
 	std::vector<double> coeffs(m, 0.0);
-	if (SolveGauss(sum, coeffs)) return coeffs;
+	if (ti.SolveGauss(sum, coeffs)) return coeffs;
 	return std::vector<double>();
 }
 //---------------------------------------------------------------------------
@@ -544,10 +494,4 @@ void __fastcall TForm1::GridRowMoved(TObject *Sender, int FromIndex, int ToIndex
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TForm1::N2Click(TObject *Sender)
-{
-	//
-
-}
-//---------------------------------------------------------------------------
 

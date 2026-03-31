@@ -98,21 +98,16 @@ __published:	// IDE-managed Components
           TUpDownDirection Direction);
 	void __fastcall OnlyXClick(TObject *Sender);
 	void __fastcall GridRowMoved(TObject *Sender, int FromIndex, int ToIndex);
-	void __fastcall N2Click(TObject *Sender);
 private:	// User declarations
 //Только в пределах данного модуля
 public:	// User declarations
 	int N, S;
 	typedef double T;
 	std::vector<double> x, y;
-	//std::vector<T> a, b;
-	//std::vector<std::vector<T> > sums;
-	//std::vector<std::vector<double> > pows;
 	unsigned int point;
 	__fastcall TForm1(TComponent* Owner); //Объявление конструктора
 	void AddRedDot(double x);
 	inline void Exchange(T &a, T &b);
-	bool SolveGauss(std::vector< std::vector<double> >& matrix, std::vector<double>& result);
 	std::vector<double> PolyFit(const std::vector<double>& x, const std::vector<double>& y, int degree);
 	double GetPredict(const LSResult& res, double x);
 	void CalculateError(const std::vector<double>& x, const std::vector<double>& y, LSResult& res);
