@@ -3,7 +3,7 @@ object Form1: TForm1
   Top = 27
   Caption = #1052#1077#1090#1086#1076' '#1085#1072#1080#1084#1077#1085#1100#1096#1080#1093' '#1082#1074#1072#1076#1088#1072#1090#1086#1074
   ClientHeight = 715
-  ClientWidth = 1026
+  ClientWidth = 1073
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,19 +14,40 @@ object Form1: TForm1
   OldCreateOrder = False
   PixelsPerInch = 120
   TextHeight = 23
+  object Splitter1: TSplitter
+    Left = 420
+    Top = 0
+    Height = 715
+    ExplicitLeft = 472
+    ExplicitTop = -1
+  end
   object PanelLeft: TPanel
     Left = 0
     Top = 0
-    Width = 401
+    Width = 420
     Height = 715
     Align = alLeft
     BevelOuter = bvNone
     Caption = 'PanelLeft'
+    Constraints.MinWidth = 360
     ShowCaption = False
     TabOrder = 0
     DesignSize = (
-      401
+      420
       715)
+    object Label1: TLabel
+      Left = 10
+      Top = 635
+      Width = 48
+      Height = 18
+      Caption = 'Label1'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'Arial'
+      Font.Style = []
+      ParentFont = False
+    end
     object PanelNewPoint: TPanel
       Left = 10
       Top = 10
@@ -237,8 +258,8 @@ object Form1: TForm1
       end
     end
     object Degree: TUpDown
-      Left = 145
-      Top = 621
+      Left = 143
+      Top = 599
       Width = 20
       Height = 31
       Anchors = [akLeft, akBottom]
@@ -246,10 +267,11 @@ object Form1: TForm1
       Max = 32000
       TabOrder = 3
       OnChanging = DegreeChanging
+      OnChangingEx = DegreeChangingEx
     end
     object DegreeE: TLabeledEdit
-      Left = 96
-      Top = 621
+      Left = 94
+      Top = 599
       Width = 49
       Height = 31
       Margins.Left = 4
@@ -279,7 +301,7 @@ object Form1: TForm1
       Left = 7
       Top = 201
       Width = 158
-      Height = 415
+      Height = 392
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
@@ -607,9 +629,9 @@ object Form1: TForm1
     object Out: TMemo
       Left = 169
       Top = 10
-      Width = 232
+      Width = 248
       Height = 459
-      Anchors = [akLeft, akTop, akBottom]
+      Anchors = [akLeft, akTop, akRight, akBottom]
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -18
@@ -619,68 +641,75 @@ object Form1: TForm1
       ScrollBars = ssBoth
       TabOrder = 5
       WordWrap = False
+      ExplicitWidth = 229
     end
   end
-  object Chart1: TChart
-    Left = 401
+  object Panel1: TPanel
+    Left = 423
     Top = 0
-    Width = 625
+    Width = 650
     Height = 715
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
-    BackWall.Color = clWhite
-    BottomWall.Color = 13041663
-    Gradient.Direction = gdLeftRight
-    Gradient.EndColor = 7050388
-    LeftWall.Color = 6009343
-    Legend.Alignment = laBottom
-    Legend.LegendStyle = lsSeries
-    Legend.TextStyle = ltsPlain
-    Legend.Visible = False
-    MarginTop = 1
-    PrintProportional = False
-    Title.Brush.Style = bsClear
-    Title.Font.Color = clRed
-    Title.Font.Height = -15
-    Title.Text.Strings = (
-      #1040#1087#1087#1088#1086#1082#1089#1080#1084#1072#1094#1080#1103)
-    Zoom.Pen.Mode = pmNotXor
-    Align = alRight
-    BevelOuter = bvNone
+    Align = alClient
+    Caption = 'Panel1'
     TabOrder = 1
-    DefaultCanvas = 'TGDIPlusCanvas'
-    ColorPaletteIndex = 13
-    object Splitter1: TSplitter
-      Left = 622
-      Top = 0
-      Height = 715
-      Align = alRight
-      ExplicitLeft = 88
-      ExplicitTop = 216
-      ExplicitHeight = 100
-    end
-    object Series1: TLineSeries
-      SeriesColor = 8388672
-      Title = 'Series12'
-      Brush.BackColor = clDefault
-      Pointer.InflateMargins = True
-      Pointer.Style = psRectangle
-      XValues.Name = 'X'
-      XValues.Order = loAscending
-      YValues.Name = 'Y'
-      YValues.Order = loNone
-    end
-    object Series2: TLineSeries
-      SeriesColor = clRed
-      Brush.BackColor = clDefault
-      Pointer.InflateMargins = True
-      Pointer.Style = psRectangle
-      XValues.Name = 'X'
-      XValues.Order = loAscending
-      YValues.Name = 'Y'
-      YValues.Order = loNone
+    ExplicitLeft = -16
+    ExplicitTop = 45
+    ExplicitWidth = 185
+    ExplicitHeight = 41
+    object Chart1: TChart
+      Left = 1
+      Top = 1
+      Width = 648
+      Height = 713
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
+      BackWall.Color = clWhite
+      BottomWall.Color = 13041663
+      Gradient.Direction = gdLeftRight
+      Gradient.EndColor = 7050388
+      LeftWall.Color = 6009343
+      Legend.Alignment = laBottom
+      Legend.LegendStyle = lsSeries
+      Legend.TextStyle = ltsPlain
+      Legend.Visible = False
+      MarginTop = 1
+      PrintProportional = False
+      Title.Brush.Style = bsClear
+      Title.Font.Color = clRed
+      Title.Font.Height = -15
+      Title.Text.Strings = (
+        #1040#1087#1087#1088#1086#1082#1089#1080#1084#1072#1094#1080#1103)
+      Zoom.Pen.Mode = pmNotXor
+      Align = alClient
+      BevelOuter = bvNone
+      TabOrder = 0
+      ExplicitLeft = 224
+      ExplicitWidth = 400
+      DefaultCanvas = 'TGDIPlusCanvas'
+      ColorPaletteIndex = 13
+      object Series1: TLineSeries
+        SeriesColor = 8388672
+        Title = 'Series12'
+        Brush.BackColor = clDefault
+        Pointer.InflateMargins = True
+        Pointer.Style = psRectangle
+        XValues.Name = 'X'
+        XValues.Order = loAscending
+        YValues.Name = 'Y'
+        YValues.Order = loNone
+      end
+      object Series2: TLineSeries
+        SeriesColor = clRed
+        Brush.BackColor = clDefault
+        Pointer.InflateMargins = True
+        Pointer.Style = psRectangle
+        XValues.Name = 'X'
+        XValues.Order = loAscending
+        YValues.Name = 'Y'
+        YValues.Order = loNone
+      end
     end
   end
   object MainMenu1: TMainMenu
@@ -730,9 +759,6 @@ object Form1: TForm1
         Caption = '&'#1055#1086#1082#1072#1079#1072#1090#1100' '#1089#1080#1089#1090#1077#1084#1091' '#1091#1088#1072#1074#1085#1077#1085#1080#1081
         ShortCut = 16469
         OnClick = NKoeffClick
-      end
-      object N2: TMenuItem
-        Caption = #1057#1086#1088#1090#1080#1088#1086#1074#1082#1072
       end
     end
     object N9: TMenuItem

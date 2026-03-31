@@ -71,8 +71,9 @@ __published:	// IDE-managed Components
 	TMemo *Out;
 	TMenuItem *NPrints2;
 	TCheckBox *OnlyX;
-	TMenuItem *N2;
 	TSplitter *Splitter1;
+	TPanel *Panel1;
+   TLabel *Label1;
 	void __fastcall NExitClick(TObject *Sender);
 	void __fastcall RunClick(TObject *Sender);
 	void __fastcall NNewClick(TObject *Sender);
@@ -94,10 +95,10 @@ __published:	// IDE-managed Components
 	void __fastcall NGColorClick(TObject *Sender);
 	void __fastcall RunGraphClick(TObject *Sender);
 	void __fastcall DegreeChanging(TObject *Sender, bool &AllowChange);
-	void __fastcall DegreeChangingEx(TObject *Sender, bool &AllowChange, short NewValue,
-          TUpDownDirection Direction);
 	void __fastcall OnlyXClick(TObject *Sender);
 	void __fastcall GridRowMoved(TObject *Sender, int FromIndex, int ToIndex);
+   void __fastcall DegreeChangingEx(TObject *Sender, bool &AllowChange, int NewValue,
+          TUpDownDirection Direction);
 private:	// User declarations
 //Только в пределах данного модуля
 public:	// User declarations
@@ -126,6 +127,7 @@ public:	// User declarations
 			Out->Lines->Append(nam+" "+str);
 	}
 	TLeastSquares ti;
+	LSResult res;
 };
 //---------------------------------------------------------------------------
 extern PACKAGE TForm1 *Form1;

@@ -225,53 +225,67 @@ void __fastcall TForm1::RunClick(TObject *Sender)
 	//int powcount = S+S+1;
 	//pows.resize(powcount);
 
-	LSResult lsr;
 	std::vector<double> result(S, 0.0);
 	//result = PolyFit(x, y, S);
 
 	//lsr = TLeastSquares::Calculate(x, y, S);
-	lsr = ti.Calculate(x, y, S);
+	res = ti.Calculate(x, y, S);
 
 	//a.clear();
 	//a.resize(S + 1, 0);
 
-
+	if (res.success == false)
+		return;
 
 	if (Out->Lines->Count > 0)
 		Out->Lines->Append("===== "+IntToStr(S)+ " =====");
 
 	for(int i=0; i<S+1; i++)
-		Out->Lines->Add("C["+IntToStr(i)+"]="+FloatToStr(lsr.coeffs[i])+"\t"+lsr.coeffs[i]);
-	tolog("shiftX="+FloatToStr(lsr.shiftX));
-	tolog("rmse="+FloatToStr(lsr.rmse));
-	tolog("r2="+FloatToStr(lsr.r2));
-	double s2 = 0;
-	double mino = DBL_MAX;
-	double maxo = DBL_MIN;
-	for(int j=0; j<N; j++)
-	{
-		double cu = 0;
-		//for(int i=0; i<S+1; i++)
-		//	cu += result[i] * pows[i][j];//pow(x[j], i);
-		s2 += (y[j] - cu) * (y[j] - cu);
-		if (NPrints2->Checked)
-		{
-			Out->Lines->Append(FloatToStr(cu)+" "+FloatToStr(y[j]-cu));
-			if ((y[j] - cu) < mino)
-				mino = y[j] - cu;
-			if ((y[j] - cu) > maxo)
-				maxo = y[j] - cu;
-		}
-	}
+   {
+	   // ffGeneral — умный формат: уберет лишние нули и округлит "мусор" в конце
+      // 12 — общая точность (хватит для double)
+      // 4 — если число станет очень маленьким, перейдет в экспоненциальный вид (1E-15)
+      //String value = FloatToStrF(res.coeffs[i], ffGeneral, 12, 4);
+      double val = res.coeffs[i];
+      // Если число по модулю меньше одной триллионной — это шум
+      if (std::abs(val) < 1e-12) val = 0.0;
+      // Теперь выводим с хорошей точностью (14 знаков)
+      // Но шум уже превращен в 0.0 и выведется как "0"
+      String value = FloatToStrF(val, ffGeneral, 14, 0);
+
+      Out->Lines->Add("C[" + IntToStr(i) + "] = " + value);
+   }
+	tolog("shiftX=\n"+FloatToStr(res.shiftX));
+	tolog("rmse=\n"+FloatToStr(res.rmse));
+	tolog("r2=\n"+FloatToStr(res.r2));
+
 	if (NPrints2->Checked)
 	{
+		double s2 = 0;
+		double mino = DBL_MAX;
+		double maxo = DBL_MIN;
+		for(int j=0; j<N; j++)
+		{
+			double cu = 0;
+			for(int i=0; i<S+1; i++)
+				cu += res.coeffs[i] * pow(x[j], i);
+			s2 += (y[j] - cu) * (y[j] - cu);
+
+			{
+				Out->Lines->Append(FloatToStr(cu)+" "+FloatToStr(y[j]-cu));
+				if ((y[j] - cu) < mino)
+					mino = y[j] - cu;
+				if ((y[j] - cu) > maxo)
+					maxo = y[j] - cu;
+			}
+		}
 		Out->Lines->Add("Минимальное отклонение");
 		Out->Lines->Add(FloatToStr(mino));
 		Out->Lines->Add("Максимальное отклонение");
 		Out->Lines->Add(FloatToStr(maxo));
 	}
-	Out->Lines->Add("Сумма квадратов отклонений");
-	Out->Lines->Add(FloatToStr(s2));
+	//Out->Lines->Add("Сумма квадратов отклонений");
+	//Out->Lines->Add(FloatToStr(s2));
 	RunGraph->Enabled = true;
 }
 //---------------------------------------------------------------------------
@@ -316,7 +330,7 @@ void __fastcall TForm1::NOpenClick(TObject *Sender)
 	}
 	RunGraph->Enabled = true;
 	RunBtn->Enabled = true;
-	Degree->Position = point-1;
+	Degree->Position = point-2;
 }
 //---------------------------------------------------------------------------
 //Функция сохраняет список в текстовый файл
@@ -434,7 +448,7 @@ void __fastcall TForm1::N3DClick(TObject *Sender)
 //График - Цвет
 void __fastcall TForm1::NGColorClick(TObject *Sender)
 {
-	if (ColorDialog1->Execute()==ID_OK)
+   if (ColorDialog1->Execute()==ID_OK)
 	{
 		// Series1->ValueColor=ColorDialog1->Color;
 		Series1->AreaColor = ColorDialog1->Color;
@@ -443,10 +457,29 @@ void __fastcall TForm1::NGColorClick(TObject *Sender)
 //---------------------------------------------------------------------------
 void TForm1::AddRedDot(double X)
 {
-	double y = 0;
-//	for (int j=0; j<Degree->Position+1; j++)
-//		y += a[j] * pow(X, j);
-	Series2->AddXY(X, y,"",clRed);
+   if (res.shiftX == 0)
+   {
+	   double y = res.coeffs[0];
+      double xPower = 1.0;
+      for (int j = 1; j <= Degree->Position; j++)
+      {
+          xPower *= X; // На каждой итерации просто домножаем на X
+          y += res.coeffs[j] * xPower;
+      }
+      Series2->AddXY(X, y, "", clRed);
+   }
+   else
+   {
+      X -= res.shiftX;
+      double y = res.coeffs[0];
+      double xPower = 1.0;
+      for (int j = 1; j <= Degree->Position; j++)
+      {
+          xPower *= X; // На каждой итерации просто домножаем на X
+          y += res.coeffs[j] * xPower;
+      }
+      Series2->AddXY(X+res.shiftX, y, "", clRed);
+   }
 }
 //---------------------------------------------------------------------------
 //ПОСТРОИТЬ
@@ -468,13 +501,27 @@ void __fastcall TForm1::DegreeChanging(TObject *Sender, bool &AllowChange)
 	RunGraph->Enabled = false;
 }
 //---------------------------------------------------------------------------
-void __fastcall TForm1::DegreeChangingEx(TObject *Sender, bool &AllowChange, short NewValue,
-			 TUpDownDirection Direction)
+void __fastcall TForm1::DegreeChangingEx(TObject *Sender, bool &AllowChange, int NewValue,
+          TUpDownDirection Direction)
 {
-	if ((unsigned)NewValue >= point)
+	if (NewValue >= (int)point-1)
 		DegreeE->Font->Color = clMaroon;
 	else
 		DegreeE->Font->Color = clWindowText;
+   static const String DegreeNames[] = {
+      L"Константа",
+      L"Прямая",
+      L"Парабола",
+      L"Кубическая функция",
+      L"Квартическая функция",
+      L"Квинтическая функция" // Для степени 5
+   };
+   if (NewValue < 0)
+      NewValue = 0;
+   if (NewValue <= 5)
+      Label1->Caption = DegreeNames[NewValue];
+   else
+      Label1->Caption ="++";
 }
 //---------------------------------------------------------------------------
 
