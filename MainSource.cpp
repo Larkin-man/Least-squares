@@ -9,6 +9,7 @@
 #include <cmath>
 #include <algorithm>
 #include "LMSUnit.h"
+#include "ChebyshevUnit.h"
 #pragma hdrstop
 
 #include "Table.h"
@@ -255,9 +256,9 @@ void __fastcall TForm1::RunClick(TObject *Sender)
 
       Out->Lines->Add("C[" + IntToStr(i) + "] = " + value);
    }
-	tolog("shiftX=\n"+FloatToStr(res.shiftX));
-	tolog("rmse=\n"+FloatToStr(res.rmse));
-	tolog("r2=\n"+FloatToStr(res.r2));
+	tolog("shiftX = \n"+FloatToStr(res.shiftX));
+	tolog("rmse = " + FloatToStrF(res.rmse, ffExponent, 4, 2));
+	tolog("r2 = \n"+FloatToStr(res.r2));
 
 	if (NPrints2->Checked)
 	{

@@ -2,7 +2,7 @@ object Form1: TForm1
   Left = 176
   Top = 27
   Caption = #1052#1077#1090#1086#1076' '#1085#1072#1080#1084#1077#1085#1100#1096#1080#1093' '#1082#1074#1072#1076#1088#1072#1090#1086#1074
-  ClientHeight = 715
+  ClientHeight = 695
   ClientWidth = 1073
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -17,15 +17,16 @@ object Form1: TForm1
   object Splitter1: TSplitter
     Left = 420
     Top = 0
-    Height = 715
+    Height = 695
     ExplicitLeft = 472
     ExplicitTop = -1
+    ExplicitHeight = 715
   end
   object PanelLeft: TPanel
     Left = 0
     Top = 0
     Width = 420
-    Height = 715
+    Height = 695
     Align = alLeft
     BevelOuter = bvNone
     Caption = 'PanelLeft'
@@ -34,7 +35,7 @@ object Form1: TForm1
     TabOrder = 0
     DesignSize = (
       420
-      715)
+      695)
     object Label1: TLabel
       Left = 10
       Top = 635
@@ -259,7 +260,7 @@ object Form1: TForm1
     end
     object Degree: TUpDown
       Left = 143
-      Top = 599
+      Top = 579
       Width = 20
       Height = 31
       Anchors = [akLeft, akBottom]
@@ -271,7 +272,7 @@ object Form1: TForm1
     end
     object DegreeE: TLabeledEdit
       Left = 94
-      Top = 599
+      Top = 579
       Width = 49
       Height = 31
       Margins.Left = 4
@@ -301,7 +302,7 @@ object Form1: TForm1
       Left = 7
       Top = 201
       Width = 158
-      Height = 392
+      Height = 372
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
@@ -326,7 +327,7 @@ object Form1: TForm1
     end
     object PanelApprox: TGroupBox
       Left = 173
-      Top = 476
+      Top = 456
       Width = 220
       Height = 236
       Margins.Left = 4
@@ -534,7 +535,7 @@ object Form1: TForm1
     end
     object RunBtn: TBitBtn
       Left = 19
-      Top = 661
+      Top = 641
       Width = 136
       Height = 39
       Margins.Left = 4
@@ -630,7 +631,7 @@ object Form1: TForm1
       Left = 169
       Top = 10
       Width = 248
-      Height = 459
+      Height = 439
       Anchors = [akLeft, akTop, akRight, akBottom]
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
@@ -641,26 +642,21 @@ object Form1: TForm1
       ScrollBars = ssBoth
       TabOrder = 5
       WordWrap = False
-      ExplicitWidth = 229
     end
   end
   object Panel1: TPanel
     Left = 423
     Top = 0
     Width = 650
-    Height = 715
+    Height = 695
     Align = alClient
     Caption = 'Panel1'
     TabOrder = 1
-    ExplicitLeft = -16
-    ExplicitTop = 45
-    ExplicitWidth = 185
-    ExplicitHeight = 41
     object Chart1: TChart
       Left = 1
       Top = 1
       Width = 648
-      Height = 713
+      Height = 693
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
@@ -685,8 +681,6 @@ object Form1: TForm1
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 0
-      ExplicitLeft = 224
-      ExplicitWidth = 400
       DefaultCanvas = 'TGDIPlusCanvas'
       ColorPaletteIndex = 13
       object Series1: TLineSeries

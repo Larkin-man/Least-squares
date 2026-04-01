@@ -1,9 +1,9 @@
 ﻿#ifndef LMSUnitH
 #define LMSUnitH
-
 #include <vector>
 #include <cmath>
 #include <algorithm>
+#pragma hdrstop
 
 /**
  * Структура LSResult
@@ -33,27 +33,36 @@ public:
 	static bool SolveGauss(std::vector< std::vector<double> >& matrix, std::vector<double>& result)
 	{
 		int n = (int)result.size();
-		for (int i = 0; i < n; i++) {
+		for (int i = 0; i < n; i++)
+      {
 			// Поиск ведущего элемента (частичный выбор по столбцу) для стабильности
 			int maxRow = i;
 			for (int k = i + 1; k < n; k++)
-				if (std::abs(matrix[k][i]) > std::abs(matrix[maxRow][i])) maxRow = k;
-			std::swap(matrix[maxRow], matrix[i]);
+				if (std::abs(matrix[k][i]) > std::abs(matrix[maxRow][i]))
+               maxRow = k;
+            if (maxRow != i)
+               std::swap(matrix[maxRow], matrix[i]); // Перестановка строк
 
 			// Проверка на вырожденность (определитель близок к нулю)
-			if (std::abs(matrix[i][i]) < 1e-18) return false;
+			if (std::abs(matrix[i][i]) < 1e-18)
+				return false;
 
 			// Прямой ход Гаусса
-			for (int k = i + 1; k < n; k++) {
+			for (int k = i + 1; k < n; k++)
+         {
 				double c = -matrix[k][i] / matrix[i][i];
-				for (int j = i; j <= n; j++) matrix[k][j] += (i == j) ? 0 : c * matrix[i][j];
+				for (int j = i; j <= n; j++)
+               matrix[k][j] += (i == j) ? 0 : c * matrix[i][j];
 				matrix[k][i] = 0;
 			}
 		}
+		//После того как прямой ход метода Гаусса превратил левую часть матрицы в «треугольник» (под главной диагональю стоят нули)
 		// Обратный ход Гаусса
-		for (int i = n - 1; i >= 0; i--) {
+		for (int i = n - 1; i >= 0; i--)
+      {
 			result[i] = matrix[i][n] / matrix[i][i];
-			for (int k = i - 1; k >= 0; k--) matrix[k][n] -= matrix[k][i] * result[i];
+			for (int k = i - 1; k >= 0; k--)
+            matrix[k][n] -= matrix[k][i] * result[i];
 		}
 		return true;
 	}
@@ -80,7 +89,8 @@ public:
 		// 1. Находим границы X и вычисляем целочисленный сдвиг (shiftX)
 		// Это предотвращает потерю точности при возведении больших X в степени.
 		double minX = x[0], maxX = x[0], sumY = 0;
-		for (int i = 0; i < n; i++) {
+		for (int i = 0; i < n; i++)
+      {
 			if (x[i] < minX) minX = x[i];
 			if (x[i] > maxX) maxX = x[i];
 			sumY += y[i];
@@ -98,7 +108,8 @@ public:
 		for (int i = 0; i < n; i++) {
 			double xs = x[i] - res.shiftX; // Работаем с центрированным X
 			double xp = 1.0;
-			for (int k = 0; k < num_sums; k++) {
+			for (int k = 0; k < num_sums; k++)
+         {
 				if (k > 0) sum_x[k] += xp;
 				if (k < m) sum_xy[k] += y[i] * xp;
 				xp *= xs;
@@ -107,8 +118,10 @@ public:
 
 		// 3. Заполняем матрицу системы и вызываем решение
 		std::vector< std::vector<double> > matrix(m, std::vector<double>(m + 1, 0.0));
-		for (int i = 0; i < m; i++) {
-			for (int j = 0; j < m; j++) matrix[i][j] = sum_x[i + j];
+		for (int i = 0; i < m; i++)
+      {
+			for (int j = 0; j < m; j++)
+            matrix[i][j] = sum_x[i + j];
 			matrix[i][m] = sum_xy[i];
 		}
 
@@ -117,9 +130,11 @@ public:
 
 		// 4. Пост-расчет статистики точности (RMSE и R-квадрат)
 		double sse = 0, sst = 0;
-		for (int i = 0; i < n; i++) {
+		for (int i = 0; i < n; i++)
+      {
 			double yp = 0, xp = 1, xs = x[i] - res.shiftX;
-			for (int j = 0; j < m; j++) { yp += res.coeffs[j] * xp; xp *= xs; }
+			for (int j = 0; j < m; j++)
+            { yp += res.coeffs[j] * xp; xp *= xs; }
 			sse += (y[i] - yp) * (y[i] - yp);
 			sst += (y[i] - meanY) * (y[i] - meanY);
 		}
@@ -133,6 +148,7 @@ public:
 	 * Predict: Вычисляет значение Y для любого X на основе результата Calculate.
 	 * Автоматически учитывает внутренний сдвиг shiftX.
 	 */
+	// res - структура с коэффициентами и сдвигом после CalculateLMS
 	static double Predict(const LSResult& res, double x)
 	{
 		if (!res.success) return 0;
