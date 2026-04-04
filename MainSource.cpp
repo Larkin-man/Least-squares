@@ -219,7 +219,10 @@ void __fastcall TForm1::RunClick(TObject *Sender)
    if (RadioNormal->Checked)
 	   res = TLeastSquares::Calculate(x, y, S);
    else if (RadioChebyshev->Checked)
-      res = TChebyshevLMS::Calculate(x, y, S); // Степень 5
+   {
+      TChebyshevLMS::Calculate(x, y, S, ch); // Степень 5
+      res = ch;
+   }
 
 	if (res.success == false)
 		return;
@@ -472,8 +475,30 @@ void TForm1::AddRedDot(double X)
 //ПОСТРОИТЬ
 void __fastcall TForm1::RunGraphClick(TObject *Sender)
 {
+   //   for (int i = 0; i < x.size(); i++)
+   //   {
+   //      tolog("X=" + FloatToStr(x[i]) +
+   //                      " Real Y=" + FloatToStr(y[i]) +
+   //                      " Pred Y=" + FloatToStr(TChebyshevLMS::Predict(ch, x[i])));
+   //   }
 	Series2->BeginUpdate();
 	Series2->Clear();
+
+   //Series1->Pointer->Visible = true;
+   //Series1->Pointer->Style = psRectangle; // Квадратики
+   //Series1->SeriesColor = clRed;
+   if (res.Method == LMSOutResult::Chebyshev)
+   {
+      // 3. Рисуем аппроксимирующую линию // Рисуем плавную кривую (берем 100 шагов между min и max)
+      // Важно: берем чуть больше точек, чтобы линия была плавной
+      double step = (res.maxX - res.minX) / 50.0;
+      for(double curX = res.minX; curX <= res.maxX; curX += step)
+      {
+          double curY = TChebyshevLMS::Predict(ch, curX);
+          Series2->AddXY(curX, curY);
+      }
+      return;
+   }
 	if (!OnlyX->Checked)
 		for (double xc=AppXn->Position; xc<=AppXk->Position; xc+=AppStep->Position)
 			AddRedDot(xc);

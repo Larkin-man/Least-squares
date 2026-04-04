@@ -130,9 +130,11 @@ public:	// User declarations
 			Out->Lines->Append(nam+" "+str);
 	}
 	TLeastSquares ti;
+   TChebResult ch;
    struct LMSOutResult:public LSResult
    {
       double minX, maxX;			// Границы для нормализации Чебышёва
+      enum CalculatingMethod { Norm, Chebyshev } Method;
       void Clear()
       {
          shiftX = 0;
@@ -146,6 +148,7 @@ public:	// User declarations
 	      rmse = rhs.rmse;                // Среднеквадратичная ошибка (чем ближе к 0, тем лучше)
 	      r2 = rhs.r2;                  // Коэффициент детерминации (1.0 - идеальное совпадение, 0 - плохо)
 	      success = rhs.success;
+         Method = Norm;
          return *this;
       }
       LMSOutResult& operator=(TChebResult rhs)
@@ -156,6 +159,7 @@ public:	// User declarations
 	      rmse = rhs.rmse;                // Среднеквадратичная ошибка (чем ближе к 0, тем лучше)
 	      r2 = rhs.r2;                  // Коэффициент детерминации (1.0 - идеальное совпадение, 0 - плохо)
 	      success = rhs.success;
+         Method = Chebyshev;
          return *this;
       }
 

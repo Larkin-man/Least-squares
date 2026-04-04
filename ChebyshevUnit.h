@@ -51,14 +51,15 @@ private:
 
 public:
 	// Основной расчет МНК по Чебышёву
-	static TChebResult Calculate(const std::vector<double>& x, const std::vector<double>& y, int degree)
+	//static TChebResult Calculate(const std::vector<double>& x, const std::vector<double>& y, int degree)
+   static void Calculate(const std::vector<double>& x, const std::vector<double>& y, int degree, TChebResult &res)
 	{
-		TChebResult res;
+		//TChebResult res;
 		res.success = false;
 		int n = (int)x.size();
 		int m = degree + 1;
-		if (n < m || degree < 0) 
-			return res;
+		if (n < m || degree < 0)
+			return;
 
 		// 1. Поиск границ для нормализации x в [-1, 1]
 		res.minX = x[0]; res.maxX = x[0];
@@ -71,7 +72,7 @@ public:
 		}
 		double range = res.maxX - res.minX;
 		if (range < 1e-18) 
-			return res;
+			return;
 
 		// 2. Сбор матрицы сумм Ti(x)*Tj(x)
 		std::vector< std::vector<double> > matrix(m, std::vector<double>(m + 1, 0.0));
@@ -95,24 +96,37 @@ public:
 
 		res.coeffs.resize(m);
 		if (!SolveGauss(matrix, res.coeffs)) 
-			return res;
+			return;
 
-		// 3. Расчет статистики
-		double sse = 0, sst = 0, meanY = sumY / n;
-		for (int k = 0; k < n; k++) 
-		{
-			double yp = Predict(res, x[k]);
-			sse += (y[k] - yp) * (y[k] - yp);
-			sst += (y[k] - meanY) * (y[k] - meanY);
-		}
-		res.rmse = std::sqrt(sse / n);
-		res.r2 = (sst > 1e-18) ? (1.0 - sse / sst) : 1.0;
-		res.success = true;
-		return res;
+		// 3. Расчет статистики (исправленный)
+      double sse = 0, sst = 0, meanY = sumY / n;
+      for (int k = 0; k < n; k++)
+      {
+          // Считаем значение полинома прямо на месте, используя нормализованный x
+          double x_norm = (2.0 * x[k] - (res.maxX + res.minX)) / (res.maxX - res.minX);
+          double yp = 0, t0 = 1.0, t1 = x_norm;
+
+          for (int i = 0; i < m; i++) {
+              if (i == 0) yp += res.coeffs[i] * t0;
+              else if (i == 1) yp += res.coeffs[i] * t1;
+              else {
+                  double t2 = 2.0 * x_norm * t1 - t0;
+                  yp += res.coeffs[i] * t2;
+                  t0 = t1; t1 = t2;
+              }
+          }
+
+          sse += (y[k] - yp) * (y[k] - yp);
+          sst += (y[k] - meanY) * (y[k] - meanY);
+      }
+      res.rmse = std::sqrt(sse / n);
+      if (res.rmse < 1e-12) res.rmse = 0; // Округляем машинный ноль
+      res.r2 = (sst > 1e-18) ? (1.0 - sse / sst) : 1.0;
+      res.success = true;
 	}
 
 	// Прогноз Y для любого X
-	static double Predict(const TChebResult& res, double x) 
+	static double Predict(const TChebResult& res, double x)
 	{
 		if (!res.success) return 0;
 		double x_norm = (2.0 * x - (res.maxX + res.minX)) / (res.maxX - res.minX);
@@ -124,7 +138,7 @@ public:
 				y += res.coeffs[i] * t_prev;
 			else if (i == 1) 
 				y += res.coeffs[i] * t_curr;
-			else 
+			else
 			{
 				double t_next = 2.0 * x_norm * t_curr - t_prev;
 				y += res.coeffs[i] * t_next;
