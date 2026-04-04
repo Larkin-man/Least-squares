@@ -77,7 +77,7 @@ public:
 	 * 3. Решает СЛАУ.
 	 * 4. Считает статистику точности (RMSE, R2).
 	 */
-	LSResult Calculate(const std::vector<double>& x, const std::vector<double>& y, int degree)
+	static LSResult Calculate(const std::vector<double>& x, const std::vector<double>& y, int degree)
 	{
 		LSResult res;
 		res.success = false;

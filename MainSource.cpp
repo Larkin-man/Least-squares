@@ -208,32 +208,18 @@ void __fastcall TForm1::RunClick(TObject *Sender)
 	}
 	Form2->StringGrid1->ColCount = S+2;
 	Form2->StringGrid1->RowCount = S+1;
-	//std::vector<double> x, y;
-	//std::vector<T> a, b;
-	//std::vector<std::vector<T> > sums;
-	//std::vector<std::vector<double> > pows;
-	//a.resize(S+1);
-	//b.resize(S+1);
 	x.resize(N);
 	y.resize(N);
-
 	for(int p=0; p<N; p++)
 	{
 		x[p] = StrToFloat(Grid->Cells[1][p+1]);
 		y[p] = StrToFloat(Grid->Cells[2][p+1]);
 	}
-
-	//int powcount = S+S+1;
-	//pows.resize(powcount);
-
-	std::vector<double> result(S, 0.0);
-	//result = PolyFit(x, y, S);
-
-	//lsr = TLeastSquares::Calculate(x, y, S);
-	res = ti.Calculate(x, y, S);
-
-	//a.clear();
-	//a.resize(S + 1, 0);
+   res.Clear();
+   if (RadioNormal->Checked)
+	   res = TLeastSquares::Calculate(x, y, S);
+   else if (RadioChebyshev->Checked)
+      res = TChebyshevLMS::Calculate(x, y, S); // Степень 5
 
 	if (res.success == false)
 		return;

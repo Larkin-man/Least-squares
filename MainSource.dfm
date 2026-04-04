@@ -2,7 +2,7 @@ object Form1: TForm1
   Left = 176
   Top = 27
   Caption = #1052#1077#1090#1086#1076' '#1085#1072#1080#1084#1077#1085#1100#1096#1080#1093' '#1082#1074#1072#1076#1088#1072#1090#1086#1074
-  ClientHeight = 695
+  ClientHeight = 675
   ClientWidth = 1073
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -17,7 +17,7 @@ object Form1: TForm1
   object Splitter1: TSplitter
     Left = 420
     Top = 0
-    Height = 695
+    Height = 675
     ExplicitLeft = 472
     ExplicitTop = -1
     ExplicitHeight = 715
@@ -26,22 +26,23 @@ object Form1: TForm1
     Left = 0
     Top = 0
     Width = 420
-    Height = 695
+    Height = 675
     Align = alLeft
     BevelOuter = bvNone
     Caption = 'PanelLeft'
     Constraints.MinWidth = 360
     ShowCaption = False
     TabOrder = 0
+    ExplicitLeft = 8
     DesignSize = (
       420
-      695)
+      675)
     object Label1: TLabel
       Left = 10
-      Top = 635
-      Width = 48
+      Top = 596
+      Width = 74
       Height = 18
-      Caption = 'Label1'
+      Caption = #1050#1086#1085#1089#1090#1072#1085#1090#1072
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -16
@@ -260,7 +261,7 @@ object Form1: TForm1
     end
     object Degree: TUpDown
       Left = 143
-      Top = 579
+      Top = 559
       Width = 20
       Height = 31
       Anchors = [akLeft, akBottom]
@@ -272,7 +273,7 @@ object Form1: TForm1
     end
     object DegreeE: TLabeledEdit
       Left = 94
-      Top = 579
+      Top = 559
       Width = 49
       Height = 31
       Margins.Left = 4
@@ -302,7 +303,7 @@ object Form1: TForm1
       Left = 7
       Top = 201
       Width = 158
-      Height = 372
+      Height = 284
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
@@ -327,7 +328,7 @@ object Form1: TForm1
     end
     object PanelApprox: TGroupBox
       Left = 173
-      Top = 456
+      Top = 436
       Width = 220
       Height = 236
       Margins.Left = 4
@@ -535,7 +536,7 @@ object Form1: TForm1
     end
     object RunBtn: TBitBtn
       Left = 19
-      Top = 641
+      Top = 621
       Width = 136
       Height = 39
       Margins.Left = 4
@@ -631,7 +632,7 @@ object Form1: TForm1
       Left = 169
       Top = 10
       Width = 248
-      Height = 439
+      Height = 419
       Anchors = [akLeft, akTop, akRight, akBottom]
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
@@ -643,12 +644,37 @@ object Form1: TForm1
       TabOrder = 5
       WordWrap = False
     end
+    object GroupBox1: TGroupBox
+      Left = 7
+      Top = 491
+      Width = 158
+      Height = 60
+      TabOrder = 7
+      object RadioNormal: TRadioButton
+        Left = 6
+        Top = 8
+        Width = 113
+        Height = 17
+        Caption = #1055#1086#1083#1080#1085#1086#1084
+        Checked = True
+        TabOrder = 0
+        TabStop = True
+      end
+      object RadioChebyshev: TRadioButton
+        Left = 6
+        Top = 34
+        Width = 113
+        Height = 17
+        Caption = #1063#1077#1073#1099#1096#1105#1074
+        TabOrder = 1
+      end
+    end
   end
   object Panel1: TPanel
     Left = 423
     Top = 0
     Width = 650
-    Height = 695
+    Height = 675
     Align = alClient
     Caption = 'Panel1'
     TabOrder = 1
@@ -656,7 +682,7 @@ object Form1: TForm1
       Left = 1
       Top = 1
       Width = 648
-      Height = 693
+      Height = 673
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4

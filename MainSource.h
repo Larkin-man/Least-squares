@@ -74,6 +74,9 @@ __published:	// IDE-managed Components
 	TSplitter *Splitter1;
 	TPanel *Panel1;
    TLabel *Label1;
+   TGroupBox *GroupBox1;
+   TRadioButton *RadioNormal;
+   TRadioButton *RadioChebyshev;
 	void __fastcall NExitClick(TObject *Sender);
 	void __fastcall RunClick(TObject *Sender);
 	void __fastcall NNewClick(TObject *Sender);
@@ -127,7 +130,36 @@ public:	// User declarations
 			Out->Lines->Append(nam+" "+str);
 	}
 	TLeastSquares ti;
-	LSResult res;
+   struct LMSOutResult:public LSResult
+   {
+      double minX, maxX;			// Границы для нормализации Чебышёва
+      void Clear()
+      {
+         shiftX = 0;
+         minX = maxX = 0;
+         success = false;
+      }
+      LMSOutResult& operator=(LSResult rhs)
+      {
+         coeffs = rhs.coeffs; // Вектор найденных коэффициентов полинома [a0, a1, a2...]
+	      shiftX = rhs.shiftX;            // Целочисленный сдвиг для защиты от переполнения
+	      rmse = rhs.rmse;                // Среднеквадратичная ошибка (чем ближе к 0, тем лучше)
+	      r2 = rhs.r2;                  // Коэффициент детерминации (1.0 - идеальное совпадение, 0 - плохо)
+	      success = rhs.success;
+         return *this;
+      }
+      LMSOutResult& operator=(TChebResult rhs)
+      {
+         coeffs = rhs.coeffs; // Вектор найденных коэффициентов полинома [a0, a1, a2...]
+	      minX = rhs.minX;                // Границы для нормализации
+         maxX = rhs.maxX;
+	      rmse = rhs.rmse;                // Среднеквадратичная ошибка (чем ближе к 0, тем лучше)
+	      r2 = rhs.r2;                  // Коэффициент детерминации (1.0 - идеальное совпадение, 0 - плохо)
+	      success = rhs.success;
+         return *this;
+      }
+
+   } res;
 };
 //---------------------------------------------------------------------------
 extern PACKAGE TForm1 *Form1;

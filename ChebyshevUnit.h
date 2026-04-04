@@ -8,7 +8,7 @@
 #pragma hdrstop
 
 // Структура для хранения всех результатов аппроксимации
-struct TChebResult 
+struct TChebResult
 {
 	std::vector<double> coeffs;	// Коэффициенты в базисе Чебышёва
 	double minX, maxX;			// Границы для нормализации
@@ -51,7 +51,7 @@ private:
 
 public:
 	// Основной расчет МНК по Чебышёву
-	static TChebResult Calculate(const std::vector<double>& x, const std::vector<double>& y, int degree) 
+	static TChebResult Calculate(const std::vector<double>& x, const std::vector<double>& y, int degree)
 	{
 		TChebResult res;
 		res.success = false;
@@ -77,13 +77,14 @@ public:
 		std::vector< std::vector<double> > matrix(m, std::vector<double>(m + 1, 0.0));
 		std::vector<double> basis(m);
 
-		for (int k = 0; k < n; k++) 
+		for (int k = 0; k < n; k++)
 		{
 			double x_norm = (2.0 * x[k] - (res.maxX + res.minX)) / range;
 			// Рекуррентное вычисление базиса Чебышёва (без pow)
 			basis[0] = 1.0;
 			if (m > 1) basis[1] = x_norm;
-			for (int i = 2; i < m; i++) basis[i] = 2.0 * x_norm * basis[i - 1] - basis[i - 2];
+			for (int i = 2; i < m; i++)
+            basis[i] = 2.0 * x_norm * basis[i - 1] - basis[i - 2];
 
 			for (int i = 0; i < m; i++) 
 			{
