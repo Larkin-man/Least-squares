@@ -134,12 +134,14 @@ public:
       {
 			double yp = 0, xp = 1, xs = x[i] - res.shiftX;
 			for (int j = 0; j < m; j++)
-            { yp += res.coeffs[j] * xp; xp *= xs; }
+            { yp += res.coeffs[j] * xp;
+            xp *= xs; }
 			sse += (y[i] - yp) * (y[i] - yp);
 			sst += (y[i] - meanY) * (y[i] - meanY);
 		}
 		res.rmse = std::sqrt(sse / n);
-		res.r2 = (sst > 1e-18) ? (1.0 - sse / sst) : 1.0;
+      res.r2 = (1.0 - sse / sst);
+		//res.r2 = (sst > 1e-18) ? (1.0 - sse / sst) : 1.0;
 		res.success = true;
 		return res;
 	}
@@ -151,9 +153,11 @@ public:
 	// res - структура с коэффициентами и сдвигом после CalculateLMS
 	static double Predict(const LSResult& res, double x)
 	{
-		if (!res.success) return 0;
+		if (!res.success)
+         return 0;
 		double y = 0, xp = 1, xs = x - res.shiftX;
-		for (size_t i = 0; i < res.coeffs.size(); i++) {
+		for (size_t i = 0; i < res.coeffs.size(); i++)
+      {
 			y += res.coeffs[i] * xp;
 			xp *= xs;
 		}

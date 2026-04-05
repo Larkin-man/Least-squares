@@ -135,6 +135,7 @@ public:	// User declarations
    {
       double minX, maxX;			// Границы для нормализации Чебышёва
       enum CalculatingMethod { Norm, Chebyshev } Method;
+      TFitQuality quality;
       void Clear()
       {
          shiftX = 0;
@@ -159,6 +160,7 @@ public:	// User declarations
 	      rmse = rhs.rmse;                // Среднеквадратичная ошибка (чем ближе к 0, тем лучше)
 	      r2 = rhs.r2;                  // Коэффициент детерминации (1.0 - идеальное совпадение, 0 - плохо)
 	      success = rhs.success;
+         quality = rhs.quality;
          Method = Chebyshev;
          return *this;
       }

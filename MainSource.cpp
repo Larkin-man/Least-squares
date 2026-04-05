@@ -223,7 +223,6 @@ void __fastcall TForm1::RunClick(TObject *Sender)
       TChebyshevLMS::Calculate(x, y, S, ch); // Степень 5
       res = ch;
    }
-
 	if (res.success == false)
 		return;
 
@@ -245,9 +244,24 @@ void __fastcall TForm1::RunClick(TObject *Sender)
 
       Out->Lines->Add("C[" + IntToStr(i) + "] = " + value);
    }
-	tolog("shiftX = \n"+FloatToStr(res.shiftX));
-	tolog("rmse = " + FloatToStrF(res.rmse, ffExponent, 4, 2));
-	tolog("r2 = \n"+FloatToStr(res.r2));
+   if (res.Method == LMSOutResult::Norm)
+      tolog("shiftX = \n"+FloatToStr(res.shiftX));
+   else
+   {
+      tolog(TChebyshevLMS::GetFormulaString(ch));
+      String status;
+      switch(res.quality)
+      {
+          case fqExact:      status = "Perfect (Machine Zero)"; break;
+          case fqNoise:      status = "High Precision (Double Noise)"; break;
+          case fqApprox:     status = "Approximation"; break;
+          case fqInaccurate: status = "Low Accuracy / Check Data"; break;
+      }
+
+      tolog("Quality: " + status);
+   }
+	tolog("RMSE = " + FloatToStrF(res.rmse, ffExponent, 4, 2));
+	tolog("R2 = \n"+FloatToStr(res.r2));
 
 	if (NPrints2->Checked)
 	{
@@ -489,13 +503,25 @@ void __fastcall TForm1::RunGraphClick(TObject *Sender)
    //Series1->SeriesColor = clRed;
    if (res.Method == LMSOutResult::Chebyshev)
    {
-      // 3. Рисуем аппроксимирующую линию // Рисуем плавную кривую (берем 100 шагов между min и max)
-      // Важно: берем чуть больше точек, чтобы линия была плавной
-      double step = (res.maxX - res.minX) / 50.0;
-      for(double curX = res.minX; curX <= res.maxX; curX += step)
+      if (OnlyX->Checked)
       {
-          double curY = TChebyshevLMS::Predict(ch, curX);
-          Series2->AddXY(curX, curY);
+         for (unsigned int i = 0; i < x.size(); i++)
+		      if (x[i] >= AppXn->Position && x[i] <= AppXk->Position)
+            {
+               double curY = TChebyshevLMS::Predict(ch, x[i]);
+               Series2->AddXY(x[i], curY);
+            }
+      }
+      else
+      {
+         // 3. Рисуем аппроксимирующую линию // Рисуем плавную кривую (берем 50 шагов между min и max)
+         // Важно: берем чуть больше точек, чтобы линия была плавной
+         double step = (res.maxX - res.minX) / 50.0;
+         for(double curX = res.minX; curX <= res.maxX; curX += step)
+         {
+             double curY = TChebyshevLMS::Predict(ch, curX);
+             Series2->AddXY(curX, curY);
+         }
       }
       return;
    }
