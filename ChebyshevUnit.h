@@ -37,16 +37,19 @@ public:
 	{
       int n = (int)result.size();
       if (n == 0 || (int)matrix.size() < n || (int)matrix[0].size() < n + 1)
-        return false; // Защита от неправильных размеров
+         return false; // Защита от неправильных размеров
+
 		for (int i = 0; i < n; i++)
 		{
 			int maxRow = i;
 			for (int k = i + 1; k < n; k++)
-				if (std::abs(matrix[k][i]) > std::abs(matrix[maxRow][i])) 
+				if (std::abs(matrix[k][i]) > std::abs(matrix[maxRow][i]))
 					maxRow = k;
 			std::swap(matrix[maxRow], matrix[i]);
 			if (std::abs(matrix[i][i]) < 1e-18)
 				return false;
+
+         // Прямой ход Гаусса
 			for (int k = i + 1; k < n; k++)
 			{
 				double c = -matrix[k][i] / matrix[i][i];
@@ -55,6 +58,8 @@ public:
 				matrix[k][i] = 0;
 			}
 		}
+      // После того как прямой ход метода Гаусса превратил левую часть матрицы в «треугольник» (под главной диагональю стоят нули)
+		// Обратный ход Гаусса
 		for (int i = n - 1; i >= 0; i--)
 		{
 			result[i] = matrix[i][n] / matrix[i][i];
@@ -67,7 +72,6 @@ public:
 	// Основной расчет МНК по Чебышёву
    static void Calculate(const std::vector<double>& x, const std::vector<double>& y, int degree, TChebResult &res)
 	{
-		//TChebResult res;
 		res.success = false;
 		int n = (int)x.size();
 		int m = degree + 1;
@@ -111,7 +115,7 @@ public:
 		if (!SolveGauss(matrix, res.coeffs))
 			return;
 
-		// 3. Расчет статистики (исправленный)
+		// 3. Расчет статистики
       double sse = 0, sst = 0, meanY = sumY / n;
       for (int k = 0; k < n; k++)
       {
@@ -154,7 +158,8 @@ public:
 	// Прогноз Y для любого X
 	static double Predict(const TChebResult& res, double x)
 	{
-		if (!res.success) return 0;
+		if (!res.success)
+         return 0;
 		double x_norm = (2.0 * x - (res.maxX + res.minX)) / (res.maxX - res.minX);
 		int m = (int)res.coeffs.size();
 		double y = 0, t_prev = 1.0, t_curr = x_norm;
@@ -175,11 +180,12 @@ public:
 	}
 
 	// Пересчет в стандартные коэффициенты a0 + a1*x + a2*x^2...
-	static std::vector<double> GetStandardCoeffs(const TChebResult& res) 
+	static std::vector<double> GetStandardCoeffs(const TChebResult& res)
 	{
 		int m = (int)res.coeffs.size();
 		std::vector<double> finalA(m, 0.0);
-		if (!res.success) return finalA;
+		if (!res.success)
+         return finalA;
 
 		double A = 2.0 / (res.maxX - res.minX);
 		double B = -(res.maxX + res.minX) / (res.maxX - res.minX);

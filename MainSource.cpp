@@ -10,6 +10,7 @@
 #include <algorithm>
 #include "LMSUnit.h"
 #include "ChebyshevUnit.h"
+#include "NamesLMSUnit.h"
 #pragma hdrstop
 
 #include "Table.h"

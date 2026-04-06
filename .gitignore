@@ -24,7 +24,6 @@
 # C++ object files produced when C/C++ Output file generation is configured.
 # Uncomment this if you are not using external objects (zlib library for example).
 *.obj
-#
 
 # Delphi compiler-generated binaries (safe to delete)
 *.exe
@@ -58,8 +57,10 @@
 *.dsk
 
 # Delphi history and backups
+Debug/
 __history/
 __recovery/
+__astcache/
 *.~*
 
 # Castalia statistics file (since XE7 Castalia is distributed with Delphi)
@@ -68,6 +69,4 @@ __recovery/
 # Boss dependency manager vendor folder https://github.com/HashLoad/boss
 modules/
 MNK.bpf
-mnk.vcproj.Larkin.user
 del.bat
-one.txt
