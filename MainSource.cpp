@@ -31,6 +31,7 @@ __fastcall TForm1::TForm1(TComponent* Owner): TForm(Owner)
 	NNewClick(NULL);
 	//OpenDialog1->InitialDir = GetCurrentDir();
 	//SaveDialog1->InitialDir = GetCurrentDir();
+   Notebook1->PageIndex = 0;
 }
 //---------------------------------------------------------------------------
 //Начать заново
@@ -91,6 +92,7 @@ void __fastcall TForm1::AddClick(TObject *Sender)
 	Series1->AddXY(X, Y, "", clNavy);
 	//StatusBar1->SimpleText=("");
 	RunBtn->Enabled = true;
+   BringColor(Degree->Position);
 }
 //---------------------------------------------------------------------------
 void __fastcall TForm1::NExitClick(TObject *Sender)
@@ -372,7 +374,7 @@ void __fastcall TForm1::NFontClick(TObject *Sender)
 //Удалить точку
 void __fastcall TForm1::NDeleteClick(TObject *Sender)
 {
-	if (Grid->Row < 1)
+	if (Grid->RowCount < 1)
 		return;
 	point--;
 	for (int i = Grid->Row; i < Grid->RowCount-1; i++)
@@ -384,6 +386,7 @@ void __fastcall TForm1::NDeleteClick(TObject *Sender)
 	Grid->RowCount--;
 	Label7->Caption = point;
 	Series1->Delete(Grid->Row-1);
+   BringColor(Degree->Position);
 }
 //---------------------------------------------------------------------------
 //Таб
@@ -540,10 +543,10 @@ void __fastcall TForm1::DegreeChanging(TObject *Sender, bool &AllowChange)
 	RunGraph->Enabled = false;
 }
 //---------------------------------------------------------------------------
-void __fastcall TForm1::DegreeChangingEx(TObject *Sender, bool &AllowChange, int NewValue,
-          TUpDownDirection Direction)
+void TForm1::BringColor(int NewDegree)
 {
-	if (NewValue >= (int)point-1)
+   tolog(NewDegree); tolog(point);
+   if (NewDegree >= (int)point-1)
 		DegreeE->Font->Color = clMaroon;
 	else
 		DegreeE->Font->Color = clWindowText;
@@ -555,12 +558,18 @@ void __fastcall TForm1::DegreeChangingEx(TObject *Sender, bool &AllowChange, int
       L"Квартическая функция",
       L"Квинтическая функция" // Для степени 5
    };
-   if (NewValue < 0)
-      NewValue = 0;
-   if (NewValue <= 5)
-      Label1->Caption = DegreeNames[NewValue];
+   if (NewDegree < 0)
+      NewDegree = 0;
+   if (NewDegree <= 5)
+      Label1->Caption = DegreeNames[NewDegree];
    else
       Label1->Caption ="++";
+}
+//---------------------------------------------------------------------------
+void __fastcall TForm1::DegreeChangingEx(TObject *Sender, bool &AllowChange, int NewValue,
+          TUpDownDirection Direction)
+{
+   BringColor(NewValue);
 }
 //---------------------------------------------------------------------------
 
@@ -580,4 +589,12 @@ void __fastcall TForm1::GridRowMoved(TObject *Sender, int FromIndex, int ToIndex
 }
 //---------------------------------------------------------------------------
 
+void __fastcall TForm1::NXSClick(TObject *Sender)
+{
+   if (NXS->Checked)
+      Notebook1->PageIndex = 0;
+   else
+      Notebook1->PageIndex = 1;
+}
+//---------------------------------------------------------------------------
 

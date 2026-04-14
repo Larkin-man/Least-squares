@@ -34,10 +34,7 @@ __published:	// IDE-managed Components
 	TMenuItem *N9;
 	TMenuItem *NKoeff;
 	TMenuItem *NPointClear;
-	TPanel *PanelNewPoint;
-	TLabel *Label4;
 	TMenuItem *NNew;
-	TLabel *Label7;
 	TFontDialog *FontDialog1;
 	TMenuItem *N3D;
 	TMenuItem *NAdd;
@@ -46,19 +43,13 @@ __published:	// IDE-managed Components
 	TMenuItem *Nformat;
 	TMenuItem *NGridClear;
 	TColorDialog *ColorDialog1;
-	TBitBtn *Add;
 	TBitBtn *RunBtn;
-	TStringGrid *Grid;
 	TChart *Chart1;
 	TLineSeries *Series1;
 	TMenuItem *NGColor;
 	TGroupBox *PanelApprox;
 	TLineSeries *Series2;
 	TBitBtn *RunGraph;
-	TLabeledEdit *NewXE;
-	TUpDown *NewX;
-	TLabeledEdit *NewYE;
-	TUpDown *NewY;
 	TUpDown *AppXk;
 	TLabeledEdit *AppXnE;
 	TUpDown *AppXn;
@@ -74,9 +65,22 @@ __published:	// IDE-managed Components
 	TSplitter *Splitter1;
 	TPanel *Panel1;
    TLabel *Label1;
+   TNotebook *Notebook1;
+   TStringGrid *Grid;
    TGroupBox *GroupBox1;
    TRadioButton *RadioNormal;
    TRadioButton *RadioChebyshev;
+   TPanel *PanelNewPoint;
+   TLabel *Label4;
+   TLabel *Label7;
+   TBitBtn *Add;
+   TLabeledEdit *NewXE;
+   TUpDown *NewX;
+   TUpDown *NewY;
+   TLabeledEdit *NewYE;
+   TMenuItem *NXS;
+   TMenuItem *N2;
+   TMemo *Ins;
 	void __fastcall NExitClick(TObject *Sender);
 	void __fastcall RunClick(TObject *Sender);
 	void __fastcall NNewClick(TObject *Sender);
@@ -102,6 +106,7 @@ __published:	// IDE-managed Components
 	void __fastcall GridRowMoved(TObject *Sender, int FromIndex, int ToIndex);
    void __fastcall DegreeChangingEx(TObject *Sender, bool &AllowChange, int NewValue,
           TUpDownDirection Direction);
+   void __fastcall NXSClick(TObject *Sender);
 private:	// User declarations
 //Только в пределах данного модуля
 public:	// User declarations
@@ -166,6 +171,7 @@ public:	// User declarations
       }
 
    } res;
+   void BringColor(int NewDegree);
 };
 //---------------------------------------------------------------------------
 extern PACKAGE TForm1 *Form1;

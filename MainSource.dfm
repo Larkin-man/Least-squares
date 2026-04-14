@@ -2,7 +2,7 @@ object Form1: TForm1
   Left = 176
   Top = 27
   Caption = #1052#1077#1090#1086#1076' '#1085#1072#1080#1084#1077#1085#1100#1096#1080#1093' '#1082#1074#1072#1076#1088#1072#1090#1086#1074
-  ClientHeight = 675
+  ClientHeight = 635
   ClientWidth = 1073
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -15,9 +15,9 @@ object Form1: TForm1
   PixelsPerInch = 120
   TextHeight = 23
   object Splitter1: TSplitter
-    Left = 420
+    Left = 401
     Top = 0
-    Height = 675
+    Height = 635
     ExplicitLeft = 472
     ExplicitTop = -1
     ExplicitHeight = 715
@@ -25,21 +25,20 @@ object Form1: TForm1
   object PanelLeft: TPanel
     Left = 0
     Top = 0
-    Width = 420
-    Height = 675
+    Width = 401
+    Height = 635
     Align = alLeft
     BevelOuter = bvNone
     Caption = 'PanelLeft'
     Constraints.MinWidth = 360
     ShowCaption = False
     TabOrder = 0
-    ExplicitLeft = 8
     DesignSize = (
-      420
-      675)
+      401
+      635)
     object Label1: TLabel
-      Left = 10
-      Top = 596
+      Left = 13
+      Top = 556
       Width = 74
       Height = 18
       Caption = #1050#1086#1085#1089#1090#1072#1085#1090#1072
@@ -50,230 +49,21 @@ object Form1: TForm1
       Font.Style = []
       ParentFont = False
     end
-    object PanelNewPoint: TPanel
-      Left = 10
-      Top = 10
-      Width = 154
-      Height = 183
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
-      PopupMenu = PopupMenu2
-      TabOrder = 0
-      object Label4: TLabel
-        Left = 10
-        Top = 10
-        Width = 76
-        Height = 25
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
-        Alignment = taCenter
-        Caption = #1058#1086#1095#1082#1072' '#8470
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -20
-        Font.Name = 'MS Sans Serif'
-        Font.Style = []
-        ParentFont = False
-      end
-      object Label7: TLabel
-        Left = 92
-        Top = 10
-        Width = 11
-        Height = 25
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
-        Caption = '_'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -20
-        Font.Name = 'MS Sans Serif'
-        Font.Style = []
-        ParentFont = False
-      end
-      object Add: TBitBtn
-        Left = 10
-        Top = 134
-        Width = 135
-        Height = 40
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
-        Caption = '&'#1044#1086#1073#1072#1074#1080#1090#1100
-        Default = True
-        Glyph.Data = {
-          96090000424D9609000000000000360000002800000028000000140000000100
-          18000000000060090000120B0000120B0000000000000000000000FF0000FF00
-          00FF0000FF0000FF0000FF0000FF0000FF00FFE9BDFFE5B4FFE5B3FFEBC000FF
-          0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000
-          FF0000FF0000FF0000FF0000FF00EBEBEBE6E6E6E6E6E6ECECEC00FF0000FF00
-          00FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF
-          0000FF0000FF0000FF00F29818F39918F49918F99C1800FF0000FF0000FF0000
-          FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF00
-          00FF0000FF0092929292929293939395959500FF0000FF0000FF0000FF0000FF
-          0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000
-          FF00FFA218F89C18F89C18FFA41800FF0000FF0000FF0000FF0000FF0000FF00
-          00FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF009898
-          9895959595959598989800FF0000FF0000FF0000FF0000FF0000FF0000FF0000
-          FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF00FFA318EE9618
-          EE9618FFA51800FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF
-          0000FF0000FF0000FF0000FF0000FF0000FF0000FF0098989890909090909098
-          989800FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF00
-          00FF0000FF0000FF0000FF0000FF0000FF00FE9E18E89218E89218FFA31800FF
-          0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000
-          FF0000FF0000FF0000FF0000FF009898988D8D8D8D8D8D98989800FF0000FF00
-          00FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF
-          0000FF0000FF0000FF00FA9D18E18E18E08E18FF9F1800FF0000FF0000FF0000
-          FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF00
-          00FF0000FF0096969689898989898998989800FF0000FF0000FF0000FF0000FF
-          0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000
-          FF00F99C18D98918D88918FD9E1800FF0000FF0000FF0000FF0000FF0000FF00
-          00FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF009595
-          9585858585858597979700FF0000FF0000FF0000FF0000FF0000FF0000FF0000
-          FF0000FF00FFE5B2FFE1A6FFE3ACFFE2ACFFE2ACFFE3B0FFD99AE99218D38518
-          D38518ED9518FFDB9FFFE3B0FFE2ACFFE2ACFFE2ACFFE1A5FFE6B400FF0000FF
-          00E5E5E5DFDFDFE2E2E2E2E2E2E2E2E2E4E4E4D9D9D98D8D8D8282828282828F
-          8F8FDCDCDCE4E4E4E2E2E2E2E2E2E2E2E2DFDFDFE6E6E600FF0000FF00DD8C18
-          B57418C37D18C67F18C98018CC8318CD8318D08418D08418D08418D08418CD83
-          18CC8318CA8118C67F18C27C18B57418E8921800FF0000FF008787877373737A
-          7A7A7C7C7C7D7D7D7F7F7F7F7F7F8181818181818181818181817F7F7F7F7F7F
-          7E7E7E7C7C7C7A7A7A7373738D8D8D00FF0000FF00D788189E6718B17118B574
-          18B97718BF7A18C27C18C87F18C98018C98018C87F18C27C18BF7A18BB7718B6
-          7518B171189E6718E38F1800FF0000FF00848484686868717171737373757575
-          7878787A7A7A7D7D7D7D7D7D7D7D7D7D7D7D7A7A7A7878787676767474747171
-          716868688A8A8A00FF0000FF00C37D18976218A86C18AC6E18B17118B47418B7
-          7518BF7A18C37D18C37D18BF7A18B77518B57418B27218AE6F18A86D18986218
-          D1851800FF0000FF007A7A7A6464646D6D6D6F6F6F7171717373737474747878
-          787A7A7A7A7A7A7878787474747373737272727070706D6D6D65656581818100
-          FF0000FF00FFB751F2A73FF8AE48F8AE48F9AE48F8AF4AFAAC3FCD8318B77518
-          B77518CF8418FAAC41F8AE4AF9AE48F9AE48F8AE48F2A73EFFBB5800FF0000FF
-          00B5B5B5A5A5A5ADADADADADADADADADAEAEAEA9A9A97F7F7F74747474747480
-          8080AAAAAAAEAEAEADADADADADADADADADA5A5A5B8B8B800FF0000FF0000FF00
-          00FF0000FF0000FF0000FF0000FF0000FF00E18E18AA6D18AA6D18E8921900FF
-          0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000
-          FF0000FF0000FF0000FF0000FF008989896E6E6E6E6E6E8D8D8D00FF0000FF00
-          00FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF
-          0000FF0000FF0000FF00DC8B18A56A18A56A18E3901900FF0000FF0000FF0000
-          FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF00
-          00FF0000FF008787876B6B6B6B6B6B8B8B8B00FF0000FF0000FF0000FF0000FF
-          0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000
-          FF00DA8A189C65189C6518DF8D1900FF0000FF0000FF0000FF0000FF0000FF00
-          00FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF008686
-          8667676767676789898900FF0000FF0000FF0000FF0000FF0000FF0000FF0000
-          FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF00D78818966118
-          956118DD8C1A00FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF
-          0000FF0000FF0000FF0000FF0000FF0000FF0000FF0084848464646463636388
-          888800FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF00
-          00FF0000FF0000FF0000FF0000FF0000FF00D385188B5B188B5B18D7891B00FF
-          0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000
-          FF0000FF0000FF0000FF0000FF008282825E5E5E5E5E5E86868600FF0000FF00
-          00FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF
-          0000FF0000FF0000FF00B775187D53187C5318BC781800FF0000FF0000FF0000
-          FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF00
-          00FF0000FF0074747457575757575777777700FF0000FF0000FF0000FF0000FF
-          0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000
-          FF00FEB450EBA23EECA33DFFB75600FF0000FF0000FF0000FF0000FF0000FF00
-          00FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF00B4B4
-          B4A1A1A1A1A1A1B7B7B700FF0000FF0000FF0000FF0000FF0000FF0000FF0000
-          FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF00
-          00FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF
-          0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000
-          FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF00}
-        ModalResult = 6
-        NumGlyphs = 2
-        TabOrder = 4
-        OnClick = AddClick
-      end
-      object NewXE: TLabeledEdit
-        Left = 29
-        Top = 41
-        Width = 98
-        Height = 31
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
-        EditLabel.Width = 19
-        EditLabel.Height = 23
-        EditLabel.Margins.Left = 4
-        EditLabel.Margins.Top = 4
-        EditLabel.Margins.Right = 4
-        EditLabel.Margins.Bottom = 4
-        EditLabel.Caption = 'X:'
-        LabelPosition = lpLeft
-        TabOrder = 0
-        Text = '0'
-      end
-      object NewX: TUpDown
-        Left = 127
-        Top = 41
-        Width = 20
-        Height = 31
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
-        Associate = NewXE
-        Min = -32000
-        Max = 32000
-        TabOrder = 1
-      end
-      object NewY: TUpDown
-        Left = 127
-        Top = 81
-        Width = 20
-        Height = 31
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
-        Associate = NewYE
-        Min = -32000
-        Max = 32000
-        TabOrder = 3
-      end
-      object NewYE: TLabeledEdit
-        Left = 29
-        Top = 81
-        Width = 98
-        Height = 31
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
-        EditLabel.Width = 19
-        EditLabel.Height = 23
-        EditLabel.Margins.Left = 4
-        EditLabel.Margins.Top = 4
-        EditLabel.Margins.Right = 4
-        EditLabel.Margins.Bottom = 4
-        EditLabel.Caption = 'Y:'
-        LabelPosition = lpLeft
-        TabOrder = 2
-        Text = '0'
-      end
-    end
     object Degree: TUpDown
       Left = 143
-      Top = 559
+      Top = 519
       Width = 20
       Height = 31
       Anchors = [akLeft, akBottom]
       Associate = DegreeE
       Max = 32000
-      TabOrder = 3
+      TabOrder = 1
       OnChanging = DegreeChanging
       OnChangingEx = DegreeChangingEx
     end
     object DegreeE: TLabeledEdit
       Left = 94
-      Top = 559
+      Top = 519
       Width = 49
       Height = 31
       Margins.Left = 4
@@ -296,49 +86,25 @@ object Form1: TForm1
       LabelPosition = lpLeft
       NumbersOnly = True
       ParentFont = False
-      TabOrder = 2
+      TabOrder = 0
       Text = '0'
-    end
-    object Grid: TStringGrid
-      Left = 7
-      Top = 201
-      Width = 158
-      Height = 284
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
-      Anchors = [akLeft, akTop, akBottom]
-      ColCount = 3
-      Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRowMoving, goColMoving, goEditing, goAlwaysShowEditor]
-      PopupMenu = PopupMenu2
-      ScrollBars = ssVertical
-      TabOrder = 1
-      OnRowMoved = GridRowMoved
-      ColWidths = (
-        64
-        64
-        64)
-      RowHeights = (
-        24
-        24
-        24
-        24
-        24)
     end
     object PanelApprox: TGroupBox
       Left = 173
-      Top = 436
-      Width = 220
+      Top = 396
+      Width = 221
       Height = 236
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
-      Anchors = [akLeft, akBottom]
+      Anchors = [akLeft, akRight, akBottom]
       Caption = #1040#1087#1087#1088#1086#1082#1089#1080#1084#1072#1094#1080#1103
       PopupMenu = PopupMenu2
-      TabOrder = 6
+      TabOrder = 4
+      DesignSize = (
+        221
+        236)
       object RunGraph: TBitBtn
         Left = 29
         Top = 185
@@ -434,24 +200,27 @@ object Form1: TForm1
         OnClick = RunGraphClick
       end
       object AppXk: TUpDown
-        Left = 153
+        Left = 154
         Top = 76
         Width = 20
         Height = 31
+        Anchors = [akTop, akRight]
         Associate = AppXkE
         Min = -32000
         Max = 32000
         TabOrder = 3
+        ExplicitLeft = 153
       end
       object AppXnE: TLabeledEdit
         Left = 77
         Top = 33
-        Width = 76
+        Width = 77
         Height = 31
         Margins.Left = 4
         Margins.Top = 4
         Margins.Right = 4
         Margins.Bottom = 4
+        Anchors = [akLeft, akTop, akRight]
         EditLabel.Width = 64
         EditLabel.Height = 23
         EditLabel.Margins.Left = 4
@@ -462,37 +231,43 @@ object Form1: TForm1
         LabelPosition = lpLeft
         TabOrder = 0
         Text = '0'
+        ExplicitWidth = 76
       end
       object AppXn: TUpDown
-        Left = 153
+        Left = 154
         Top = 33
         Width = 20
         Height = 31
+        Anchors = [akTop, akRight]
         Associate = AppXnE
         Min = -32000
         Max = 32000
         TabOrder = 1
+        ExplicitLeft = 153
       end
       object AppStep: TUpDown
-        Left = 153
+        Left = 154
         Top = 116
         Width = 20
         Height = 31
+        Anchors = [akTop, akRight]
         Associate = AppStepE
         Min = 1
         Max = 32000
         Position = 1
         TabOrder = 5
+        ExplicitLeft = 153
       end
       object AppXkE: TLabeledEdit
         Left = 77
         Top = 76
-        Width = 76
+        Width = 77
         Height = 31
         Margins.Left = 4
         Margins.Top = 4
         Margins.Right = 4
         Margins.Bottom = 4
+        Anchors = [akLeft, akTop, akRight]
         EditLabel.Width = 63
         EditLabel.Height = 23
         EditLabel.Margins.Left = 4
@@ -503,16 +278,18 @@ object Form1: TForm1
         LabelPosition = lpLeft
         TabOrder = 2
         Text = '0'
+        ExplicitWidth = 76
       end
       object AppStepE: TLabeledEdit
         Left = 77
         Top = 116
-        Width = 76
+        Width = 77
         Height = 31
         Margins.Left = 4
         Margins.Top = 4
         Margins.Right = 4
         Margins.Bottom = 4
+        Anchors = [akLeft, akTop, akRight]
         EditLabel.Width = 43
         EditLabel.Height = 23
         EditLabel.Margins.Left = 4
@@ -523,6 +300,7 @@ object Form1: TForm1
         LabelPosition = lpLeft
         TabOrder = 4
         Text = '1'
+        ExplicitWidth = 76
       end
       object OnlyX: TCheckBox
         Left = 16
@@ -536,7 +314,7 @@ object Form1: TForm1
     end
     object RunBtn: TBitBtn
       Left = 19
-      Top = 621
+      Top = 581
       Width = 136
       Height = 39
       Margins.Left = 4
@@ -625,14 +403,14 @@ object Form1: TForm1
         A0A09E9E9E9C9C9C9A9A9A979797959595B2B2B200FF0000FF00}
       ModalResult = 5
       NumGlyphs = 2
-      TabOrder = 4
+      TabOrder = 2
       OnClick = RunClick
     end
     object Out: TMemo
-      Left = 169
+      Left = 175
       Top = 10
-      Width = 248
-      Height = 419
+      Width = 223
+      Height = 379
       Anchors = [akLeft, akTop, akRight, akBottom]
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
@@ -641,48 +419,319 @@ object Form1: TForm1
       Font.Style = []
       ParentFont = False
       ScrollBars = ssBoth
-      TabOrder = 5
+      TabOrder = 3
       WordWrap = False
     end
-    object GroupBox1: TGroupBox
-      Left = 7
-      Top = 491
-      Width = 158
-      Height = 60
-      TabOrder = 7
-      object RadioNormal: TRadioButton
-        Left = 6
-        Top = 8
-        Width = 113
-        Height = 17
-        Caption = #1055#1086#1083#1080#1085#1086#1084
-        Checked = True
-        TabOrder = 0
-        TabStop = True
+    object Notebook1: TNotebook
+      Left = 8
+      Top = 8
+      Width = 161
+      Height = 505
+      TabOrder = 5
+      object TPage
+        Left = 0
+        Top = 0
+        Caption = 'Default'
+        DesignSize = (
+          161
+          505)
+        object Grid: TStringGrid
+          Left = 3
+          Top = 186
+          Width = 158
+          Height = 254
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
+          Anchors = [akLeft, akTop, akBottom]
+          ColCount = 3
+          GradientStartColor = clBtnShadow
+          Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRowMoving, goColMoving, goEditing, goAlwaysShowEditor]
+          PopupMenu = PopupMenu2
+          ScrollBars = ssVertical
+          TabOrder = 0
+          OnRowMoved = GridRowMoved
+          ColWidths = (
+            64
+            64
+            64)
+          RowHeights = (
+            24
+            24
+            24
+            24
+            24)
+        end
+        object GroupBox1: TGroupBox
+          Left = 3
+          Top = 441
+          Width = 158
+          Height = 63
+          TabOrder = 1
+          object RadioNormal: TRadioButton
+            Left = 6
+            Top = 8
+            Width = 113
+            Height = 17
+            Caption = #1055#1086#1083#1080#1085#1086#1084
+            Checked = True
+            TabOrder = 0
+            TabStop = True
+          end
+          object RadioChebyshev: TRadioButton
+            Left = 6
+            Top = 34
+            Width = 113
+            Height = 17
+            Caption = #1063#1077#1073#1099#1096#1105#1074
+            TabOrder = 1
+          end
+        end
+        object PanelNewPoint: TPanel
+          Left = 3
+          Top = 2
+          Width = 154
+          Height = 183
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
+          PopupMenu = PopupMenu2
+          TabOrder = 2
+          object Label4: TLabel
+            Left = 10
+            Top = 10
+            Width = 76
+            Height = 25
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
+            Alignment = taCenter
+            Caption = #1058#1086#1095#1082#1072' '#8470
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -20
+            Font.Name = 'MS Sans Serif'
+            Font.Style = []
+            ParentFont = False
+          end
+          object Label7: TLabel
+            Left = 92
+            Top = 10
+            Width = 11
+            Height = 25
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
+            Caption = '_'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -20
+            Font.Name = 'MS Sans Serif'
+            Font.Style = []
+            ParentFont = False
+          end
+          object Add: TBitBtn
+            Left = 10
+            Top = 134
+            Width = 135
+            Height = 40
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
+            Caption = '&'#1044#1086#1073#1072#1074#1080#1090#1100
+            Default = True
+            Glyph.Data = {
+              96090000424D9609000000000000360000002800000028000000140000000100
+              18000000000060090000120B0000120B0000000000000000000000FF0000FF00
+              00FF0000FF0000FF0000FF0000FF0000FF00FFE9BDFFE5B4FFE5B3FFEBC000FF
+              0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000
+              FF0000FF0000FF0000FF0000FF00EBEBEBE6E6E6E6E6E6ECECEC00FF0000FF00
+              00FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF
+              0000FF0000FF0000FF00F29818F39918F49918F99C1800FF0000FF0000FF0000
+              FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF00
+              00FF0000FF0092929292929293939395959500FF0000FF0000FF0000FF0000FF
+              0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000
+              FF00FFA218F89C18F89C18FFA41800FF0000FF0000FF0000FF0000FF0000FF00
+              00FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF009898
+              9895959595959598989800FF0000FF0000FF0000FF0000FF0000FF0000FF0000
+              FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF00FFA318EE9618
+              EE9618FFA51800FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF
+              0000FF0000FF0000FF0000FF0000FF0000FF0000FF0098989890909090909098
+              989800FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF00
+              00FF0000FF0000FF0000FF0000FF0000FF00FE9E18E89218E89218FFA31800FF
+              0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000
+              FF0000FF0000FF0000FF0000FF009898988D8D8D8D8D8D98989800FF0000FF00
+              00FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF
+              0000FF0000FF0000FF00FA9D18E18E18E08E18FF9F1800FF0000FF0000FF0000
+              FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF00
+              00FF0000FF0096969689898989898998989800FF0000FF0000FF0000FF0000FF
+              0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000
+              FF00F99C18D98918D88918FD9E1800FF0000FF0000FF0000FF0000FF0000FF00
+              00FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF009595
+              9585858585858597979700FF0000FF0000FF0000FF0000FF0000FF0000FF0000
+              FF0000FF00FFE5B2FFE1A6FFE3ACFFE2ACFFE2ACFFE3B0FFD99AE99218D38518
+              D38518ED9518FFDB9FFFE3B0FFE2ACFFE2ACFFE2ACFFE1A5FFE6B400FF0000FF
+              00E5E5E5DFDFDFE2E2E2E2E2E2E2E2E2E4E4E4D9D9D98D8D8D8282828282828F
+              8F8FDCDCDCE4E4E4E2E2E2E2E2E2E2E2E2DFDFDFE6E6E600FF0000FF00DD8C18
+              B57418C37D18C67F18C98018CC8318CD8318D08418D08418D08418D08418CD83
+              18CC8318CA8118C67F18C27C18B57418E8921800FF0000FF008787877373737A
+              7A7A7C7C7C7D7D7D7F7F7F7F7F7F8181818181818181818181817F7F7F7F7F7F
+              7E7E7E7C7C7C7A7A7A7373738D8D8D00FF0000FF00D788189E6718B17118B574
+              18B97718BF7A18C27C18C87F18C98018C98018C87F18C27C18BF7A18BB7718B6
+              7518B171189E6718E38F1800FF0000FF00848484686868717171737373757575
+              7878787A7A7A7D7D7D7D7D7D7D7D7D7D7D7D7A7A7A7878787676767474747171
+              716868688A8A8A00FF0000FF00C37D18976218A86C18AC6E18B17118B47418B7
+              7518BF7A18C37D18C37D18BF7A18B77518B57418B27218AE6F18A86D18986218
+              D1851800FF0000FF007A7A7A6464646D6D6D6F6F6F7171717373737474747878
+              787A7A7A7A7A7A7878787474747373737272727070706D6D6D65656581818100
+              FF0000FF00FFB751F2A73FF8AE48F8AE48F9AE48F8AF4AFAAC3FCD8318B77518
+              B77518CF8418FAAC41F8AE4AF9AE48F9AE48F8AE48F2A73EFFBB5800FF0000FF
+              00B5B5B5A5A5A5ADADADADADADADADADAEAEAEA9A9A97F7F7F74747474747480
+              8080AAAAAAAEAEAEADADADADADADADADADA5A5A5B8B8B800FF0000FF0000FF00
+              00FF0000FF0000FF0000FF0000FF0000FF00E18E18AA6D18AA6D18E8921900FF
+              0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000
+              FF0000FF0000FF0000FF0000FF008989896E6E6E6E6E6E8D8D8D00FF0000FF00
+              00FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF
+              0000FF0000FF0000FF00DC8B18A56A18A56A18E3901900FF0000FF0000FF0000
+              FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF00
+              00FF0000FF008787876B6B6B6B6B6B8B8B8B00FF0000FF0000FF0000FF0000FF
+              0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000
+              FF00DA8A189C65189C6518DF8D1900FF0000FF0000FF0000FF0000FF0000FF00
+              00FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF008686
+              8667676767676789898900FF0000FF0000FF0000FF0000FF0000FF0000FF0000
+              FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF00D78818966118
+              956118DD8C1A00FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF
+              0000FF0000FF0000FF0000FF0000FF0000FF0000FF0084848464646463636388
+              888800FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF00
+              00FF0000FF0000FF0000FF0000FF0000FF00D385188B5B188B5B18D7891B00FF
+              0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000
+              FF0000FF0000FF0000FF0000FF008282825E5E5E5E5E5E86868600FF0000FF00
+              00FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF
+              0000FF0000FF0000FF00B775187D53187C5318BC781800FF0000FF0000FF0000
+              FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF00
+              00FF0000FF0074747457575757575777777700FF0000FF0000FF0000FF0000FF
+              0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000
+              FF00FEB450EBA23EECA33DFFB75600FF0000FF0000FF0000FF0000FF0000FF00
+              00FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF00B4B4
+              B4A1A1A1A1A1A1B7B7B700FF0000FF0000FF0000FF0000FF0000FF0000FF0000
+              FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF00
+              00FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF
+              0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000
+              FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF00}
+            ModalResult = 6
+            NumGlyphs = 2
+            TabOrder = 4
+            OnClick = AddClick
+          end
+          object NewXE: TLabeledEdit
+            Left = 29
+            Top = 41
+            Width = 98
+            Height = 31
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
+            EditLabel.Width = 19
+            EditLabel.Height = 23
+            EditLabel.Margins.Left = 4
+            EditLabel.Margins.Top = 4
+            EditLabel.Margins.Right = 4
+            EditLabel.Margins.Bottom = 4
+            EditLabel.Caption = 'X:'
+            LabelPosition = lpLeft
+            TabOrder = 0
+            Text = '0'
+          end
+          object NewX: TUpDown
+            Left = 127
+            Top = 41
+            Width = 16
+            Height = 31
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
+            Associate = NewXE
+            Min = -32000
+            Max = 32000
+            TabOrder = 1
+          end
+          object NewY: TUpDown
+            Left = 127
+            Top = 81
+            Width = 16
+            Height = 31
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
+            Associate = NewYE
+            Min = -32000
+            Max = 32000
+            TabOrder = 3
+          end
+          object NewYE: TLabeledEdit
+            Left = 29
+            Top = 81
+            Width = 98
+            Height = 31
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
+            EditLabel.Width = 19
+            EditLabel.Height = 23
+            EditLabel.Margins.Left = 4
+            EditLabel.Margins.Top = 4
+            EditLabel.Margins.Right = 4
+            EditLabel.Margins.Bottom = 4
+            EditLabel.Caption = 'Y:'
+            LabelPosition = lpLeft
+            TabOrder = 2
+            Text = '0'
+          end
+        end
       end
-      object RadioChebyshev: TRadioButton
-        Left = 6
-        Top = 34
-        Width = 113
-        Height = 17
-        Caption = #1063#1077#1073#1099#1096#1105#1074
-        TabOrder = 1
+      object TPage
+        Left = 0
+        Top = 0
+        Caption = 'Names'
+        ExplicitWidth = 0
+        ExplicitHeight = 0
+        object Ins: TMemo
+          Left = 0
+          Top = 24
+          Width = 161
+          Height = 481
+          Align = alBottom
+          Lines.Strings = (
+            'Ins')
+          TabOrder = 0
+        end
       end
     end
   end
   object Panel1: TPanel
-    Left = 423
+    Left = 404
     Top = 0
-    Width = 650
-    Height = 675
+    Width = 669
+    Height = 635
     Align = alClient
     Caption = 'Panel1'
     TabOrder = 1
+    ExplicitLeft = 436
+    ExplicitWidth = 637
     object Chart1: TChart
       Left = 1
       Top = 1
-      Width = 648
-      Height = 673
+      Width = 667
+      Height = 633
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
@@ -707,6 +756,7 @@ object Form1: TForm1
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 0
+      ExplicitWidth = 635
       DefaultCanvas = 'TGDIPlusCanvas'
       ColorPaletteIndex = 13
       object Series1: TLineSeries
@@ -779,6 +829,15 @@ object Form1: TForm1
         Caption = '&'#1055#1086#1082#1072#1079#1072#1090#1100' '#1089#1080#1089#1090#1077#1084#1091' '#1091#1088#1072#1074#1085#1077#1085#1080#1081
         ShortCut = 16469
         OnClick = NKoeffClick
+      end
+      object N2: TMenuItem
+        Caption = '-'
+      end
+      object NXS: TMenuItem
+        AutoCheck = True
+        Caption = '&'#1042#1074#1086#1076' '#1061
+        Checked = True
+        OnClick = NXSClick
       end
     end
     object N9: TMenuItem
