@@ -219,7 +219,7 @@ public:
 			if (std::abs(a[i]) < 1e-20) 
 				continue;
 			if (i > 0)
-				s += (a[i] >= 0) ? " + " : " - ";
+				s += (a[i] >= 0) ? " +" : " -";
 			else if (a[i] < 0) 
 				s += "-";
 			s += FloatToStrF(std::abs(a[i]), ffFixed, 15, 12);

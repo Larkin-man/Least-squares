@@ -107,9 +107,9 @@ __published:	// IDE-managed Components
    void __fastcall DegreeChangingEx(TObject *Sender, bool &AllowChange, int NewValue,
           TUpDownDirection Direction);
    void __fastcall NXSClick(TObject *Sender);
-private:	// User declarations
-//Только в пределах данного модуля
-public:	// User declarations
+private:
+
+public:
 	int N, S;
 	typedef double T;
 	std::vector<double> x, y;

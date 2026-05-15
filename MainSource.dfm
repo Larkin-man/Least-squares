@@ -2,8 +2,8 @@ object Form1: TForm1
   Left = 176
   Top = 27
   Caption = #1052#1077#1090#1086#1076' '#1085#1072#1080#1084#1077#1085#1100#1096#1080#1093' '#1082#1074#1072#1076#1088#1072#1090#1086#1074
-  ClientHeight = 635
-  ClientWidth = 1073
+  ClientHeight = 646
+  ClientWidth = 1058
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,7 +17,9 @@ object Form1: TForm1
   object Splitter1: TSplitter
     Left = 401
     Top = 0
-    Height = 635
+    Height = 646
+    Beveled = True
+    ResizeStyle = rsUpdate
     ExplicitLeft = 472
     ExplicitTop = -1
     ExplicitHeight = 715
@@ -26,21 +28,23 @@ object Form1: TForm1
     Left = 0
     Top = 0
     Width = 401
-    Height = 635
+    Height = 646
     Align = alLeft
     BevelOuter = bvNone
     Caption = 'PanelLeft'
     Constraints.MinWidth = 360
     ShowCaption = False
     TabOrder = 0
+    ExplicitHeight = 615
     DesignSize = (
       401
-      635)
+      646)
     object Label1: TLabel
       Left = 13
-      Top = 556
+      Top = 567
       Width = 74
       Height = 18
+      Anchors = [akLeft, akBottom]
       Caption = #1050#1086#1085#1089#1090#1072#1085#1090#1072
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
@@ -48,10 +52,11 @@ object Form1: TForm1
       Font.Name = 'Arial'
       Font.Style = []
       ParentFont = False
+      ExplicitTop = 556
     end
     object Degree: TUpDown
       Left = 143
-      Top = 519
+      Top = 530
       Width = 20
       Height = 31
       Anchors = [akLeft, akBottom]
@@ -60,10 +65,11 @@ object Form1: TForm1
       TabOrder = 1
       OnChanging = DegreeChanging
       OnChangingEx = DegreeChangingEx
+      ExplicitTop = 499
     end
     object DegreeE: TLabeledEdit
       Left = 94
-      Top = 519
+      Top = 530
       Width = 49
       Height = 31
       Margins.Left = 4
@@ -88,10 +94,11 @@ object Form1: TForm1
       ParentFont = False
       TabOrder = 0
       Text = '0'
+      ExplicitTop = 499
     end
     object PanelApprox: TGroupBox
       Left = 173
-      Top = 396
+      Top = 407
       Width = 221
       Height = 236
       Margins.Left = 4
@@ -102,6 +109,7 @@ object Form1: TForm1
       Caption = #1040#1087#1087#1088#1086#1082#1089#1080#1084#1072#1094#1080#1103
       PopupMenu = PopupMenu2
       TabOrder = 4
+      ExplicitTop = 376
       DesignSize = (
         221
         236)
@@ -209,7 +217,6 @@ object Form1: TForm1
         Min = -32000
         Max = 32000
         TabOrder = 3
-        ExplicitLeft = 153
       end
       object AppXnE: TLabeledEdit
         Left = 77
@@ -231,7 +238,6 @@ object Form1: TForm1
         LabelPosition = lpLeft
         TabOrder = 0
         Text = '0'
-        ExplicitWidth = 76
       end
       object AppXn: TUpDown
         Left = 154
@@ -243,7 +249,6 @@ object Form1: TForm1
         Min = -32000
         Max = 32000
         TabOrder = 1
-        ExplicitLeft = 153
       end
       object AppStep: TUpDown
         Left = 154
@@ -256,7 +261,6 @@ object Form1: TForm1
         Max = 32000
         Position = 1
         TabOrder = 5
-        ExplicitLeft = 153
       end
       object AppXkE: TLabeledEdit
         Left = 77
@@ -278,7 +282,6 @@ object Form1: TForm1
         LabelPosition = lpLeft
         TabOrder = 2
         Text = '0'
-        ExplicitWidth = 76
       end
       object AppStepE: TLabeledEdit
         Left = 77
@@ -300,7 +303,6 @@ object Form1: TForm1
         LabelPosition = lpLeft
         TabOrder = 4
         Text = '1'
-        ExplicitWidth = 76
       end
       object OnlyX: TCheckBox
         Left = 16
@@ -314,7 +316,7 @@ object Form1: TForm1
     end
     object RunBtn: TBitBtn
       Left = 19
-      Top = 581
+      Top = 592
       Width = 136
       Height = 39
       Margins.Left = 4
@@ -405,12 +407,13 @@ object Form1: TForm1
       NumGlyphs = 2
       TabOrder = 2
       OnClick = RunClick
+      ExplicitTop = 561
     end
     object Out: TMemo
       Left = 175
       Top = 10
       Width = 223
-      Height = 379
+      Height = 390
       Anchors = [akLeft, akTop, akRight, akBottom]
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
@@ -421,30 +424,31 @@ object Form1: TForm1
       ScrollBars = ssBoth
       TabOrder = 3
       WordWrap = False
+      ExplicitHeight = 359
     end
     object Notebook1: TNotebook
       Left = 8
       Top = 8
       Width = 161
-      Height = 505
+      Height = 514
+      Anchors = [akLeft, akTop, akBottom]
       TabOrder = 5
+      ExplicitHeight = 505
       object TPage
         Left = 0
         Top = 0
         Caption = 'Default'
-        DesignSize = (
-          161
-          505)
+        ExplicitHeight = 505
         object Grid: TStringGrid
-          Left = 3
-          Top = 186
-          Width = 158
-          Height = 254
+          Left = 0
+          Top = 183
+          Width = 161
+          Height = 268
           Margins.Left = 4
           Margins.Top = 4
           Margins.Right = 4
           Margins.Bottom = 4
-          Anchors = [akLeft, akTop, akBottom]
+          Align = alClient
           ColCount = 3
           GradientStartColor = clBtnShadow
           Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRowMoving, goColMoving, goEditing, goAlwaysShowEditor]
@@ -452,6 +456,8 @@ object Form1: TForm1
           ScrollBars = ssVertical
           TabOrder = 0
           OnRowMoved = GridRowMoved
+          ExplicitTop = 264
+          ExplicitHeight = 187
           ColWidths = (
             64
             64
@@ -464,11 +470,15 @@ object Form1: TForm1
             24)
         end
         object GroupBox1: TGroupBox
-          Left = 3
-          Top = 441
-          Width = 158
+          Left = 0
+          Top = 451
+          Width = 161
           Height = 63
+          Align = alBottom
           TabOrder = 1
+          ExplicitLeft = 3
+          ExplicitTop = 441
+          ExplicitWidth = 158
           object RadioNormal: TRadioButton
             Left = 6
             Top = 8
@@ -489,16 +499,20 @@ object Form1: TForm1
           end
         end
         object PanelNewPoint: TPanel
-          Left = 3
-          Top = 2
-          Width = 154
+          Left = 0
+          Top = 0
+          Width = 161
           Height = 183
           Margins.Left = 4
           Margins.Top = 4
           Margins.Right = 4
           Margins.Bottom = 4
+          Align = alTop
           PopupMenu = PopupMenu2
           TabOrder = 2
+          ExplicitLeft = 3
+          ExplicitTop = 2
+          ExplicitWidth = 154
           object Label4: TLabel
             Left = 10
             Top = 10
@@ -702,17 +716,17 @@ object Form1: TForm1
         Left = 0
         Top = 0
         Caption = 'Names'
-        ExplicitWidth = 0
-        ExplicitHeight = 0
+        ExplicitHeight = 505
         object Ins: TMemo
           Left = 0
-          Top = 24
+          Top = 33
           Width = 161
           Height = 481
           Align = alBottom
           Lines.Strings = (
             'Ins')
           TabOrder = 0
+          ExplicitTop = 24
         end
       end
     end
@@ -720,18 +734,18 @@ object Form1: TForm1
   object Panel1: TPanel
     Left = 404
     Top = 0
-    Width = 669
-    Height = 635
+    Width = 654
+    Height = 646
     Align = alClient
     Caption = 'Panel1'
     TabOrder = 1
-    ExplicitLeft = 436
-    ExplicitWidth = 637
+    ExplicitWidth = 669
+    ExplicitHeight = 615
     object Chart1: TChart
       Left = 1
       Top = 1
-      Width = 667
-      Height = 633
+      Width = 652
+      Height = 644
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
@@ -756,7 +770,8 @@ object Form1: TForm1
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 0
-      ExplicitWidth = 635
+      ExplicitWidth = 667
+      ExplicitHeight = 613
       DefaultCanvas = 'TGDIPlusCanvas'
       ColorPaletteIndex = 13
       object Series1: TLineSeries

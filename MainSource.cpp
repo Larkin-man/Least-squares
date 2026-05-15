@@ -107,68 +107,6 @@ inline void TForm1::Exchange(T &a, T &b)
 	b = temp;
 }
 //---------------------------------------------------------------------------
-// Основная функция МНК
-// degree - степень полинома (1 - прямая, 2 - парабола и т.д.)
-//МНК подготавливает систему уравнений (матрицу сумм)
-std::vector<double> TForm1::PolyFit(const std::vector<double>& x, const std::vector<double>& y, int degree)
-{
-	int n = (int)x.size();
-	int m = degree + 1; // Размерность матрицы (m x m)
-	int num_sums = 2 * degree + 1; // Столько уникальных сумм x^k нам нужно
-
-	if (degree >= (int)x.size())
-		return std::vector<double>();
-	logv(x,"x"); logv(y, "y");
-	// 1. Вычисляем все необходимые суммы степеней x: sum_x[k] = \sum x_i^k
-	// С оптимизацией std::pow(x[k], i + j);
-	std::vector<double> sum_x(num_sums, 0.0);
-	sum_x[0] = (double)n; // x^0 это 1, сумма единиц это n
-
-	for (int i = 0; i < n; i++) {
-		double x_pow = 1.0;
-		for (int k = 1; k < num_sums; k++) {
-			// Проверка перед умножением, чтобы не вылететь за пределы double
-			if (std::abs(x_pow) > DBL_MAX / std::abs(x[i])) {
-				// Ошибка: слишком большие значения для такой степени
-				return std::vector<double>();
-			}
-			x_pow *= x[i];
-
-			// Проверка суммы
-			if (DBL_MAX - std::abs(x_pow) < std::abs(sum_x[k])) {
-				return std::vector<double>(); // Переполнение суммы
-			}
-			sum_x[k] += x_pow;
-		}
-	}
-	logv(sum_x,"sum_x");
-
-	// 2. Вычисляем суммы произведений: sum_xy[k] = \sum (y_i * x_i^k)
-	std::vector<double> sum_xy(m, 0.0);
-	for (int i = 0; i < n; i++) {
-		double x_pow = 1.0;
-		for (int k = 0; k < m; k++) {
-			sum_xy[k] += y[i] * x_pow;
-			x_pow *= x[i];
-		}
-	}
-	logv(sum_xy,"sum_xy");
-
-	// 3. Заполняем матрицу sum, просто копируя уже вычисленные значения
-	std::vector< std::vector<double> > sum(m, std::vector<double>(m + 1, 0.0));
-	for (int i = 0; i < m; i++) {
-		for (int j = 0; j < m; j++) {
-			sum[i][j] = sum_x[i + j]; // Берем готовую сумму из массива
-		}
-		sum[i][m] = sum_xy[i]; // Свободный член
-	}
-
-	// Далее вызываем SolveGauss(sum, coeffs)...
-	std::vector<double> coeffs(m, 0.0);
-	if (ti.SolveGauss(sum, coeffs)) return coeffs;
-	return std::vector<double>();
-}
-//---------------------------------------------------------------------------
 // Функция для расчета ошибки после нахождения коэффициентов
 void TForm1::CalculateError(const std::vector<double>& x, const std::vector<double>& y, LSResult& res)
 {
@@ -248,7 +186,10 @@ void __fastcall TForm1::RunClick(TObject *Sender)
       Out->Lines->Add("C[" + IntToStr(i) + "] = " + value);
    }
    if (res.Method == LMSOutResult::Norm)
+   {
       tolog("shiftX = \n"+FloatToStr(res.shiftX));
+      tolog(TLeastSquares::GetFormulaString(res));
+   }
    else
    {
       tolog(TChebyshevLMS::GetFormulaString(ch));
@@ -493,15 +434,8 @@ void TForm1::AddRedDot(double X)
 //ПОСТРОИТЬ
 void __fastcall TForm1::RunGraphClick(TObject *Sender)
 {
-   //   for (int i = 0; i < x.size(); i++)
-   //   {
-   //      tolog("X=" + FloatToStr(x[i]) +
-   //                      " Real Y=" + FloatToStr(y[i]) +
-   //                      " Pred Y=" + FloatToStr(TChebyshevLMS::Predict(ch, x[i])));
-   //   }
 	Series2->BeginUpdate();
 	Series2->Clear();
-
    //Series1->Pointer->Visible = true;
    //Series1->Pointer->Style = psRectangle; // Квадратики
    //Series1->SeriesColor = clRed;
@@ -545,12 +479,12 @@ void __fastcall TForm1::DegreeChanging(TObject *Sender, bool &AllowChange)
 //---------------------------------------------------------------------------
 void TForm1::BringColor(int NewDegree)
 {
-   tolog(NewDegree); tolog(point);
    if (NewDegree >= (int)point-1)
 		DegreeE->Font->Color = clMaroon;
 	else
 		DegreeE->Font->Color = clWindowText;
-   static const String DegreeNames[] = {
+   static const String DegreeNames[] =
+   {
       L"Константа",
       L"Прямая",
       L"Парабола",
@@ -581,9 +515,6 @@ void __fastcall TForm1::OnlyXClick(TObject *Sender)
 
 void __fastcall TForm1::GridRowMoved(TObject *Sender, int FromIndex, int ToIndex)
 {
-	//String t(Grid->Cells[1][FromIndex]);
-	//Grid->Cells[1][FromIndex] = Grid->Cells[1][ToIndex];
-	//Grid->Cells[1][ToIndex] = t;
 	for (int i = 1; i < Grid->RowCount; i++)
 		Grid->Cells[0][i] = i;
 }
