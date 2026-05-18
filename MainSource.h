@@ -81,6 +81,8 @@ __published:	// IDE-managed Components
    TMenuItem *NXS;
    TMenuItem *N2;
    TMemo *Ins;
+   TBitBtn *BitBtn1;
+   TMemo *Memo1;
 	void __fastcall NExitClick(TObject *Sender);
 	void __fastcall RunClick(TObject *Sender);
 	void __fastcall NNewClick(TObject *Sender);
@@ -104,9 +106,9 @@ __published:	// IDE-managed Components
 	void __fastcall DegreeChanging(TObject *Sender, bool &AllowChange);
 	void __fastcall OnlyXClick(TObject *Sender);
 	void __fastcall GridRowMoved(TObject *Sender, int FromIndex, int ToIndex);
-   void __fastcall DegreeChangingEx(TObject *Sender, bool &AllowChange, int NewValue,
-          TUpDownDirection Direction);
    void __fastcall NXSClick(TObject *Sender);
+   void __fastcall DegreeEChange(TObject *Sender);
+   void __fastcall BitBtn1Click(TObject *Sender);
 private:
 
 public:
@@ -136,38 +138,66 @@ public:
 	}
 	TLeastSquares ti;
    TChebResult ch;
-   struct LMSOutResult:public LSResult
+
+   enum ResultType {RT_NONE, RT_LS, RT_CHEB};
+   struct LMSOutResult
    {
-      double minX, maxX;			// Границы для нормализации Чебышёва
-      enum CalculatingMethod { Norm, Chebyshev } Method;
-      TFitQuality quality;
+      LSResult ls;
+      TChebResult cheb;
+      ResultType type;
+      // Конструктор по умолчанию
+      LMSOutResult()
+      {
+         type = RT_NONE;
+      }
+
+      // Метод сброса флага и очистки векторов для освобождения памяти
       void Clear()
       {
-         shiftX = 0;
-         minX = maxX = 0;
-         success = false;
+         type = RT_NONE;
+         cheb.coeffs.clear();
+         ls.coeffs.clear();
       }
-      LMSOutResult& operator=(LSResult rhs)
+
+      // Оператор присваивания для TChebResult
+      LMSOutResult& operator=(const TChebResult& src)
       {
-         coeffs = rhs.coeffs; // Вектор найденных коэффициентов полинома [a0, a1, a2...]
-	      shiftX = rhs.shiftX;            // Целочисленный сдвиг для защиты от переполнения
-	      rmse = rhs.rmse;                // Среднеквадратичная ошибка (чем ближе к 0, тем лучше)
-	      r2 = rhs.r2;                  // Коэффициент детерминации (1.0 - идеальное совпадение, 0 - плохо)
-	      success = rhs.success;
-         Method = Norm;
+         this->cheb = src;
+         this->type = RT_CHEB;
          return *this;
       }
-      LMSOutResult& operator=(TChebResult rhs)
+
+      // Оператор присваивания для LSResult
+      LMSOutResult& operator=(const LSResult& src)
       {
-         coeffs = rhs.coeffs; // Вектор найденных коэффициентов полинома [a0, a1, a2...]
-	      minX = rhs.minX;                // Границы для нормализации
-         maxX = rhs.maxX;
-	      rmse = rhs.rmse;                // Среднеквадратичная ошибка (чем ближе к 0, тем лучше)
-	      r2 = rhs.r2;                  // Коэффициент детерминации (1.0 - идеальное совпадение, 0 - плохо)
-	      success = rhs.success;
-         quality = rhs.quality;
-         Method = Chebyshev;
+         this->ls = src;
+         this->type = RT_LS;
          return *this;
+      }
+
+      // Доступ к общему вектору coeffs по ссылке (для чтения и изменения)
+      std::vector<double>& coeffs()
+      {
+         return (type == RT_CHEB) ? cheb.coeffs : ls.coeffs;
+      }
+      // Константная версия coeffs для безопасного чтения
+      const std::vector<double>& coeffs() const
+      {
+         return (type == RT_CHEB) ? cheb.coeffs : ls.coeffs;
+      }
+      // Доступ к остальным общим полям
+      double rmse() const
+      {
+         return (type == RT_CHEB) ? cheb.rmse : ls.rmse;
+      }
+      double r2() const
+      {
+         return (type == RT_CHEB) ? cheb.r2 : ls.r2;
+      }
+
+      bool success() const
+      {
+         return (type == RT_CHEB) ? cheb.success : ls.success;
       }
 
    } res;

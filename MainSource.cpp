@@ -110,7 +110,8 @@ inline void TForm1::Exchange(T &a, T &b)
 // Функция для расчета ошибки после нахождения коэффициентов
 void TForm1::CalculateError(const std::vector<double>& x, const std::vector<double>& y, LSResult& res)
 {
-	if (!res.success) {
+	if (!res.success)
+   {
 		res.rmse = -1.0;
 		return;
 	}
@@ -118,7 +119,8 @@ void TForm1::CalculateError(const std::vector<double>& x, const std::vector<doub
 	double sse = 0.0; // Сумма квадратов отклонений
 	int n = (int)x.size();
 
-	for (int i = 0; i < n; i++) {
+	for (int i = 0; i < n; i++)
+   {
 		// Считаем значение полинома в данной точке
 		double y_pred = 0.0;
 		double x_shifted = x[i] - res.shiftX;
@@ -164,7 +166,7 @@ void __fastcall TForm1::RunClick(TObject *Sender)
       TChebyshevLMS::Calculate(x, y, S, ch); // Степень 5
       res = ch;
    }
-	if (res.success == false)
+	if (res.success() == false)
 		return;
 
 	if (Out->Lines->Count > 0)
@@ -176,7 +178,7 @@ void __fastcall TForm1::RunClick(TObject *Sender)
       // 12 — общая точность (хватит для double)
       // 4 — если число станет очень маленьким, перейдет в экспоненциальный вид (1E-15)
       //String value = FloatToStrF(res.coeffs[i], ffGeneral, 12, 4);
-      double val = res.coeffs[i];
+      double val = res.coeffs()[i];
       // Если число по модулю меньше одной триллионной — это шум
       if (std::abs(val) < 1e-12) val = 0.0;
       // Теперь выводим с хорошей точностью (14 знаков)
@@ -185,16 +187,16 @@ void __fastcall TForm1::RunClick(TObject *Sender)
 
       Out->Lines->Add("C[" + IntToStr(i) + "] = " + value);
    }
-   if (res.Method == LMSOutResult::Norm)
+   if (res.type == RT_LS)
    {
-      tolog("shiftX = \n"+FloatToStr(res.shiftX));
-      tolog(TLeastSquares::GetFormulaString(res));
+      tolog("shiftX = \n"+FloatToStr(res.ls.shiftX));
+      tolog(TLeastSquares::GetFormulaString(res.ls.coeffs));
    }
    else
    {
       tolog(TChebyshevLMS::GetFormulaString(ch));
       String status;
-      switch(res.quality)
+      switch(res.cheb.quality)
       {
           case fqExact:      status = "Perfect (Machine Zero)"; break;
           case fqNoise:      status = "High Precision (Double Noise)"; break;
@@ -204,8 +206,8 @@ void __fastcall TForm1::RunClick(TObject *Sender)
 
       tolog("Quality: " + status);
    }
-	tolog("RMSE = " + FloatToStrF(res.rmse, ffExponent, 4, 2));
-	tolog("R2 = \n"+FloatToStr(res.r2));
+	tolog("RMSE = " + FloatToStrF(res.rmse(), ffExponent, 4, 2));
+	tolog("R2 = \n"+FloatToStr(res.r2()));
 
 	if (NPrints2->Checked)
 	{
@@ -216,7 +218,7 @@ void __fastcall TForm1::RunClick(TObject *Sender)
 		{
 			double cu = 0;
 			for(int i=0; i<S+1; i++)
-				cu += res.coeffs[i] * pow(x[j], i);
+				cu += res.coeffs()[i] * pow(x[j], i);
 			s2 += (y[j] - cu) * (y[j] - cu);
 
 			{
@@ -406,28 +408,28 @@ void __fastcall TForm1::NGColorClick(TObject *Sender)
 //---------------------------------------------------------------------------
 void TForm1::AddRedDot(double X)
 {
-   if (res.shiftX == 0)
+   if (res.ls.shiftX == 0)
    {
-	   double y = res.coeffs[0];
+	   double y = res.coeffs()[0];
       double xPower = 1.0;
       for (int j = 1; j <= Degree->Position; j++)
       {
           xPower *= X; // На каждой итерации просто домножаем на X
-          y += res.coeffs[j] * xPower;
+          y += res.coeffs()[j] * xPower;
       }
       Series2->AddXY(X, y, "", clRed);
    }
    else
    {
-      X -= res.shiftX;
-      double y = res.coeffs[0];
+      X -= res.ls.shiftX;
+      double y = res.coeffs()[0];
       double xPower = 1.0;
       for (int j = 1; j <= Degree->Position; j++)
       {
           xPower *= X; // На каждой итерации просто домножаем на X
-          y += res.coeffs[j] * xPower;
+          y += res.coeffs()[j] * xPower;
       }
-      Series2->AddXY(X+res.shiftX, y, "", clRed);
+      Series2->AddXY(X+res.ls.shiftX, y, "", clRed);
    }
 }
 //---------------------------------------------------------------------------
@@ -439,7 +441,7 @@ void __fastcall TForm1::RunGraphClick(TObject *Sender)
    //Series1->Pointer->Visible = true;
    //Series1->Pointer->Style = psRectangle; // Квадратики
    //Series1->SeriesColor = clRed;
-   if (res.Method == LMSOutResult::Chebyshev)
+   if (res.type == RT_CHEB)
    {
       if (OnlyX->Checked)
       {
@@ -454,8 +456,8 @@ void __fastcall TForm1::RunGraphClick(TObject *Sender)
       {
          // 3. Рисуем аппроксимирующую линию // Рисуем плавную кривую (берем 50 шагов между min и max)
          // Важно: берем чуть больше точек, чтобы линия была плавной
-         double step = (res.maxX - res.minX) / 50.0;
-         for(double curX = res.minX; curX <= res.maxX; curX += step)
+         double step = (res.cheb.maxX - res.cheb.minX) / 50.0;
+         for(double curX = res.cheb.minX; curX <= res.cheb.maxX; curX += step)
          {
              double curY = TChebyshevLMS::Predict(ch, curX);
              Series2->AddXY(curX, curY);
@@ -500,12 +502,12 @@ void TForm1::BringColor(int NewDegree)
       Label1->Caption ="++";
 }
 //---------------------------------------------------------------------------
-void __fastcall TForm1::DegreeChangingEx(TObject *Sender, bool &AllowChange, int NewValue,
-          TUpDownDirection Direction)
+void __fastcall TForm1::DegreeEChange(TObject *Sender)
 {
-   BringColor(NewValue);
+   BringColor(Degree->Position);
 }
 //---------------------------------------------------------------------------
+
 
 void __fastcall TForm1::OnlyXClick(TObject *Sender)
 {
@@ -526,6 +528,56 @@ void __fastcall TForm1::NXSClick(TObject *Sender)
       Notebook1->PageIndex = 0;
    else
       Notebook1->PageIndex = 1;
+}
+//---------------------------------------------------------------------------
+
+
+void __fastcall TForm1::BitBtn1Click(TObject *Sender)
+{
+   // Создаем векторы для результатов
+   std::vector<double> x;
+   std::vector<double> y;
+
+   // Настраиваем формат: принудительно заставляем программу читать точку '.'
+   TFormatSettings fmt = TFormatSettings::Create(); // Получаем системные настройки
+   fmt.DecimalSeparator = '.';                      // Фиксируем разделитель как точку
+
+   for (int i = 0; i < Memo1->Lines->Count; i++)
+   {
+      String sRow = Memo1->Lines->Strings[i].Trim();
+      if (sRow.IsEmpty()) continue;
+      int tabPos = sRow.Pos("\t");
+      if (tabPos == 0)
+      {
+         tabPos = sRow.Pos(" ");
+         if (tabPos == 0)
+            continue;
+      }
+      String sCol1 = sRow.SubString(1, tabPos - 1).Trim();
+      String sCol2 = sRow.SubString(tabPos + 1, sRow.Length() - tabPos).Trim();
+
+      if (!sCol1.IsEmpty() && !sCol2.IsEmpty())
+      {
+          // Заменяем все запятые на точки в обеих ячейках
+          sCol1 = StringReplace(sCol1, ",", ".", TReplaceFlags() << rfReplaceAll);
+          sCol2 = StringReplace(sCol2, ",", ".", TReplaceFlags() << rfReplaceAll);
+
+          try
+          {
+              // Конвертируем строки, передавая наш формат с жестко заданной точкой
+              double val1 = StrToFloat(sCol1, fmt);
+              double val2 = StrToFloat(sCol2, fmt);
+
+              x.push_back(val1);
+              y.push_back(val2);
+              tolog(FloatToStr(val1)+FloatToStr(val2));
+          }
+          catch (EConvertError &e)
+          {
+              ShowMessage("Ошибка в строке " + IntToStr(i + 1) + ": Неверный формат числа.");
+          }
+      }
+   }
 }
 //---------------------------------------------------------------------------
 

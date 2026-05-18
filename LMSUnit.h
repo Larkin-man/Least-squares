@@ -159,19 +159,20 @@ public:
 		return y;
 	}
    // Формирование строки уравнения для вывода
-	static String GetFormulaString(const LSResult& res)
+	//static String GetFormulaString(const LSResult& res)
+   static String GetFormulaString(const std::vector<double> &coeffs)
 	{
 		//std::vector<double> a = GetStandardCoeffs(res);
 		String s = "y = ";
-		for (int i = 0; i < (int)res.coeffs.size(); i++)
+		for (int i = 0; i < (int)coeffs.size(); i++)
 		{
-			if (std::abs(res.coeffs[i]) < 1e-20)
+			if (std::abs(coeffs[i]) < 1e-20)
 				continue;
 			if (i > 0)
-				s += (res.coeffs[i] >= 0) ? " +" : " -";
-			else if (res.coeffs[i] < 0)
+				s += (coeffs[i] >= 0) ? " +" : " -";
+			else if (coeffs[i] < 0)
 				s += "-";
-			s += FloatToStrF(std::abs(res.coeffs[i]), ffFixed, 15, 12);
+			s += FloatToStrF(std::abs(coeffs[i]), ffFixed, 15, 12);
 			if (i > 0)
             if (i == 1)
                s += " * x";
